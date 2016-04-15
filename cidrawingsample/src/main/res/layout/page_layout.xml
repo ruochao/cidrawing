@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#999"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <Button
+            android:id="@+id/select_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select"/>
+
+        <Button
+            android:id="@+id/skew_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Skew"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/top2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_layout"
+        android:background="#999"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <Button
+            android:id="@+id/pen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pen"/>
+
+        <Button
+            android:id="@+id/shape_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shape"/>
+
+        <Button
+            android:id="@+id/picture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pic"/>
+
+        <Button
+            android:id="@+id/text_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#999"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <Button
+            android:id="@+id/color_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color"/>
+
+        <Button
+            android:id="@+id/width_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Width"/>
+
+        <Button
+            android:id="@+id/undo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Undo"/>
+
+        <Button
+            android:id="@+id/redo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Redo"/>
+    </LinearLayout>
+
+    <com.mocircle.cidrawing.view.CiDrawingView
+        android:id="@+id/drawing_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@id/top2_layout"/>
+</RelativeLayout>

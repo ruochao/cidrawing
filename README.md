@@ -7,6 +7,7 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
 ## Supported Features
 ### Elements
  * Stroke element (Pen)
+ * Group element (Group/Ungroup)
  * Shape element
   * Line
   * Rectangle
@@ -21,6 +22,8 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Custom paint (color, width, style, etc)
  * Multiple layer support
  * Unlimited undo/redo
+ * Element group/ungroup
+ * Multiple elements selection and transformation
 
 ## How to Use
 Include view in your layout as:
@@ -39,6 +42,9 @@ drawingBoard.setupDrawingView(drawingView);
 
 ## Sample Project
 Please check out the sample project at [CiDrawing Sample] (https://github.com/mocircle/cidrawing/tree/master/cidrawingsample)
+
+## Add to your project
+Current CiDrawing is still under developing, not yet published. So please compile source code yourself.
 
 ## License
 

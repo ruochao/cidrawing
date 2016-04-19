@@ -91,10 +91,10 @@ public class SelectionMode extends AbstractDrawingMode {
                             selectedElements.add(element);
                         }
                     }
-                    if (selectedElements.size() == 1 && false) {
+                    if (selectedElements.size() == 1) {
                         // Multiple selection with single element
                         selectedElements.get(0).setSelected(true);
-                    } else if (selectedElements.size() > 0) {
+                    } else if (selectedElements.size() > 1) {
                         // Really multiple selection
                         virtualElement = new VirtualElement(selectedElements);
                         virtualElement.setSelected(true);

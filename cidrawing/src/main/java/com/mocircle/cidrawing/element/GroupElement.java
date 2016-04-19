@@ -1,38 +1,37 @@
 package com.mocircle.cidrawing.element;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
+import android.graphics.Matrix;
 
 import java.util.List;
 
-public class GroupElement extends DrawElement {
+public class GroupElement extends ElementGroup {
 
-    private List<DrawElement> elements;
+    public GroupElement() {
+        super();
+    }
 
     public GroupElement(List<DrawElement> elements) {
-        this.elements = elements;
-        updateBoundingBox();
+        super(elements);
     }
 
     @Override
-    public void updateBoundingBox() {
-        RectF box = new RectF();
-        for (DrawElement element : elements) {
-            box.union(element.getOuterBoundingBox());
-        }
-        setBoundingBox(box);
+    public Object clone() {
+        GroupElement element = new GroupElement();
+        cloneTo(element);
+        return element;
     }
 
     @Override
     public void drawElement(Canvas canvas) {
-
-    }
-
-    @Override
-    public void move(float x, float y) {
-        super.move(x, y);
         for (DrawElement element : elements) {
-            element.move(x, y);
+            canvas.save();
+            Matrix originalDisplay = new Matrix(element.getDisplayMatrix());
+            originalDisplay.postConcat(getInvertedDisplayMatrix());
+            canvas.concat(originalDisplay);
+            element.drawElement(canvas);
+            canvas.restore();
         }
     }
+
 }

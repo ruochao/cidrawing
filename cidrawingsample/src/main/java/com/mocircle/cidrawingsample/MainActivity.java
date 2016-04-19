@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -16,6 +17,8 @@ import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
+import com.mocircle.cidrawing.command.GroupElementCommand;
+import com.mocircle.cidrawing.command.UngroupElementCommand;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
@@ -47,6 +50,25 @@ public class MainActivity extends AppCompatActivity {
         setupDefault();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_more, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.switch_debug_menu:
+                switchDebugMode();
+                return true;
+            case R.id.show_info_menu:
+                showInfo();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setupView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,6 +95,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 skew();
+            }
+        });
+
+        View groupButton = findViewById(R.id.group_button);
+        groupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                group();
+            }
+        });
+
+        View ungroupButton = findViewById(R.id.ungroup_button);
+        ungroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ungroup();
             }
         });
 
@@ -188,6 +226,14 @@ public class MainActivity extends AppCompatActivity {
         drawingBoard.getDrawingContext().setDrawingMode(new SkewMode());
     }
 
+    private void group() {
+        drawingBoard.getCommandManager().executeCommand(new GroupElementCommand());
+    }
+
+    private void ungroup() {
+        drawingBoard.getCommandManager().executeCommand(new UngroupElementCommand());
+    }
+
     private void pen(View v) {
         drawingBoard.getDrawingContext().setDrawingMode(new PenMode());
     }
@@ -272,6 +318,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void redo() {
         drawingBoard.getCommandManager().redo();
+    }
+
+    private void switchDebugMode() {
+        drawingBoard.getConfigManager().setDebugMode(!drawingBoard.getConfigManager().isDebugMode());
+        drawingView.notifyViewUpdated();
+    }
+
+    private void showInfo() {
     }
 
 }

@@ -4,7 +4,9 @@ import android.graphics.Paint;
 
 public interface PaintBuilder {
 
-    Paint createDebugPaint();
+    Paint createDebugPaintForLine();
+
+    Paint createDebugPaintForArea();
 
     Paint createPreviewPaint(Paint originalPaint);
 

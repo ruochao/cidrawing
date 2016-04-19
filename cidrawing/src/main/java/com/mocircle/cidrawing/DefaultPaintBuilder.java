@@ -7,11 +7,20 @@ import android.graphics.Paint;
 public class DefaultPaintBuilder implements PaintBuilder {
 
     @Override
-    public Paint createDebugPaint() {
+    public Paint createDebugPaintForLine() {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(1);
+        return paint;
+    }
+
+    @Override
+    public Paint createDebugPaintForArea() {
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setAlpha(10);
+        paint.setStyle(Paint.Style.FILL);
         return paint;
     }
 

@@ -10,7 +10,7 @@ import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.behavior.Selectable;
-import com.mocircle.cidrawing.utils.DrawUtils;
+import com.mocircle.cidrawing.utils.SelectionUtils;
 
 public class SkewMode extends AbstractDrawingMode {
 
@@ -97,11 +97,11 @@ public class SkewMode extends AbstractDrawingMode {
     }
 
     private void detectElement() {
-        DrawUtils.clearSelections(elementManager);
+        SelectionUtils.clearSelections(elementManager);
         if (drawElement != null) {
             drawElement.setSelectionStyle(previousSelectionStyle);
         }
-        drawElement = DrawUtils.getFirstHitElement(elementManager, downX, downY);
+        drawElement = SelectionUtils.getFirstHitElement(elementManager, downX, downY);
         if (drawElement != null) {
             previousSelectionStyle = drawElement.getSelectionStyle();
             drawElement.setSelected(true);

@@ -27,6 +27,8 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     protected PaintBuilder paintBuilder;
     protected PaintingBehavior paintingBehavior;
     protected Paint paint = new Paint();
+    protected Paint debugPaintForLine;
+    protected Paint debugPaintForArea;
 
     protected Matrix displayMatrix = new Matrix();
     protected Matrix dataMatrix = new Matrix();
@@ -57,6 +59,8 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         configManager = board.getConfigManager();
         paintBuilder = board.getPaintBuilder();
         paintingBehavior = board.getPaintingBehavior();
+        debugPaintForLine = paintBuilder.createDebugPaintForLine();
+        debugPaintForArea = paintBuilder.createDebugPaintForArea();
     }
 
     public Paint getPaint() {
@@ -99,7 +103,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
         // Draw debug info
         if (configManager.isDebugMode()) {
-            canvas.drawRect(getOuterBoundingBox(), paintBuilder.createDebugPaint());
+            canvas.drawRect(getOuterBoundingBox(), debugPaintForLine);
         }
     }
 
@@ -113,6 +117,10 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         return m;
     }
 
+    public Matrix getDataMatrix() {
+        return dataMatrix;
+    }
+
     public void applyMatrixForData(Matrix matrix) {
         dataMatrix.postConcat(matrix);
 
@@ -120,6 +128,15 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         float[] points = new float[]{getReferencePoint().x, getReferencePoint().y};
         matrix.mapPoints(points);
         setReferencePoint(new PointF(points[0], points[1]));
+    }
+
+    /**
+     * Transfer display matrix to data matrix, and reset the display matrix.
+     */
+    public void applyDisplayMatrixToData() {
+        applyMatrixForData(getDisplayMatrix());
+        getDisplayMatrix().reset();
+        updateBoundingBox();
     }
 
     public RectF getBoundingBox() {
@@ -452,6 +469,36 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         }
 
         return ResizingDirection.NONE;
+    }
+
+    @Override
+    protected void cloneTo(BaseElement element) {
+        super.cloneTo(element);
+        if (element instanceof DrawElement) {
+            DrawElement obj = (DrawElement) element;
+            obj.boardId = boardId;
+            obj.configManager = configManager;
+            obj.paintBuilder = paintBuilder;
+            obj.paintingBehavior = paintingBehavior;
+            obj.paint = new Paint(paint);
+            obj.debugPaintForLine = debugPaintForLine;
+            obj.debugPaintForArea = debugPaintForArea;
+
+            obj.displayMatrix = new Matrix(displayMatrix);
+            obj.dataMatrix = new Matrix(dataMatrix);
+            obj.boundingBox = new RectF(boundingBox);
+            if (referencePoint != null) {
+                obj.referencePoint = new PointF(referencePoint.x, referencePoint.y);
+            }
+
+            obj.selected = selected;
+            obj.selectionEnabled = selectionEnabled;
+            obj.selectionStyle = selectionStyle;
+            obj.movementEnabled = movementEnabled;
+            obj.rotationEnabled = rotationEnabled;
+            obj.skewEnabled = skewEnabled;
+            obj.resizingEnabled = resizingEnabled;
+        }
     }
 }
 

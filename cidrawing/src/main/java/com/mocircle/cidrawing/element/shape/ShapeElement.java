@@ -6,6 +6,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 import com.mocircle.cidrawing.core.Vector2;
+import com.mocircle.cidrawing.element.BaseElement;
 import com.mocircle.cidrawing.element.DrawElement;
 
 public abstract class ShapeElement extends DrawElement {
@@ -58,4 +59,12 @@ public abstract class ShapeElement extends DrawElement {
 
     protected abstract Path createShapePath();
 
+    @Override
+    protected void cloneTo(BaseElement element) {
+        super.cloneTo(element);
+        if (element instanceof ShapeElement) {
+            ShapeElement obj = (ShapeElement) element;
+            obj.shapePath = new Path(shapePath);
+        }
+    }
 }

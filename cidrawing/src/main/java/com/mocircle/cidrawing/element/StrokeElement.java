@@ -18,6 +18,13 @@ public class StrokeElement extends DrawElement {
     }
 
     @Override
+    public Object clone() {
+        StrokeElement element = new StrokeElement();
+        cloneTo(element);
+        return element;
+    }
+
+    @Override
     public void drawElement(Canvas canvas) {
         if (strokePath != null) {
             canvas.drawPath(strokePath, paint);
@@ -67,6 +74,19 @@ public class StrokeElement extends DrawElement {
             return box;
         }
         return new RectF();
+    }
+
+    @Override
+    protected void cloneTo(BaseElement element) {
+        super.cloneTo(element);
+        if (element instanceof StrokeElement) {
+            StrokeElement obj = (StrokeElement) element;
+            obj.strokePath = new Path(strokePath);
+            obj.points = new ArrayList<>();
+            for (PointF p : points) {
+                obj.points.add(new PointF(p.x, p.y));
+            }
+        }
     }
 
     private Path createStrokePath() {

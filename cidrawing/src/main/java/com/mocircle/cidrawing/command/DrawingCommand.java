@@ -4,7 +4,7 @@ public interface DrawingCommand {
 
     void setDrawingBoardId(String boardId);
 
-    void doCommand();
+    boolean doCommand();
 
     void undoCommand();
 

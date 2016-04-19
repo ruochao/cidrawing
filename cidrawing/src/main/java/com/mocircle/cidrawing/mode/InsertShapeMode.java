@@ -61,8 +61,6 @@ public class InsertShapeMode extends AbstractDrawingMode {
                 elementManager.removeElementFromCurrentLayer(previewElement);
 
                 ShapeElement shapeElement = createShape(new Vector2(downX, downY, event.getX(), event.getY()));
-                //drawingManager.addElement(shapeElement);
-
                 commandManager.executeCommand(new InsertShapeCommand(shapeElement));
                 return true;
             case MotionEvent.ACTION_CANCEL:

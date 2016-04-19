@@ -11,6 +11,7 @@ import com.mocircle.cidrawing.element.VirtualElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
 import com.mocircle.cidrawing.utils.DrawUtils;
+import com.mocircle.cidrawing.utils.SelectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class SelectionMode extends AbstractDrawingMode {
     private float downX;
     private float downY;
 
-    private ShapeElement shapeElement;
+    private ShapeElement selectionElement;
     private VirtualElement virtualElement;
 
     public SelectionMode() {
@@ -41,7 +42,7 @@ public class SelectionMode extends AbstractDrawingMode {
 
     @Override
     public void onLeaveMode() {
-        DrawUtils.clearSelections(elementManager);
+        SelectionUtils.clearSelections(elementManager);
         drawingBoard.getDrawingView().notifyViewUpdated();
     }
 
@@ -52,34 +53,29 @@ public class SelectionMode extends AbstractDrawingMode {
                 downX = event.getX();
                 downY = event.getY();
 
-                shapeElement = new RectElement();
+                selectionElement = new RectElement();
                 Paint p = paintBuilder.createSelectionPaint();
-                shapeElement.setPaint(p);
-                elementManager.addElementToCurrentLayer(shapeElement);
+                selectionElement.setPaint(p);
+                elementManager.addElementToCurrentLayer(selectionElement);
 
                 return true;
             case MotionEvent.ACTION_MOVE:
-                shapeElement.buildShapeFromVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                selectionElement.buildShapeFromVector(new Vector2(downX, downY, event.getX(), event.getY()));
                 return true;
             case MotionEvent.ACTION_UP:
-                elementManager.removeElementFromCurrentLayer(shapeElement);
-                if (virtualElement != null) {
-                    elementManager.removeElementFromCurrentLayer(virtualElement);
-                }
+                elementManager.removeElementFromCurrentLayer(selectionElement);
+                SelectionUtils.clearSelections(elementManager);
 
                 if (DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event.getX(), event.getY())) {
 
                     // Single selection
-                    boolean hitTestResult = true;
                     for (int i = elementManager.getCurrentElements().length - 1; i >= 0; i--) {
                         DrawElement element = elementManager.getCurrentElements()[i];
                         if (element.isSelectionEnabled()) {
                             if (element.hitTestForSelection(downX, downY)) {
                                 // Only allow one element selected
-                                element.setSelected(hitTestResult);
-                                hitTestResult = false;
-                            } else {
-                                element.setSelected(false);
+                                element.setSelected(true);
+                                break;
                             }
                         }
                     }
@@ -95,10 +91,10 @@ public class SelectionMode extends AbstractDrawingMode {
                             selectedElements.add(element);
                         }
                     }
-                    if (selectedElements.size() == 1) {
+                    if (selectedElements.size() == 1 && false) {
                         // Multiple selection with single element
                         selectedElements.get(0).setSelected(true);
-                    } else if (selectedElements.size() > 1) {
+                    } else if (selectedElements.size() > 0) {
                         // Really multiple selection
                         virtualElement = new VirtualElement(selectedElements);
                         virtualElement.setSelected(true);
@@ -108,7 +104,7 @@ public class SelectionMode extends AbstractDrawingMode {
 
                 return true;
             case MotionEvent.ACTION_CANCEL:
-                elementManager.removeElementFromCurrentLayer(shapeElement);
+                elementManager.removeElementFromCurrentLayer(selectionElement);
                 return true;
         }
         return false;

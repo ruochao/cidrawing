@@ -19,8 +19,9 @@ public class InsertShapeCommand extends AbstractCommand {
     }
 
     @Override
-    public void doCommand() {
+    public boolean doCommand() {
         elementManager.addElementToCurrentLayer(element);
+        return true;
     }
 
     @Override

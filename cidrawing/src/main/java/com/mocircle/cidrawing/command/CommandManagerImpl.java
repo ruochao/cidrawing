@@ -20,11 +20,14 @@ public class CommandManagerImpl implements CommandManager {
 
     @Override
     public void executeCommand(DrawingCommand command) {
-        CircleLog.d(TAG, "Execute command: " + command.getClass().getSimpleName());
+        CircleLog.i(TAG, "Execute command: " + command.getClass().getSimpleName());
         command.setDrawingBoardId(boardId);
-        command.doCommand();
-        undoCommandList.push(command);
-        redoCommandList.clear();
+        boolean result = command.doCommand();
+        if (result) {
+            undoCommandList.push(command);
+            redoCommandList.clear();
+        }
+        CircleLog.i(TAG, "Execute command result: " + result);
     }
 
     @Override

@@ -1,5 +1,7 @@
 # CiDrawing
 
+[![Build Status](https://travis-ci.org/mocircle/cidrawing.svg?branch=master)](https://travis-ci.org/mocircle/cidrawing)
+
 CiDrawing is a vector graphics library for Android, it provides a custom view and together with a set of tools to manage vector graphics drawing.
 
 ## Supported Features

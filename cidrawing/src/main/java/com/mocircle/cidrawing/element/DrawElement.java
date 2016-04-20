@@ -133,10 +133,22 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     /**
      * Transfer display matrix to data matrix, and reset the display matrix.
      */
-    public void applyDisplayMatrixToData() {
+    public Matrix applyDisplayMatrixToData() {
+        Matrix matrix = new Matrix(getDisplayMatrix());
         applyMatrixForData(getDisplayMatrix());
         getDisplayMatrix().reset();
         updateBoundingBox();
+        return matrix;
+    }
+
+    public void restoreDisplayMatrixFromData(Matrix matrix) {
+        if (matrix != null) {
+            Matrix invertDisplayMatrix = new Matrix();
+            matrix.invert(invertDisplayMatrix);
+            applyMatrixForData(invertDisplayMatrix);
+            getDisplayMatrix().set(new Matrix(matrix));
+            updateBoundingBox();
+        }
     }
 
     public RectF getBoundingBox() {
@@ -185,6 +197,10 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     public void setReferencePoint(PointF referencePoint) {
         this.referencePoint = referencePoint;
+    }
+
+    public void resetReferencePoint() {
+        referencePoint = new PointF(getBoundingBox().centerX(), getBoundingBox().centerY());
     }
 
     public void drawReferencePoint(Canvas canvas) {

@@ -18,6 +18,7 @@ import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
 import com.mocircle.cidrawing.command.GroupElementCommand;
+import com.mocircle.cidrawing.command.ReshapeCommand;
 import com.mocircle.cidrawing.command.UngroupElementCommand;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.reshape_menu:
+                reshape();
+                return true;
             case R.id.switch_debug_menu:
                 switchDebugMode();
                 return true;
@@ -318,6 +322,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void redo() {
         drawingBoard.getCommandManager().redo();
+    }
+
+    private void reshape() {
+        drawingBoard.getCommandManager().executeCommand(new ReshapeCommand());
+        drawingView.notifyViewUpdated();
     }
 
     private void switchDebugMode() {

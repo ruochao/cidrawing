@@ -26,7 +26,7 @@ public abstract class ElementGroup extends DrawElement {
 
     public void setElements(List<DrawElement> elements) {
         this.elements = elements;
-        updateBoundingBoxForFirstTime();
+        recalculateBoundingBox();
     }
 
     @Override
@@ -36,26 +36,25 @@ public abstract class ElementGroup extends DrawElement {
         boundingPath = new Path();
         boundingPath.addRect(initBoundingBox, Path.Direction.CW);
         boundingPath.transform(dataMatrix);
+    }
 
-        for (DrawElement element : elements) {
+    @Override
+    public Matrix applyDisplayMatrixToData() {
+        Matrix matrix = new Matrix(getDisplayMatrix());
+        applyMatrixForData(getDisplayMatrix());
+        getDisplayMatrix().reset();
+        recalculateBoundingBox();
+        return matrix;
+    }
 
-            // Before applying data matrix, it should restore the extra display matrices
-            // which including element's display matrix and parent's display matrix.
-
-            Matrix parentDisplay = new Matrix(getDisplayMatrix());
-            Matrix parentInvertDisplay = new Matrix(getInvertedDisplayMatrix());
-            Matrix originalDisplay = new Matrix(element.getDisplayMatrix());
-            originalDisplay.postConcat(parentInvertDisplay);
-            Matrix originalInvertDisplay = new Matrix();
-            originalDisplay.invert(originalInvertDisplay);
-
-            element.getDisplayMatrix().postConcat(parentInvertDisplay);
-            element.applyDisplayMatrixToData();
-            element.applyMatrixForData(matrix);
-            element.applyMatrixForData(originalInvertDisplay);
-            element.getDisplayMatrix().postConcat(originalDisplay);
-            element.getDisplayMatrix().postConcat(parentDisplay);
-            element.updateBoundingBox();
+    @Override
+    public void restoreDisplayMatrixFromData(Matrix matrix) {
+        if (matrix != null) {
+            Matrix invertDisplayMatrix = new Matrix();
+            matrix.invert(invertDisplayMatrix);
+            applyMatrixForData(invertDisplayMatrix);
+            getDisplayMatrix().set(new Matrix(matrix));
+            recalculateBoundingBox();
         }
     }
 
@@ -66,67 +65,6 @@ public abstract class ElementGroup extends DrawElement {
             boundingPath.computeBounds(box, true);
             setBoundingBox(box);
         }
-    }
-
-    @Override
-    public RectF getOuterBoundingBox() {
-        RectF box = new RectF();
-        for (DrawElement element : elements) {
-            box.union(element.getOuterBoundingBox());
-        }
-        return box;
-    }
-
-    @Override
-    public void move(float x, float y) {
-        super.move(x, y);
-        for (DrawElement element : elements) {
-            element.move(x, y);
-        }
-    }
-
-    @Override
-    public void moveTo(float x, float y) {
-        super.moveTo(x, y);
-        for (DrawElement element : elements) {
-            element.moveTo(x, y);
-        }
-    }
-
-    @Override
-    public void rotate(float degree, float px, float py) {
-        super.rotate(degree, px, py);
-        for (DrawElement element : elements) {
-            element.rotate(degree, px, py);
-        }
-    }
-
-    @Override
-    public void rotateTo(float degree, float px, float py) {
-        super.rotateTo(degree, px, py);
-        for (DrawElement element : elements) {
-            element.rotateTo(degree, px, py);
-        }
-    }
-
-    @Override
-    public void resize(float sx, float sy, float px, float py) {
-        super.resize(sx, sy, px, py);
-    }
-
-    @Override
-    public void resizeTo(float sx, float sy, float px, float py) {
-        super.resizeTo(sx, sy, px, py);
-    }
-
-    @Override
-    public void skew(float kx, float ky, float px, float py) {
-        super.skew(kx, ky, px, py);
-    }
-
-    @Override
-    public void skewTo(float kx, float ky, float px, float py) {
-        super.skewTo(kx, ky, px, py);
     }
 
     @Override
@@ -145,7 +83,7 @@ public abstract class ElementGroup extends DrawElement {
         }
     }
 
-    private void updateBoundingBoxForFirstTime() {
+    protected void recalculateBoundingBox() {
         RectF box = new RectF();
         for (DrawElement element : elements) {
             box.union(element.getOuterBoundingBox());

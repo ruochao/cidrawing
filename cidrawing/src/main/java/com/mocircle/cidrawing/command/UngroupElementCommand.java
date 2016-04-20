@@ -39,6 +39,7 @@ public class UngroupElementCommand extends AbstractCommand {
         }
 
         for (DrawElement element : groupElement.getElements()) {
+            element.getDisplayMatrix().postConcat(groupElement.getDisplayMatrix());
             elementManager.addElementToCurrentLayer(element);
         }
         elementManager.removeElementFromCurrentLayer(groupElement);

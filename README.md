@@ -17,6 +17,7 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Rotate
  * Resize
  * Skew
+ * ReShape
 
 ### Functions
  * Custom paint (color, width, style, etc)

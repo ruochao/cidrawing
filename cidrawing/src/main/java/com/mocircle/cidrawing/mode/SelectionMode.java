@@ -20,9 +20,9 @@ public class SelectionMode extends AbstractDrawingMode {
 
     private static final String TAG = "SelectionMode";
 
-    private PaintBuilder paintBuilder;
-
     private ElementManager elementManager;
+    private PaintBuilder paintBuilder;
+    private Paint selectionPaint;
 
     private float downX;
     private float downY;
@@ -38,6 +38,7 @@ public class SelectionMode extends AbstractDrawingMode {
         super.setDrawingBoardId(boardId);
         elementManager = drawingBoard.getElementManager();
         paintBuilder = drawingBoard.getPaintBuilder();
+        selectionPaint = paintBuilder.createSelectionPaint();
     }
 
     @Override
@@ -54,8 +55,7 @@ public class SelectionMode extends AbstractDrawingMode {
                 downY = event.getY();
 
                 selectionElement = new RectElement();
-                Paint p = paintBuilder.createSelectionPaint();
-                selectionElement.setPaint(p);
+                selectionElement.setPaint(selectionPaint);
                 elementManager.addElementToCurrentLayer(selectionElement);
 
                 return true;

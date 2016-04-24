@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/move_menu"
+        android:title="Move"/>
+    <item
+        android:id="@+id/rotate_menu"
+        android:title="Rotate"/>
+    <item
+        android:id="@+id/resize_menu"
+        android:title="Resize"/>
+    <item
+        android:id="@+id/skew_menu"
+        android:title="Skew"/>
+</menu>

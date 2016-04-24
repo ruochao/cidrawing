@@ -4,73 +4,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <HorizontalScrollView
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#999"
-        android:orientation="horizontal"
         android:padding="2dp">
 
-        <Button
-            android:id="@+id/select_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/skew_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Skew"/>
+            <Button
+                android:id="@+id/select_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select"/>
 
-        <Button
-            android:id="@+id/group_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Group"/>
+            <Button
+                android:id="@+id/transform_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transform"/>
 
-        <Button
-            android:id="@+id/ungroup_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ungroup"/>
+            <Button
+                android:id="@+id/group_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Group"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/ungroup_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ungroup"/>
 
-    <LinearLayout
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
         android:id="@+id/top2_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_layout"
         android:background="#999"
-        android:orientation="horizontal"
         android:padding="2dp">
 
-        <Button
-            android:id="@+id/pen_button"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pen"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/shape_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shape"/>
+            <Button
+                android:id="@+id/pen_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pen"/>
 
-        <Button
-            android:id="@+id/picture_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pic"/>
+            <Button
+                android:id="@+id/shape_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shape"/>
 
-        <Button
-            android:id="@+id/text_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Text"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/picture_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Pic"/>
+
+            <Button
+                android:id="@+id/text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Text"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:id="@+id/bottom_layout"

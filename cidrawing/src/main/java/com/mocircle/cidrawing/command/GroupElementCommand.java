@@ -64,8 +64,4 @@ public class GroupElementCommand extends AbstractCommand {
         }
     }
 
-    @Override
-    public void redoCommand() {
-        doCommand();
-    }
 }

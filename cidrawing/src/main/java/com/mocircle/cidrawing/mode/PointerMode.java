@@ -68,14 +68,14 @@ public class PointerMode extends AbstractDrawingMode {
             if (element.isSelected()) {
 
                 if (element.hitTestForReferencePoint(x, y)) {
-                    referencePointMode.setCurrentElement(element);
+                    referencePointMode.setElement(element);
                     currentMode = referencePointMode;
                     CircleLog.i(TAG, "Switch to ReferencePointMode");
                     return;
                 }
 
                 if (element.hitTestForRotationHandle(x, y)) {
-                    rotateMode.setCurrentElement(element);
+                    rotateMode.setElement(element);
                     currentMode = rotateMode;
                     CircleLog.i(TAG, "Switch to RotateMode");
                     return;
@@ -83,7 +83,7 @@ public class PointerMode extends AbstractDrawingMode {
 
                 ResizingDirection direction = element.hitTestForResizingHandle(x, y);
                 if (direction != ResizingDirection.NONE) {
-                    resizeMode.setCurrentElement(element);
+                    resizeMode.setElement(element);
                     resizeMode.setResizingDirection(direction);
                     currentMode = resizeMode;
                     CircleLog.i(TAG, "Switch to ResizeMode");
@@ -91,7 +91,7 @@ public class PointerMode extends AbstractDrawingMode {
                 }
 
                 if (element.hitTestForSelection(x, y)) {
-                    moveMode.setCurrentElement(element);
+                    moveMode.setElement(element);
                     currentMode = moveMode;
                     CircleLog.i(TAG, "Switch to MoveMode");
                     return;

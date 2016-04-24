@@ -12,7 +12,7 @@ public interface Resizable {
 
     void resize(float sx, float sy, float px, float py);
 
-    void resizeTo(float sx, float sy, float px, float py);
+    void resizeTo(float width, float height, float px, float py);
 
     void drawResizingHandle(Canvas canvas);
 

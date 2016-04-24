@@ -17,9 +17,9 @@ public interface Selectable {
 
     void setSelected(boolean selected);
 
-    SelectionStyle getSelectionStyle();
+    void setSelected(boolean selected, SelectionStyle selectionStyle);
 
-    void setSelectionStyle(SelectionStyle selectionStyle);
+    SelectionStyle getSelectionStyle();
 
     void drawSelection(Canvas canvas);
 

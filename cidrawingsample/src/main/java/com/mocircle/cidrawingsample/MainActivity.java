@@ -22,9 +22,13 @@ import com.mocircle.cidrawing.command.ReshapeCommand;
 import com.mocircle.cidrawing.command.UngroupElementCommand;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
+import com.mocircle.cidrawing.mode.DrawingMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
+import com.mocircle.cidrawing.mode.MoveMode;
 import com.mocircle.cidrawing.mode.PenMode;
 import com.mocircle.cidrawing.mode.PointerMode;
+import com.mocircle.cidrawing.mode.ResizeMode;
+import com.mocircle.cidrawing.mode.RotateMode;
 import com.mocircle.cidrawing.mode.SkewMode;
 import com.mocircle.cidrawing.view.CiDrawingView;
 
@@ -94,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        View skewButton = findViewById(R.id.skew_button);
-        skewButton.setOnClickListener(new View.OnClickListener() {
+        final View transformButton = findViewById(R.id.transform_button);
+        transformButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skew();
+                transform(transformButton);
             }
         });
 
@@ -226,8 +230,32 @@ public class MainActivity extends AppCompatActivity {
         drawingBoard.getDrawingContext().setDrawingMode(new PointerMode());
     }
 
-    private void skew() {
-        drawingBoard.getDrawingContext().setDrawingMode(new SkewMode());
+    private void transform(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_transform, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                DrawingMode mode = null;
+                switch (item.getItemId()) {
+                    case R.id.move_menu:
+                        mode = new MoveMode(true);
+                        break;
+                    case R.id.rotate_menu:
+                        mode = new RotateMode(true);
+                        break;
+                    case R.id.resize_menu:
+                        mode = new ResizeMode(true);
+                        break;
+                    case R.id.skew_menu:
+                        mode = new SkewMode(true);
+                        break;
+                }
+                drawingBoard.getDrawingContext().setDrawingMode(mode);
+                return true;
+            }
+        });
+        popup.show();
     }
 
     private void group() {

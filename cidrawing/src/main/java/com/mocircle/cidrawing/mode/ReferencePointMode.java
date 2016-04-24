@@ -1,20 +1,16 @@
 package com.mocircle.cidrawing.mode;
 
-import android.graphics.Paint;
+import android.graphics.PointF;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
-import com.mocircle.cidrawing.PaintBuilder;
-import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.command.MovePointCommand;
 
-public class ReferencePointMode extends AbstractDrawingMode {
+public class ReferencePointMode extends ElementOperationMode {
 
     private static final String TAG = "ReferencePointMode";
 
-    private PaintBuilder paintBuilder;
-
-    private DrawElement drawElement;
-    private Paint originalPaint;
+    private PointF originalReferencePoint;
 
     private float downX;
     private float downY;
@@ -23,45 +19,45 @@ public class ReferencePointMode extends AbstractDrawingMode {
     }
 
     @Override
-    public void setDrawingBoardId(String boardId) {
-        super.setDrawingBoardId(boardId);
-        paintBuilder = drawingBoard.getPaintBuilder();
-    }
-
-    public void setCurrentElement(DrawElement element) {
-        drawElement = element;
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!drawElement.hasReferencePoint()) {
-            return false;
+        boolean result = super.onTouchEvent(event);
+        if (element == null || !element.hasReferencePoint()) {
+            return result;
         }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
                 downY = event.getY();
-
-                Paint p = paintBuilder.createPreviewPaint(drawElement.getPaint());
-                originalPaint = new Paint(drawElement.getPaint());
-                drawElement.setPaint(p);
+                originalReferencePoint = new PointF(element.getReferencePoint().x, element.getReferencePoint().y);
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float[] points = new float[4];
-                drawElement.getInvertedDisplayMatrix().mapPoints(points, new float[]{downX, downY, event.getX(), event.getY()});
+                element.getInvertedDisplayMatrix().mapPoints(points, new float[]{downX, downY, event.getX(), event.getY()});
                 float dx = points[2] - points[0];
                 float dy = points[3] - points[1];
-                drawElement.getReferencePoint().offset(dx, dy);
+                element.getReferencePoint().offset(dx, dy);
                 CircleLog.d(TAG, "Move reference point by " + dx + ", " + dy);
                 downX = event.getX();
                 downY = event.getY();
                 return true;
             case MotionEvent.ACTION_UP:
+                float deltaX = element.getReferencePoint().x - originalReferencePoint.x;
+                float deltaY = element.getReferencePoint().y - originalReferencePoint.y;
+                resetPointOffset(deltaX, deltaY);
+                commandManager.executeCommand(new MovePointCommand(element.getReferencePoint(), deltaX, deltaY));
+                return true;
             case MotionEvent.ACTION_CANCEL:
-                drawElement.setPaint(originalPaint);
+                deltaX = element.getReferencePoint().x - originalReferencePoint.x;
+                deltaY = element.getReferencePoint().y - originalReferencePoint.y;
+                resetPointOffset(deltaX, deltaY);
                 return true;
         }
         return false;
     }
+
+    private void resetPointOffset(float deltaX, float deltaY) {
+        element.getReferencePoint().offset(-deltaX, -deltaY);
+    }
+
 }

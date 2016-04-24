@@ -1,14 +1,14 @@
 package com.mocircle.cidrawing.command;
 
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.element.shape.ShapeElement;
+import com.mocircle.cidrawing.element.DrawElement;
 
-public class InsertShapeCommand extends AbstractCommand {
+public class InsertElementCommand extends AbstractCommand {
 
     private ElementManager elementManager;
-    private ShapeElement element;
+    private DrawElement element;
 
-    public InsertShapeCommand(ShapeElement element) {
+    public InsertElementCommand(DrawElement element) {
         this.element = element;
     }
 
@@ -21,6 +21,7 @@ public class InsertShapeCommand extends AbstractCommand {
     @Override
     public boolean doCommand() {
         elementManager.addElementToCurrentLayer(element);
+        drawingBoard.getDrawingView().notifyViewUpdated();
         return true;
     }
 
@@ -30,9 +31,4 @@ public class InsertShapeCommand extends AbstractCommand {
         drawingBoard.getDrawingView().notifyViewUpdated();
     }
 
-    @Override
-    public void redoCommand() {
-        doCommand();
-        drawingBoard.getDrawingView().notifyViewUpdated();
-    }
 }

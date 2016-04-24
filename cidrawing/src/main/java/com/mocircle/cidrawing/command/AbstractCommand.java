@@ -12,4 +12,8 @@ public abstract class AbstractCommand implements DrawingCommand {
         this.drawingBoard = DrawingBoardManager.getInstance().findDrawingBoard(boardId);
     }
 
+    @Override
+    public void redoCommand() {
+        doCommand();
+    }
 }

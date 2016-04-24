@@ -19,6 +19,7 @@ import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
 import com.mocircle.cidrawing.mode.ResizingDirection;
+import com.mocircle.cidrawing.utils.MatrixUtils;
 
 public abstract class DrawElement extends BaseElement implements Selectable, Movable, Rotatable, Skewable, Resizable {
 
@@ -236,17 +237,18 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void setSelected(boolean selected) {
+        setSelected(selected, SelectionStyle.FULL);
+    }
+
+    @Override
+    public void setSelected(boolean selected, SelectionStyle selectionStyle) {
         this.selected = selected;
+        this.selectionStyle = selectionStyle;
     }
 
     @Override
     public SelectionStyle getSelectionStyle() {
         return selectionStyle;
-    }
-
-    @Override
-    public void setSelectionStyle(SelectionStyle selectionStyle) {
-        this.selectionStyle = selectionStyle;
     }
 
     @Override
@@ -290,16 +292,14 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void move(float x, float y) {
-        Matrix m = new Matrix();
-        m.postTranslate(x, y);
-        displayMatrix.postConcat(m);
+        displayMatrix.postTranslate(x, y);
     }
 
     @Override
     public void moveTo(float x, float y) {
-        Matrix m = new Matrix();
-        m.setTranslate(x, y);
-        displayMatrix.postConcat(m);
+        float[] v = new float[9];
+        displayMatrix.getValues(v);
+        move(x - v[Matrix.MTRANS_X], y - v[Matrix.MTRANS_Y]);
     }
 
     @Override
@@ -328,24 +328,20 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void rotate(float degree, float px, float py) {
-        Matrix m = new Matrix();
-        m.postRotate(degree, px, py);
-        getDisplayMatrix().postConcat(m);
+        getDisplayMatrix().postRotate(degree, px, py);
     }
 
     @Override
     public void rotateTo(float degree, float px, float py) {
-        Matrix m = new Matrix();
-        m.setRotate(degree, px, py);
-        getDisplayMatrix().postConcat(m);
+        rotate(degree - getAngle(), px, py);
     }
 
     @Override
     public float getAngle() {
         float[] v = new float[9];
         displayMatrix.getValues(v);
-        float arcAngle = Math.round(Math.atan2(v[Matrix.MSKEW_X], v[Matrix.MSCALE_X]));
-        return (float) Math.toDegrees(arcAngle);
+        double arcAngle = Math.atan2(v[Matrix.MSKEW_X], v[Matrix.MSCALE_X]);
+        return -Math.round(Math.toDegrees(arcAngle));
     }
 
     @Override
@@ -384,10 +380,12 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void skewTo(float kx, float ky, float px, float py) {
+        float[] v = new float[9];
+        dataMatrix.getValues(v);
         Matrix m = new Matrix();
-        m.setSkew(kx, ky, px, py);
-        applyMatrixForData(m);
-        updateBoundingBox();
+        m.setSkew(v[Matrix.MSKEW_X], v[Matrix.MSKEW_Y], px, py);
+        applyMatrixForData(MatrixUtils.getInvertMatrix(m));
+        skew(kx, ky, px, py);
     }
 
     @Override
@@ -401,7 +399,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     public float getSkewYValue() {
         float[] v = new float[9];
         dataMatrix.getValues(v);
-        return v[Matrix.MSKEW_X];
+        return v[Matrix.MSKEW_Y];
     }
 
     @Override
@@ -423,11 +421,8 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     }
 
     @Override
-    public void resizeTo(float sx, float sy, float px, float py) {
-        Matrix m = new Matrix();
-        m.setScale(sx, sy, px, py);
-        applyMatrixForData(m);
-        updateBoundingBox();
+    public void resizeTo(float width, float height, float px, float py) {
+        resize(width / boundingBox.width(), height / boundingBox.height(), px, py);
     }
 
     @Override

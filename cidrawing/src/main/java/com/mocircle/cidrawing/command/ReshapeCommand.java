@@ -46,8 +46,4 @@ public class ReshapeCommand extends AbstractCommand {
         }
     }
 
-    @Override
-    public void redoCommand() {
-        doCommand();
-    }
 }

@@ -4,6 +4,8 @@ public enum ResizingDirection {
 
     NONE,
 
+    CENTER,
+
     NORTH,
 
     SOUTH,

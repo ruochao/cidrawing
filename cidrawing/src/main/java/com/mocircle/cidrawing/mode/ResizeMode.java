@@ -1,41 +1,39 @@
 package com.mocircle.cidrawing.mode;
 
-import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
-import com.mocircle.cidrawing.PaintBuilder;
-import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.android.logging.CircleLog;
+import com.mocircle.cidrawing.element.behavior.Selectable;
+import com.mocircle.cidrawing.utils.SelectionUtils;
 
-public class ResizeMode extends AbstractDrawingMode {
+public class ResizeMode extends DataTransformMode {
 
     private static final String TAG = "ResizeMode";
-
-    private PaintBuilder paintBuilder;
 
     private float downX;
     private float downY;
 
-    private DrawElement drawElement;
-    private Paint originalPaint;
     private ResizingDirection direction;
     private boolean keepAspectRatio;
 
     public ResizeMode() {
     }
 
-    @Override
-    public void setDrawingBoardId(String boardId) {
-        super.setDrawingBoardId(boardId);
-        paintBuilder = drawingBoard.getPaintBuilder();
+    public ResizeMode(boolean autoDetectMode) {
+        super(autoDetectMode);
     }
 
-    public void setCurrentElement(DrawElement element) {
-        drawElement = element;
+    public ResizingDirection getResizingDirection() {
+        return direction;
     }
 
     public void setResizingDirection(ResizingDirection direction) {
         this.direction = direction;
+    }
+
+    public boolean isKeepAspectRatio() {
+        return keepAspectRatio;
     }
 
     public void setKeepAspectRatio(boolean keepAspectRatio) {
@@ -43,45 +41,63 @@ public class ResizeMode extends AbstractDrawingMode {
     }
 
     @Override
+    public void onLeaveMode() {
+        if (element != null) {
+            element.setSelected(false);
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!drawElement.isResizingEnabled()) {
-            return false;
+        boolean result = super.onTouchEvent(event);
+        if (element == null || !element.isResizingEnabled()) {
+            return result;
         }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
                 downY = event.getY();
-
-                Paint p = paintBuilder.createPreviewPaint(drawElement.getPaint());
-                originalPaint = new Paint(drawElement.getPaint());
-                drawElement.setPaint(p);
                 return true;
             case MotionEvent.ACTION_MOVE:
                 resizeElement(downX, downY, event.getX(), event.getY());
                 downX = event.getX();
                 downY = event.getY();
                 return true;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                drawElement.setPaint(originalPaint);
-
-                return true;
         }
-        return false;
+        return result;
     }
 
+    @Override
+    protected void detectElement(float x, float y) {
+        super.detectElement(x, y);
+        SelectionUtils.clearSelections(elementManager);
+        if (element != null) {
+            element.setSelected(true, Selectable.SelectionStyle.LIGHT);
+            direction = ResizingDirection.CENTER;
+        }
+    }
 
     private void resizeElement(float x1, float y1, float x2, float y2) {
         float[] points = new float[4];
-        drawElement.getInvertedDisplayMatrix().mapPoints(points, new float[]{x1, y1, x2, y2});
-        RectF box = drawElement.getBoundingBox();
+        element.getInvertedDisplayMatrix().mapPoints(points, new float[]{x1, y1, x2, y2});
+        RectF box = element.getBoundingBox();
 
         float sx = 1;
         float sy = 1;
         float px = 0;
         float py = 0;
         switch (direction) {
+            case CENTER:
+                px = box.centerX();
+                py = box.centerY();
+                sx = (box.width() + (points[2] - points[0])) / box.width();
+                sy = (box.height() + (points[3] - points[1])) / box.height();
+                if (keepAspectRatio) {
+                    sx = getUniformScale(sx, sy);
+                    sy = getUniformScale(sx, sy);
+                }
+                break;
             case NORTH:
                 px = box.right;
                 py = box.bottom;
@@ -150,7 +166,8 @@ public class ResizeMode extends AbstractDrawingMode {
 
         // Do resizing
         if (sx > 0 && sy > 0) {
-            drawElement.resize(sx, sy, px, py);
+            element.resize(sx, sy, px, py);
+            CircleLog.d(TAG, "Resize element by " + sx + ", " + sy);
         }
     }
 
@@ -161,6 +178,5 @@ public class ResizeMode extends AbstractDrawingMode {
             return sy;
         }
     }
-
 
 }

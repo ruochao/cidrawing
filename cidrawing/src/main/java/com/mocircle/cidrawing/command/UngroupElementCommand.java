@@ -66,8 +66,4 @@ public class UngroupElementCommand extends AbstractCommand {
         }
     }
 
-    @Override
-    public void redoCommand() {
-        doCommand();
-    }
 }

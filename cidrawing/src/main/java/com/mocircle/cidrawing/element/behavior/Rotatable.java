@@ -12,6 +12,11 @@ public interface Rotatable {
 
     void rotateTo(float degree, float px, float py);
 
+    /**
+     * Get the rotated angle, from -180 to 180
+     *
+     * @return angle
+     */
     float getAngle();
 
     void drawRotationHandle(Canvas canvas);

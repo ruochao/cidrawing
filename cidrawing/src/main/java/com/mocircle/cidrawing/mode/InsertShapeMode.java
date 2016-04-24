@@ -8,7 +8,7 @@ import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.command.CommandManager;
-import com.mocircle.cidrawing.command.InsertShapeCommand;
+import com.mocircle.cidrawing.command.InsertElementCommand;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
 
@@ -61,7 +61,7 @@ public class InsertShapeMode extends AbstractDrawingMode {
                 elementManager.removeElementFromCurrentLayer(previewElement);
 
                 ShapeElement shapeElement = createShape(new Vector2(downX, downY, event.getX(), event.getY()));
-                commandManager.executeCommand(new InsertShapeCommand(shapeElement));
+                commandManager.executeCommand(new InsertElementCommand(shapeElement));
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 elementManager.removeElementFromCurrentLayer(previewElement);

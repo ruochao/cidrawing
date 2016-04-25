@@ -44,6 +44,7 @@ public class MoveMode extends DisplayTransformMode {
                 float offsetY = event.getY() - downY;
                 element.move(offsetX, offsetY);
                 CircleLog.d(TAG, "Move element by " + offsetX + ", " + offsetY);
+                CircleLog.v(TAG, "Element position: " + element.getLocX() + ", " + element.getLocY());
                 downX = event.getX();
                 downY = event.getY();
                 return true;

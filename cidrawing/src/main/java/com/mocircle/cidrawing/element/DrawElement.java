@@ -19,7 +19,6 @@ import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
 import com.mocircle.cidrawing.mode.ResizingDirection;
-import com.mocircle.cidrawing.utils.MatrixUtils;
 
 public abstract class DrawElement extends BaseElement implements Selectable, Movable, Rotatable, Skewable, Resizable {
 
@@ -296,24 +295,18 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     }
 
     @Override
-    public void moveTo(float x, float y) {
-        float[] v = new float[9];
-        displayMatrix.getValues(v);
-        move(x - v[Matrix.MTRANS_X], y - v[Matrix.MTRANS_Y]);
+    public void moveTo(float locX, float locY) {
+        move(locX - getLocX(), locY - getLocY());
     }
 
     @Override
-    public float getOffsetX() {
-        float[] v = new float[9];
-        displayMatrix.getValues(v);
-        return v[Matrix.MTRANS_X];
+    public float getLocX() {
+        return getOuterBoundingBox().left;
     }
 
     @Override
-    public float getOffsetY() {
-        float[] v = new float[9];
-        displayMatrix.getValues(v);
-        return v[Matrix.MTRANS_Y];
+    public float getLocY() {
+        return getOuterBoundingBox().top;
     }
 
     @Override
@@ -329,19 +322,6 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     @Override
     public void rotate(float degree, float px, float py) {
         getDisplayMatrix().postRotate(degree, px, py);
-    }
-
-    @Override
-    public void rotateTo(float degree, float px, float py) {
-        rotate(degree - getAngle(), px, py);
-    }
-
-    @Override
-    public float getAngle() {
-        float[] v = new float[9];
-        displayMatrix.getValues(v);
-        double arcAngle = Math.atan2(v[Matrix.MSKEW_X], v[Matrix.MSCALE_X]);
-        return -Math.round(Math.toDegrees(arcAngle));
     }
 
     @Override
@@ -376,30 +356,6 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         m.postSkew(kx, ky, px, py);
         applyMatrixForData(m);
         updateBoundingBox();
-    }
-
-    @Override
-    public void skewTo(float kx, float ky, float px, float py) {
-        float[] v = new float[9];
-        dataMatrix.getValues(v);
-        Matrix m = new Matrix();
-        m.setSkew(v[Matrix.MSKEW_X], v[Matrix.MSKEW_Y], px, py);
-        applyMatrixForData(MatrixUtils.getInvertMatrix(m));
-        skew(kx, ky, px, py);
-    }
-
-    @Override
-    public float getSkewXValue() {
-        float[] v = new float[9];
-        dataMatrix.getValues(v);
-        return v[Matrix.MSKEW_X];
-    }
-
-    @Override
-    public float getSkewYValue() {
-        float[] v = new float[9];
-        dataMatrix.getValues(v);
-        return v[Matrix.MSKEW_Y];
     }
 
     @Override

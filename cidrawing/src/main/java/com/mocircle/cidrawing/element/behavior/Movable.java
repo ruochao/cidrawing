@@ -8,9 +8,9 @@ public interface Movable {
 
     void move(float dx, float dy);
 
-    void moveTo(float dx, float dy);
+    void moveTo(float locX, float locY);
 
-    float getOffsetX();
+    float getLocX();
 
-    float getOffsetY();
+    float getLocY();
 }

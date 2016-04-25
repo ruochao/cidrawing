@@ -2,7 +2,6 @@ package com.mocircle.cidrawing.element;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Path;
 import android.graphics.RectF;
 
 import java.util.List;
@@ -76,10 +75,10 @@ public class VirtualElement extends ElementGroup {
     }
 
     @Override
-    public void moveTo(float x, float y) {
-        super.moveTo(x, y);
+    public void moveTo(float locX, float locY) {
+        super.moveTo(locX, locY);
         for (DrawElement element : elements) {
-            element.moveTo(x, y);
+            element.moveTo(locX, locY);
         }
     }
 
@@ -88,14 +87,6 @@ public class VirtualElement extends ElementGroup {
         super.rotate(degree, px, py);
         for (DrawElement element : elements) {
             element.rotate(degree, px, py);
-        }
-    }
-
-    @Override
-    public void rotateTo(float degree, float px, float py) {
-        super.rotateTo(degree, px, py);
-        for (DrawElement element : elements) {
-            element.rotateTo(degree, px, py);
         }
     }
 

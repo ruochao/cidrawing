@@ -22,12 +22,16 @@ public class CommandManagerImpl implements CommandManager {
     public void executeCommand(DrawingCommand command) {
         CircleLog.i(TAG, "Execute command: " + command.getClass().getSimpleName());
         command.setDrawingBoardId(boardId);
-        boolean result = command.doCommand();
-        if (result) {
-            undoCommandList.push(command);
-            redoCommandList.clear();
+        if (command.isExecutable()) {
+            boolean result = command.doCommand();
+            if (result) {
+                undoCommandList.push(command);
+                redoCommandList.clear();
+            }
+            CircleLog.i(TAG, "Execute command result: " + result);
+        } else {
+            CircleLog.i(TAG, "Command is not executable now");
         }
-        CircleLog.i(TAG, "Execute command result: " + result);
     }
 
     @Override

@@ -19,6 +19,11 @@ public class InsertElementCommand extends AbstractCommand {
     }
 
     @Override
+    public boolean isExecutable() {
+        return element != null;
+    }
+
+    @Override
     public boolean doCommand() {
         elementManager.addElementToCurrentLayer(element);
         drawingBoard.getDrawingView().notifyViewUpdated();

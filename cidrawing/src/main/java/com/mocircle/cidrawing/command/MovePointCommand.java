@@ -15,10 +15,12 @@ public class MovePointCommand extends AbstractCommand {
     }
 
     @Override
+    public boolean isExecutable() {
+        return point != null;
+    }
+
+    @Override
     public boolean doCommand() {
-        if (point == null) {
-            return false;
-        }
         point.offset(deltaX, deltaY);
         drawingBoard.getDrawingView().notifyViewUpdated();
         return true;

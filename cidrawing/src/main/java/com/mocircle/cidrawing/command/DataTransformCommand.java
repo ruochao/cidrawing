@@ -16,6 +16,11 @@ public class DataTransformCommand extends AbstractCommand {
     }
 
     @Override
+    public boolean isExecutable() {
+        return element != null;
+    }
+
+    @Override
     public boolean doCommand() {
         element.applyMatrixForData(deltaMatrix);
         element.updateBoundingBox();

@@ -21,17 +21,18 @@ public class ReshapeCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean isExecutable() {
         if (reshapeElement == null) {
             List<DrawElement> elements = SelectionUtils.getCurrentSelectedElements(elementManager);
             if (elements.size() == 1) {
                 reshapeElement = elements.get(0);
             }
         }
-        if (reshapeElement == null) {
-            return false;
-        }
+        return reshapeElement != null;
+    }
 
+    @Override
+    public boolean doCommand() {
         displayMatrix = reshapeElement.applyDisplayMatrixToData();
         reshapeElement.resetReferencePoint();
         drawingBoard.getDrawingView().notifyViewUpdated();

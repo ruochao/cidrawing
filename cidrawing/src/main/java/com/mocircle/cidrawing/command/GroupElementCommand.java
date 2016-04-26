@@ -27,15 +27,16 @@ public class GroupElementCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
-        // Get current selected elements as group target
+    public boolean isExecutable() {
         if (elements == null) {
+            // Get current selected elements as group target
             elements = SelectionUtils.getCurrentSelectedElements(elementManager);
         }
-        if (elements.size() <= 1) {
-            return false;
-        }
+        return elements.size() > 1;
+    }
 
+    @Override
+    public boolean doCommand() {
         groupElement = new GroupElement(elements);
         for (DrawElement element : elements) {
             elementManager.removeElementFromCurrentLayer(element);

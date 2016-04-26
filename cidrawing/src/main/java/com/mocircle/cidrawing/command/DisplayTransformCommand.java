@@ -16,6 +16,11 @@ public class DisplayTransformCommand extends AbstractCommand {
     }
 
     @Override
+    public boolean isExecutable() {
+        return element != null;
+    }
+
+    @Override
     public boolean doCommand() {
         element.getDisplayMatrix().postConcat(deltaMatrix);
         drawingBoard.getDrawingView().notifyViewUpdated();

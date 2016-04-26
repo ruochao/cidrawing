@@ -12,7 +12,7 @@ public class MatrixUtils {
     }
 
     /**
-     * M(source) * M(delta) = M(target)
+     * M(delta) * M(source) = M(target)
      *
      * @param source
      * @param target

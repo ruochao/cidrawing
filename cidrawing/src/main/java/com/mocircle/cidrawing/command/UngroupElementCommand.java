@@ -26,18 +26,18 @@ public class UngroupElementCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
-        // Get current selected elements as group target
+    public boolean isExecutable() {
         if (groupElement == null) {
             List<DrawElement> elements = SelectionUtils.getCurrentSelectedElements(elementManager);
             if (elements.size() == 1 && elements.get(0) instanceof GroupElement) {
                 groupElement = (GroupElement) elements.get(0);
             }
         }
-        if (groupElement == null) {
-            return false;
-        }
+        return groupElement != null;
+    }
 
+    @Override
+    public boolean doCommand() {
         for (DrawElement element : groupElement.getElements()) {
             element.getDisplayMatrix().postConcat(groupElement.getDisplayMatrix());
             elementManager.addElementToCurrentLayer(element);

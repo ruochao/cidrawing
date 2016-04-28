@@ -3,9 +3,6 @@ package com.mocircle.cidrawing.command;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.GroupElement;
-import com.mocircle.cidrawing.utils.SelectionUtils;
-
-import java.util.List;
 
 public class UngroupElementCommand extends AbstractCommand {
 
@@ -28,9 +25,9 @@ public class UngroupElementCommand extends AbstractCommand {
     @Override
     public boolean isExecutable() {
         if (groupElement == null) {
-            List<DrawElement> elements = SelectionUtils.getCurrentSelectedElements(elementManager);
-            if (elements.size() == 1 && elements.get(0) instanceof GroupElement) {
-                groupElement = (GroupElement) elements.get(0);
+            DrawElement element = elementManager.getSelection().getSingleElement();
+            if (element instanceof GroupElement) {
+                groupElement = (GroupElement) element;
             }
         }
         return groupElement != null;
@@ -45,8 +42,8 @@ public class UngroupElementCommand extends AbstractCommand {
         elementManager.removeElementFromCurrentLayer(groupElement);
 
         // Re-select elements
-        SelectionUtils.clearSelections(elementManager);
-        SelectionUtils.selectElements(elementManager, groupElement.getElements());
+        elementManager.clearSelection();
+        elementManager.selectElements(groupElement.getElements());
         drawingBoard.getDrawingView().notifyViewUpdated();
         return true;
     }
@@ -60,8 +57,8 @@ public class UngroupElementCommand extends AbstractCommand {
             elementManager.addElementToCurrentLayer(groupElement);
 
             // Re-select elements
-            SelectionUtils.clearSelections(elementManager);
-            SelectionUtils.selectElement(groupElement);
+            elementManager.clearSelection();
+            elementManager.selectElement(groupElement);
             drawingBoard.getDrawingView().notifyViewUpdated();
         }
     }

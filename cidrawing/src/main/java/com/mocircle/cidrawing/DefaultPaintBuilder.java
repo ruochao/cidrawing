@@ -32,12 +32,56 @@ public class DefaultPaintBuilder implements PaintBuilder {
     }
 
     @Override
-    public Paint createSelectionPaint() {
+    public Paint createRectSelectionToolPaint() {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(2);
         paint.setPathEffect(new DashPathEffect(new float[]{10, 10}, 0));
+        return paint;
+    }
+
+    @Override
+    public Paint createSelectionBoundPaint() {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+        paint.setPathEffect(new DashPathEffect(new float[]{10, 10}, 0));
+        return paint;
+    }
+
+    @Override
+    public Paint createSelectionAreaPaint() {
+        Paint paint = createSelectionBoundPaint();
+        paint.setAlpha(10);
+        paint.setStyle(Paint.Style.FILL);
+        return paint;
+    }
+
+    @Override
+    public Paint createResizingHandlePaint() {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL);
+        return paint;
+    }
+
+    @Override
+    public Paint createRotationHandlePaint() {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(5);
+        return paint;
+    }
+
+    @Override
+    public Paint createReferencePointPaint() {
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(5);
         return paint;
     }
 

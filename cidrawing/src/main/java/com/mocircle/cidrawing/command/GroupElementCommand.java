@@ -3,7 +3,6 @@ package com.mocircle.cidrawing.command;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.GroupElement;
-import com.mocircle.cidrawing.utils.SelectionUtils;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class GroupElementCommand extends AbstractCommand {
     public boolean isExecutable() {
         if (elements == null) {
             // Get current selected elements as group target
-            elements = SelectionUtils.getCurrentSelectedElements(elementManager);
+            elements = elementManager.getSelection().getElements();
         }
         return elements.size() > 1;
     }
@@ -44,8 +43,8 @@ public class GroupElementCommand extends AbstractCommand {
         elementManager.addElementToCurrentLayer(groupElement);
 
         // Re-select elements
-        SelectionUtils.clearSelections(elementManager);
-        SelectionUtils.selectElement(groupElement);
+        elementManager.clearSelection();
+        elementManager.selectElement(groupElement);
         drawingBoard.getDrawingView().notifyViewUpdated();
         return true;
     }
@@ -59,8 +58,8 @@ public class GroupElementCommand extends AbstractCommand {
             }
 
             // Re-select elements
-            SelectionUtils.clearSelections(elementManager);
-            SelectionUtils.selectElements(elementManager, elements);
+            elementManager.clearSelection();
+            elementManager.selectElements(elements);
             drawingBoard.getDrawingView().notifyViewUpdated();
         }
     }

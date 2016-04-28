@@ -10,6 +10,26 @@ public interface PaintBuilder {
 
     Paint createPreviewPaint(Paint originalPaint);
 
-    Paint createSelectionPaint();
+    /**
+     * Paint used for rectangle selection tool
+     *
+     * @return
+     */
+    Paint createRectSelectionToolPaint();
+
+    /**
+     * Paint used for drawing selection bounds of an element
+     *
+     * @return
+     */
+    Paint createSelectionBoundPaint();
+
+    Paint createSelectionAreaPaint();
+
+    Paint createResizingHandlePaint();
+
+    Paint createRotationHandlePaint();
+
+    Paint createReferencePointPaint();
 
 }

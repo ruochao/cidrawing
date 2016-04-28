@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.element.behavior.Selectable;
-import com.mocircle.cidrawing.utils.SelectionUtils;
 
 public class SkewMode extends DataTransformMode {
 
@@ -68,7 +67,7 @@ public class SkewMode extends DataTransformMode {
     @Override
     protected void detectElement(float x, float y) {
         super.detectElement(x, y);
-        SelectionUtils.clearSelections(elementManager);
+        elementManager.clearSelection();
         if (element != null) {
             element.setSelected(true, Selectable.SelectionStyle.LIGHT);
         }

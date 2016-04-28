@@ -1,6 +1,7 @@
 package com.mocircle.cidrawing.board;
 
 import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.element.VirtualElement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -160,5 +161,50 @@ public class ElementManagerImpl implements ElementManager {
     @Override
     public void removeElementFromCurrentLayer(DrawElement element) {
         getCurrentLayer().removeElement(element);
+    }
+
+    @Override
+    public void selectElement(DrawElement element) {
+        element.setSelected(true);
+    }
+
+    @Override
+    public void selectElements(List<DrawElement> elements) {
+        VirtualElement virtualElement = new VirtualElement(elements);
+        virtualElement.setSelected(true);
+        addElementToCurrentLayer(virtualElement);
+    }
+
+    @Override
+    public Selection getSelection() {
+        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentElements()[i];
+            if (element.isSelected()) {
+                return new Selection(element);
+            }
+        }
+        return new Selection(null);
+    }
+
+    @Override
+    public void clearSelection() {
+        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentElements()[i];
+            element.setSelected(false);
+            if (element instanceof VirtualElement) {
+                removeElementFromCurrentLayer(element);
+            }
+        }
+    }
+
+    @Override
+    public DrawElement getFirstHitElement(float x, float y) {
+        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentElements()[i];
+            if (element.isSelectionEnabled() && element.hitTestForSelection(x, y)) {
+                return element;
+            }
+        }
+        return null;
     }
 }

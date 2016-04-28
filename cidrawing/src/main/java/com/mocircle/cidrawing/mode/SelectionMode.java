@@ -11,7 +11,6 @@ import com.mocircle.cidrawing.element.VirtualElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
 import com.mocircle.cidrawing.utils.DrawUtils;
-import com.mocircle.cidrawing.utils.SelectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +37,12 @@ public class SelectionMode extends AbstractDrawingMode {
         super.setDrawingBoardId(boardId);
         elementManager = drawingBoard.getElementManager();
         paintBuilder = drawingBoard.getPaintBuilder();
-        selectionPaint = paintBuilder.createSelectionPaint();
+        selectionPaint = paintBuilder.createRectSelectionToolPaint();
     }
 
     @Override
     public void onLeaveMode() {
-        SelectionUtils.clearSelections(elementManager);
+        elementManager.clearSelection();
         drawingBoard.getDrawingView().notifyViewUpdated();
     }
 
@@ -64,7 +63,7 @@ public class SelectionMode extends AbstractDrawingMode {
                 return true;
             case MotionEvent.ACTION_UP:
                 elementManager.removeElementFromCurrentLayer(selectionElement);
-                SelectionUtils.clearSelections(elementManager);
+                elementManager.clearSelection();
 
                 if (DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event.getX(), event.getY())) {
 

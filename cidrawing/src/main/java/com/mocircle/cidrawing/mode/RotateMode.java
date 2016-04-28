@@ -5,7 +5,6 @@ import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.element.behavior.Selectable;
-import com.mocircle.cidrawing.utils.SelectionUtils;
 import com.mocircle.cidrawing.utils.ShapeUtils;
 
 public class RotateMode extends DisplayTransformMode {
@@ -58,7 +57,7 @@ public class RotateMode extends DisplayTransformMode {
     @Override
     protected void detectElement(float x, float y) {
         super.detectElement(x, y);
-        SelectionUtils.clearSelections(elementManager);
+        elementManager.clearSelection();
         if (element != null) {
             element.setSelected(true, Selectable.SelectionStyle.LIGHT);
         }

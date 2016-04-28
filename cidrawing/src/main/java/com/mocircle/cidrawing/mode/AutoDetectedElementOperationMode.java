@@ -2,8 +2,6 @@ package com.mocircle.cidrawing.mode;
 
 import android.view.MotionEvent;
 
-import com.mocircle.cidrawing.utils.SelectionUtils;
-
 public class AutoDetectedElementOperationMode extends ElementOperationMode {
 
     protected boolean autoDetectMode;
@@ -35,7 +33,7 @@ public class AutoDetectedElementOperationMode extends ElementOperationMode {
     }
 
     protected void detectElement(float x, float y) {
-        setElement(SelectionUtils.getFirstHitElement(elementManager, x, y));
+        setElement(elementManager.getFirstHitElement(x, y));
     }
 
 }

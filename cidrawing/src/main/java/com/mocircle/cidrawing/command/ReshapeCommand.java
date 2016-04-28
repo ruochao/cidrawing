@@ -4,9 +4,6 @@ import android.graphics.Matrix;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
-import com.mocircle.cidrawing.utils.SelectionUtils;
-
-import java.util.List;
 
 public class ReshapeCommand extends AbstractCommand {
 
@@ -23,10 +20,7 @@ public class ReshapeCommand extends AbstractCommand {
     @Override
     public boolean isExecutable() {
         if (reshapeElement == null) {
-            List<DrawElement> elements = SelectionUtils.getCurrentSelectedElements(elementManager);
-            if (elements.size() == 1) {
-                reshapeElement = elements.get(0);
-            }
+            reshapeElement = elementManager.getSelection().getSingleElement();
         }
         return reshapeElement != null;
     }

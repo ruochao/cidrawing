@@ -5,6 +5,9 @@ import com.mocircle.cidrawing.element.DrawElement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Drawing layer to hold the elements.
+ */
 public class Layer {
 
     protected String boardId;

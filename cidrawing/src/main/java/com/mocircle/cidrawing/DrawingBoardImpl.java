@@ -8,6 +8,9 @@ import com.mocircle.cidrawing.view.DrawingView;
 import com.mocircle.cidrawing.view.DrawingViewProxy;
 import com.mocircle.cidrawing.view.DrawingViewProxyImpl;
 
+/**
+ * Implementation for {@link DrawingBoard}
+ */
 public class DrawingBoardImpl implements DrawingBoard {
 
     private String boardId;
@@ -35,7 +38,6 @@ public class DrawingBoardImpl implements DrawingBoard {
         elementManager = new ElementManagerImpl(boardId);
         commandManager = new CommandManagerImpl(boardId);
         configManager = new ConfigManagerImpl();
-
         paintBuilder = new DefaultPaintBuilder();
         paintingBehavior = new DefaultPaintingBehavior(paintBuilder);
     }

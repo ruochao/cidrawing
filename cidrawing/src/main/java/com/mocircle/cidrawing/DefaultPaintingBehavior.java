@@ -7,6 +7,9 @@ import android.graphics.RectF;
 
 import com.mocircle.cidrawing.utils.ShapeUtils;
 
+/**
+ * The default implementation of {@link PaintingBehavior}.
+ */
 public class DefaultPaintingBehavior implements PaintingBehavior {
 
     private static final int TOUCH_RADIUS = 40;

@@ -8,9 +8,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * A view to provide drawing features.
+ */
 public class CiDrawingView extends View implements DrawingView {
 
-    private DrawingViewProxy viewProxy;
+    protected DrawingViewProxy viewProxy;
 
     public CiDrawingView(Context context) {
         super(context);

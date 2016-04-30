@@ -4,6 +4,9 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
+/**
+ * The default implementation of {@link PaintBuilder}.
+ */
 public class DefaultPaintBuilder implements PaintBuilder {
 
     @Override

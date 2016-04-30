@@ -20,6 +20,9 @@ import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
 import com.mocircle.cidrawing.mode.ResizingDirection;
 
+/**
+ * Basic element for drawing.
+ */
 public abstract class DrawElement extends BaseElement implements Selectable, Movable, Rotatable, Skewable, Resizable {
 
     protected String boardId;

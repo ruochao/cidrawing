@@ -7,6 +7,9 @@ import android.graphics.RectF;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A ElementGroup is a element container basic class which contains sub elements.
+ */
 public abstract class ElementGroup extends DrawElement {
 
     protected transient RectF initBoundingBox;

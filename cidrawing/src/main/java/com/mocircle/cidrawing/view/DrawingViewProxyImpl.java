@@ -7,13 +7,16 @@ import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 
+/**
+ * Default implementation for {@link DrawingViewProxy}
+ */
 public class DrawingViewProxyImpl implements DrawingViewProxy {
 
     private DrawingView drawingView;
     private DrawingContext context;
     private ElementManager elementManager;
 
-    public  DrawingViewProxyImpl(DrawingView drawingView, DrawingContext context, ElementManager elementManager) {
+    public DrawingViewProxyImpl(DrawingView drawingView, DrawingContext context, ElementManager elementManager) {
         this.drawingView = drawingView;
         this.context = context;
         this.elementManager = elementManager;

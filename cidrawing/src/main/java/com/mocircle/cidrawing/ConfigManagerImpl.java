@@ -1,5 +1,8 @@
 package com.mocircle.cidrawing;
 
+/**
+ * The default implementation of {@link ConfigManager}.
+ */
 public class ConfigManagerImpl implements ConfigManager {
 
     private boolean debugMode = false;

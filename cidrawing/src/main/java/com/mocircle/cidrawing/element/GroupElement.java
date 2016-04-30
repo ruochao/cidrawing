@@ -6,6 +6,11 @@ import android.graphics.RectF;
 
 import java.util.List;
 
+/**
+ * A container element which holds sub elements, and it takes over the sub element's display and
+ * transformations. Sub elements should not in drawing board, since they are managed by this
+ * GroupElement.
+ */
 public class GroupElement extends ElementGroup {
 
     public GroupElement() {
@@ -40,8 +45,8 @@ public class GroupElement extends ElementGroup {
 
         for (DrawElement element : elements) {
 
-            // Before applying data matrix, it should restore the extra display matrices
-            // which including element's display matrix and parent's display matrix.
+            // Before applying data matrix, it should transfer the display matrices to data.
+            // After that, it should revert back to original display matrix.
 
             Matrix parentInvertDisplay = new Matrix(getInvertedDisplayMatrix());
             Matrix originalDisplay = new Matrix(element.getDisplayMatrix());

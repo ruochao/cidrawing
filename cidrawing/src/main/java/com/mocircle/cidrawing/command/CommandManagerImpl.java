@@ -52,7 +52,15 @@ public class CommandManagerImpl implements CommandManager {
 
     @Override
     public void undoToCommand(DrawingCommand command) {
-
+        for (int i = undoCommandList.size() - 1; i >= 0; i--) {
+            if (undoCommandList.get(i) == command) {
+                int index = undoCommandList.size() - i;
+                for (int j = 0; j < index; j++) {
+                    undo();
+                }
+                break;
+            }
+        }
     }
 
     @Override
@@ -68,8 +76,15 @@ public class CommandManagerImpl implements CommandManager {
 
     @Override
     public void redoToCommand(DrawingCommand command) {
-
+        for (int i = redoCommandList.size() - 1; i >= 0; i--) {
+            if (redoCommandList.get(i) == command) {
+                int index = redoCommandList.size() - i;
+                for (int j = 0; j < index; j++) {
+                    redo();
+                }
+                break;
+            }
+        }
     }
-
 
 }

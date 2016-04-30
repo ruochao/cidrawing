@@ -3,6 +3,9 @@ package com.mocircle.cidrawing.core;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+/**
+ * Vector defines in 2D.
+ */
 public class Vector2 {
 
     private PointF point1;

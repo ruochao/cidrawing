@@ -6,6 +6,10 @@ import android.graphics.RectF;
 
 import java.util.List;
 
+/**
+ * A invisible element which holds elements, any transformation will represent to sub elements. This
+ * virtual element just references to sub elements in the drawing board.
+ */
 public class VirtualElement extends ElementGroup {
 
     public VirtualElement() {
@@ -37,7 +41,7 @@ public class VirtualElement extends ElementGroup {
 
         for (DrawElement element : elements) {
 
-            // Before applying data matrix, it should restore the extra display matrices
+            // Before applying data matrix, it should transfer the extra display matrices to data
             // which including element's display matrix and parent's display matrix.
 
             Matrix parentDisplay = new Matrix(getDisplayMatrix());

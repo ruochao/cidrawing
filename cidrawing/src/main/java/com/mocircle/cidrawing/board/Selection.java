@@ -6,6 +6,9 @@ import com.mocircle.cidrawing.element.VirtualElement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Element selection class.
+ */
 public class Selection {
 
     private DrawElement element;

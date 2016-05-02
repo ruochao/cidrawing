@@ -35,6 +35,14 @@ public class DefaultPaintBuilder implements PaintBuilder {
     }
 
     @Override
+    public Paint createPreviewAreaPaint(Paint originalPaint) {
+        Paint paint = new Paint(originalPaint);
+        paint.setAlpha(10);
+        paint.setStyle(Paint.Style.FILL);
+        return paint;
+    }
+
+    @Override
     public Paint createRectSelectionToolPaint() {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);

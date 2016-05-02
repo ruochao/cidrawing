@@ -22,10 +22,10 @@ public class LineElement extends ShapeElement {
     }
 
     @Override
-    public void buildShapeFromVector(Vector2 vector) {
+    public void setupElementByVector(Vector2 vector) {
         this.point1 = vector.getPoint1();
         this.point2 = vector.getPoint2();
-        super.buildShapeFromVector(vector);
+        super.setupElementByVector(vector);
     }
 
     @Override

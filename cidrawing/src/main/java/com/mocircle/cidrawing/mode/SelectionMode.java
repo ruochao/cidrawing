@@ -59,7 +59,7 @@ public class SelectionMode extends AbstractDrawingMode {
 
                 return true;
             case MotionEvent.ACTION_MOVE:
-                selectionElement.buildShapeFromVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                selectionElement.setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
                 return true;
             case MotionEvent.ACTION_UP:
                 elementManager.removeElementFromCurrentLayer(selectionElement);

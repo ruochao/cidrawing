@@ -28,12 +28,12 @@ public abstract class DisplayTransformMode extends AutoDetectedElementOperationM
                 originalDisplayMatrix = new Matrix(element.getDisplayMatrix());
                 return true;
             case MotionEvent.ACTION_UP:
-                Matrix deltaMatrix = MatrixUtils.getDeltaMatrix(originalDisplayMatrix, element.getDisplayMatrix());
+                Matrix deltaMatrix = MatrixUtils.getTransformationMatrix(originalDisplayMatrix, element.getDisplayMatrix());
                 resetTransformation(deltaMatrix);
                 commandManager.executeCommand(new DisplayTransformCommand(element, deltaMatrix));
                 return true;
             case MotionEvent.ACTION_CANCEL:
-                deltaMatrix = MatrixUtils.getDeltaMatrix(originalDisplayMatrix, element.getDisplayMatrix());
+                deltaMatrix = MatrixUtils.getTransformationMatrix(originalDisplayMatrix, element.getDisplayMatrix());
                 resetTransformation(deltaMatrix);
                 return true;
         }

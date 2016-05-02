@@ -1,5 +1,7 @@
 package com.mocircle.cidrawingsample;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -20,9 +22,11 @@ import com.mocircle.cidrawing.board.LayerManager;
 import com.mocircle.cidrawing.command.GroupElementCommand;
 import com.mocircle.cidrawing.command.ReshapeCommand;
 import com.mocircle.cidrawing.command.UngroupElementCommand;
+import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.mode.DrawingMode;
+import com.mocircle.cidrawing.mode.InsertPhotoMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
 import com.mocircle.cidrawing.mode.MoveMode;
 import com.mocircle.cidrawing.mode.PenMode;
@@ -32,6 +36,7 @@ import com.mocircle.cidrawing.mode.RotateMode;
 import com.mocircle.cidrawing.mode.SkewMode;
 import com.mocircle.cidrawing.view.CiDrawingView;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -135,6 +140,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insertShape(shapeButton);
+            }
+        });
+
+        final View photoButton = findViewById(R.id.photo_button);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertPhoto();
+            }
+        });
+
+        final View textButton = findViewById(R.id.text_button);
+        textButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertText();
             }
         });
 
@@ -292,7 +313,17 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void insertPicture() {
+    private void insertPhoto() {
+        InsertPhotoMode mode = new InsertPhotoMode();
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("sample.jpg"));
+            PhotoElement element = new PhotoElement();
+            element.setBitmap(bitmap);
+            mode.setPhotoElement(element);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        drawingBoard.getDrawingContext().setDrawingMode(mode);
     }
 
     private void insertText() {

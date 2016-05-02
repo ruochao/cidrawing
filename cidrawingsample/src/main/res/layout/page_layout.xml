@@ -69,11 +69,10 @@
                 android:text="Shape"/>
 
             <Button
-                android:id="@+id/picture_button"
+                android:id="@+id/photo_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="Pic"/>
+                android:text="Photo"/>
 
             <Button
                 android:id="@+id/text_button"

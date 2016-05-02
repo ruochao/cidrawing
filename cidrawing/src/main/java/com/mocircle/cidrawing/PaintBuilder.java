@@ -30,6 +30,14 @@ public interface PaintBuilder {
     Paint createPreviewPaint(Paint originalPaint);
 
     /**
+     * Creates a paint for drawing element preview look with fill effect.
+     *
+     * @param originalPaint original paint of the element
+     * @return the paint object created
+     */
+    Paint createPreviewAreaPaint(Paint originalPaint);
+
+    /**
      * Creates a paint used for rectangle selection tool.
      *
      * @return the paint object created

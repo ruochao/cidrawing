@@ -24,13 +24,13 @@ public class RectElement extends ShapeElement {
     }
 
     @Override
-    public void buildShapeFromVector(Vector2 vector) {
+    public void setupElementByVector(Vector2 vector) {
         RectF box = vector.getRect();
         left = box.left;
         top = box.top;
         right = box.right;
         bottom = box.bottom;
-        super.buildShapeFromVector(vector);
+        super.setupElementByVector(vector);
     }
 
     @Override

@@ -7,16 +7,17 @@ import android.graphics.RectF;
 
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.BaseElement;
-import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.element.VectorElement;
 
-public abstract class ShapeElement extends DrawElement {
+public abstract class ShapeElement extends VectorElement {
 
     protected transient Path shapePath;
 
     public ShapeElement() {
     }
 
-    public void buildShapeFromVector(Vector2 vector) {
+    @Override
+    public void setupElementByVector(Vector2 vector) {
         shapePath = createShapePath();
         updateBoundingBox();
     }

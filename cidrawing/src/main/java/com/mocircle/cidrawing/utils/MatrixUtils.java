@@ -23,13 +23,13 @@ public final class MatrixUtils {
     }
 
     /**
-     * Calculates the delta matrix according to M(delta) * M(source) = M(target).
+     * Calculates the transformation matrix according to M(transformation) * M(source) = M(target).
      *
      * @param source source matrix
      * @param target target matrix
      * @return delta matrix
      */
-    public static Matrix getDeltaMatrix(Matrix source, Matrix target) {
+    public static Matrix getTransformationMatrix(Matrix source, Matrix target) {
         Matrix delta = new Matrix();
         source.invert(delta);
         delta.postConcat(target);

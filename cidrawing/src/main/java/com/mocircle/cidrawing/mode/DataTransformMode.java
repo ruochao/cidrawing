@@ -28,12 +28,12 @@ public abstract class DataTransformMode extends AutoDetectedElementOperationMode
                 originalDataMatrix = new Matrix(element.getDataMatrix());
                 return true;
             case MotionEvent.ACTION_UP:
-                Matrix deltaMatrix = MatrixUtils.getDeltaMatrix(originalDataMatrix, element.getDataMatrix());
+                Matrix deltaMatrix = MatrixUtils.getTransformationMatrix(originalDataMatrix, element.getDataMatrix());
                 resetTransformation(deltaMatrix);
                 commandManager.executeCommand(new DataTransformCommand(element, deltaMatrix));
                 return true;
             case MotionEvent.ACTION_CANCEL:
-                deltaMatrix = MatrixUtils.getDeltaMatrix(originalDataMatrix, element.getDataMatrix());
+                deltaMatrix = MatrixUtils.getTransformationMatrix(originalDataMatrix, element.getDataMatrix());
                 resetTransformation(deltaMatrix);
                 return true;
         }

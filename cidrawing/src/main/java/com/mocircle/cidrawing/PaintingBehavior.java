@@ -11,6 +11,7 @@ public interface PaintingBehavior {
 
     /**
      * Gets the box of a point
+     *
      * @param point
      * @return
      */
@@ -30,7 +31,7 @@ public interface PaintingBehavior {
 
     RectF getRotationHandleBox(RectF boundingBox);
 
-    void drawResizingHandle(Canvas canvas, RectF boundingBox);
+    void drawResizingHandle(Canvas canvas, RectF boundingBox, boolean drawESWNHandles);
 
     RectF getNResizingHandleBox(RectF boundingBox);
 

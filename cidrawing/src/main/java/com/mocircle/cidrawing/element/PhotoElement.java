@@ -15,12 +15,16 @@ public class PhotoElement extends BoundsElement implements Recyclable {
     public PhotoElement() {
     }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
     public void setBitmap(Bitmap bitmap) {
         if (this.bitmap != null) {
             this.bitmap.recycle();
         }
         this.bitmap = bitmap;
-        initBoundingBox();
+        calculateBoundingBox();
     }
 
     @Override
@@ -28,9 +32,13 @@ public class PhotoElement extends BoundsElement implements Recyclable {
         RectF box = vector.getRect();
         float scaleX = box.width() / bitmap.getWidth();
         float scaleY = box.height() / bitmap.getHeight();
-        resize(scaleX, scaleY, 0, 0);
+        if (lockAspectRatio) {
+            float scale = Math.min(scaleX, scaleY);
+            resize(scale, scale, 0, 0);
+        } else {
+            resize(scaleX, scaleY, 0, 0);
+        }
         move(box.left, box.top);
-
     }
 
     @Override
@@ -38,6 +46,26 @@ public class PhotoElement extends BoundsElement implements Recyclable {
         if (bitmap != null) {
             canvas.drawBitmap(bitmap, dataMatrix, null);
         }
+    }
+
+    @Override
+    public void resetAspectRatio(AspectRatioResetMethod method) {
+        float scaleX = boundingBox.width() / bitmap.getWidth();
+        float scaleY = boundingBox.height() / bitmap.getHeight();
+        if (method == AspectRatioResetMethod.WIDTH_FIRST) {
+            scaleY = scaleX;
+        } else if (method == AspectRatioResetMethod.HEIGHT_FIRST) {
+            scaleX = scaleY;
+        } else if (method == AspectRatioResetMethod.SMALL_FIRST) {
+            float scale = Math.min(scaleX, scaleY);
+            scaleX = scale;
+            scaleY = scale;
+        } else if (method == AspectRatioResetMethod.LARGE_FIRST) {
+            float scale = Math.max(scaleX, scaleY);
+            scaleX = scale;
+            scaleY = scale;
+        }
+        resize(scaleX, scaleY, 0, 0);
     }
 
     @Override
@@ -65,12 +93,11 @@ public class PhotoElement extends BoundsElement implements Recyclable {
     }
 
     @Override
-    protected void initBoundingBox() {
+    protected void calculateBoundingBox() {
         originalBoundingBox = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
         boundingPath = new Path();
         boundingPath.addRect(originalBoundingBox, Path.Direction.CW);
         updateBoundingBox();
     }
-
 
 }

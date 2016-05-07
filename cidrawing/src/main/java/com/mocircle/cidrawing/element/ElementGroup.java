@@ -98,6 +98,15 @@ public abstract class ElementGroup extends DrawElement {
     }
 
     @Override
+    public boolean isLockAspectRatio() {
+        boolean result = false;
+        for (DrawElement element : elements) {
+            result |= element.isLockAspectRatio();
+        }
+        return result;
+    }
+
+    @Override
     public boolean isSkewEnabled() {
         boolean result = true;
         for (DrawElement element : elements) {

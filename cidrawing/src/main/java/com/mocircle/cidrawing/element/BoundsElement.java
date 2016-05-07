@@ -49,6 +49,6 @@ public abstract class BoundsElement extends VectorElement {
         }
     }
 
-    protected abstract void initBoundingBox();
+    protected abstract void calculateBoundingBox();
 
 }

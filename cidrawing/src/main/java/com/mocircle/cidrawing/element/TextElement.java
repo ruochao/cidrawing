@@ -22,7 +22,7 @@ public class TextElement extends BoundsElement {
 
     public void setText(String text) {
         this.text = text;
-        initBoundingBox();
+        calculateBoundingBox();
     }
 
     public float getTextSize() {
@@ -38,7 +38,7 @@ public class TextElement extends BoundsElement {
     public void setPaint(Paint paint) {
         super.setPaint(paint);
         setupPaint();
-        initBoundingBox();
+        calculateBoundingBox();
     }
 
     @Override
@@ -49,7 +49,10 @@ public class TextElement extends BoundsElement {
 
     @Override
     public void drawElement(Canvas canvas) {
+        canvas.save();
+        canvas.concat(dataMatrix);
         canvas.drawText(text, 0, 0, paint);
+        canvas.restore();
     }
 
     @Override
@@ -60,22 +63,13 @@ public class TextElement extends BoundsElement {
     }
 
     @Override
-    public boolean isResizingEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isSkewEnabled() {
-        return false;
-    }
-
-    @Override
-    protected void initBoundingBox() {
+    protected void calculateBoundingBox() {
         Rect box = new Rect();
         paint.getTextBounds(text, 0, text.length(), box);
         originalBoundingBox = new RectF(box);
         boundingPath = new Path();
         boundingPath.addRect(originalBoundingBox, Path.Direction.CW);
+        boundingPath.transform(dataMatrix);
         updateBoundingBox();
     }
 

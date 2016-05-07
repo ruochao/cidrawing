@@ -74,7 +74,7 @@ public class DefaultPaintingBehavior implements PaintingBehavior {
     }
 
     @Override
-    public void drawResizingHandle(Canvas canvas, RectF boundingBox) {
+    public void drawResizingHandle(Canvas canvas, RectF boundingBox, boolean drawESWNHandles) {
 
         RectF selectionBox = new RectF(boundingBox.left - SELECTION_BOX_OFFSET, boundingBox.top - SELECTION_BOX_OFFSET,
                 boundingBox.right + SELECTION_BOX_OFFSET, boundingBox.bottom + SELECTION_BOX_OFFSET);
@@ -90,19 +90,21 @@ public class DefaultPaintingBehavior implements PaintingBehavior {
         canvas.drawRect(rightTopRect, resizingHandlePaint);
         canvas.drawRect(rightBottomRect, resizingHandlePaint);
 
-        // Draw NS resizing handles
-        RectF nsTopRect = ShapeUtils.createSquare(selectionBox.centerX(), selectionBox.top, RESIZING_HANDLE_RADIUS);
-        RectF nsBottomRect = ShapeUtils.createSquare(selectionBox.centerX(), selectionBox.bottom, RESIZING_HANDLE_RADIUS);
+        if (drawESWNHandles) {
+            // Draw NS resizing handles
+            RectF nsTopRect = ShapeUtils.createSquare(selectionBox.centerX(), selectionBox.top, RESIZING_HANDLE_RADIUS);
+            RectF nsBottomRect = ShapeUtils.createSquare(selectionBox.centerX(), selectionBox.bottom, RESIZING_HANDLE_RADIUS);
 
-        canvas.drawRect(nsTopRect, resizingHandlePaint);
-        canvas.drawRect(nsBottomRect, resizingHandlePaint);
+            canvas.drawRect(nsTopRect, resizingHandlePaint);
+            canvas.drawRect(nsBottomRect, resizingHandlePaint);
 
-        // Draw EW resizing handles
-        RectF ewLeftRect = ShapeUtils.createSquare(selectionBox.left, selectionBox.centerY(), RESIZING_HANDLE_RADIUS);
-        RectF ewRightRect = ShapeUtils.createSquare(selectionBox.right, selectionBox.centerY(), RESIZING_HANDLE_RADIUS);
+            // Draw EW resizing handles
+            RectF ewLeftRect = ShapeUtils.createSquare(selectionBox.left, selectionBox.centerY(), RESIZING_HANDLE_RADIUS);
+            RectF ewRightRect = ShapeUtils.createSquare(selectionBox.right, selectionBox.centerY(), RESIZING_HANDLE_RADIUS);
 
-        canvas.drawRect(ewLeftRect, resizingHandlePaint);
-        canvas.drawRect(ewRightRect, resizingHandlePaint);
+            canvas.drawRect(ewLeftRect, resizingHandlePaint);
+            canvas.drawRect(ewRightRect, resizingHandlePaint);
+        }
     }
 
     @Override

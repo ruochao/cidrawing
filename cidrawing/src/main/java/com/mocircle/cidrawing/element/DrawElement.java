@@ -45,6 +45,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     protected boolean rotationEnabled = true;
     protected boolean skewEnabled = true;
     protected boolean resizingEnabled = true;
+    protected boolean lockAspectRatio = false;
 
     public DrawElement() {
     }
@@ -372,6 +373,20 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     }
 
     @Override
+    public boolean isLockAspectRatio() {
+        return lockAspectRatio;
+    }
+
+    @Override
+    public void setLockAspectRatio(boolean lockAspectRatio) {
+        this.lockAspectRatio = lockAspectRatio;
+    }
+
+    @Override
+    public void resetAspectRatio(AspectRatioResetMethod method) {
+    }
+
+    @Override
     public void resize(float sx, float sy, float px, float py) {
         Matrix m = new Matrix();
         m.postScale(sx, sy, px, py);
@@ -386,7 +401,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void drawResizingHandle(Canvas canvas) {
-        paintingBehavior.drawResizingHandle(canvas, getBoundingBox());
+        paintingBehavior.drawResizingHandle(canvas, getBoundingBox(), !isLockAspectRatio());
     }
 
     @Override
@@ -398,24 +413,29 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         float[] points = new float[2];
         getInvertedDisplayMatrix().mapPoints(points, new float[]{x, y});
 
-        RectF box = paintingBehavior.getNResizingHandleBox(boundingBox);
-        if (box.contains(points[0], points[1])) {
-            return ResizingDirection.NORTH;
-        }
+        RectF box;
 
-        box = paintingBehavior.getSResizingHandleBox(boundingBox);
-        if (box.contains(points[0], points[1])) {
-            return ResizingDirection.SOUTH;
-        }
+        // If element aspect ratio has been locked, we don't handle N,S,W,E handles.
+        if (!isLockAspectRatio()) {
+            box = paintingBehavior.getNResizingHandleBox(boundingBox);
+            if (box.contains(points[0], points[1])) {
+                return ResizingDirection.NORTH;
+            }
 
-        box = paintingBehavior.getWResizingHandleBox(boundingBox);
-        if (box.contains(points[0], points[1])) {
-            return ResizingDirection.WEST;
-        }
+            box = paintingBehavior.getSResizingHandleBox(boundingBox);
+            if (box.contains(points[0], points[1])) {
+                return ResizingDirection.SOUTH;
+            }
 
-        box = paintingBehavior.getEResizingHandleBox(boundingBox);
-        if (box.contains(points[0], points[1])) {
-            return ResizingDirection.EAST;
+            box = paintingBehavior.getWResizingHandleBox(boundingBox);
+            if (box.contains(points[0], points[1])) {
+                return ResizingDirection.WEST;
+            }
+
+            box = paintingBehavior.getEResizingHandleBox(boundingBox);
+            if (box.contains(points[0], points[1])) {
+                return ResizingDirection.EAST;
+            }
         }
 
         box = paintingBehavior.getNWResizingHandleBox(boundingBox);
@@ -468,6 +488,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             obj.rotationEnabled = rotationEnabled;
             obj.skewEnabled = skewEnabled;
             obj.resizingEnabled = resizingEnabled;
+            obj.lockAspectRatio = lockAspectRatio;
         }
     }
 }

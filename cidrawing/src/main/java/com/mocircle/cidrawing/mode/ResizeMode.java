@@ -14,7 +14,7 @@ public class ResizeMode extends DataTransformMode {
     private float downY;
 
     private ResizingDirection direction;
-    private boolean keepAspectRatio;
+    private boolean lockAspectRatio;
 
     public ResizeMode() {
     }
@@ -31,12 +31,12 @@ public class ResizeMode extends DataTransformMode {
         this.direction = direction;
     }
 
-    public boolean isKeepAspectRatio() {
-        return keepAspectRatio;
+    public boolean isLockAspectRatio() {
+        return lockAspectRatio;
     }
 
-    public void setKeepAspectRatio(boolean keepAspectRatio) {
-        this.keepAspectRatio = keepAspectRatio;
+    public void setLockAspectRatio(boolean lockAspectRatio) {
+        this.lockAspectRatio = lockAspectRatio;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ResizeMode extends DataTransformMode {
                 py = box.centerY();
                 sx = (box.width() + (points[2] - points[0])) / box.width();
                 sy = (box.height() + (points[3] - points[1])) / box.height();
-                if (keepAspectRatio) {
+                if (useSameAspectRatio()) {
                     sx = getUniformScale(sx, sy);
                     sy = getUniformScale(sx, sy);
                 }
@@ -126,7 +126,7 @@ public class ResizeMode extends DataTransformMode {
                 py = box.bottom;
                 sx = (box.width() + (points[0] - points[2])) / box.width();
                 sy = (box.height() + (points[1] - points[3])) / box.height();
-                if (keepAspectRatio) {
+                if (useSameAspectRatio()) {
                     sx = getUniformScale(sx, sy);
                     sy = getUniformScale(sx, sy);
                 }
@@ -136,7 +136,7 @@ public class ResizeMode extends DataTransformMode {
                 py = box.bottom;
                 sx = (box.width() + (points[2] - points[0])) / box.width();
                 sy = (box.height() + (points[1] - points[3])) / box.height();
-                if (keepAspectRatio) {
+                if (useSameAspectRatio()) {
                     sx = getUniformScale(sx, sy);
                     sy = getUniformScale(sx, sy);
                 }
@@ -146,7 +146,7 @@ public class ResizeMode extends DataTransformMode {
                 py = box.top;
                 sx = (box.width() + (points[0] - points[2])) / box.width();
                 sy = (box.height() + (points[3] - points[1])) / box.height();
-                if (keepAspectRatio) {
+                if (useSameAspectRatio()) {
                     sx = getUniformScale(sx, sy);
                     sy = getUniformScale(sx, sy);
                 }
@@ -156,7 +156,7 @@ public class ResizeMode extends DataTransformMode {
                 py = box.top;
                 sx = (box.width() + (points[2] - points[0])) / box.width();
                 sy = (box.height() + (points[3] - points[1])) / box.height();
-                if (keepAspectRatio) {
+                if (useSameAspectRatio()) {
                     sx = getUniformScale(sx, sy);
                     sy = getUniformScale(sx, sy);
                 }
@@ -168,6 +168,10 @@ public class ResizeMode extends DataTransformMode {
             element.resize(sx, sy, px, py);
             CircleLog.d(TAG, "Resize element by " + sx + ", " + sy);
         }
+    }
+
+    private boolean useSameAspectRatio() {
+        return lockAspectRatio || element.isLockAspectRatio();
     }
 
     private float getUniformScale(float sx, float sy) {

@@ -6,9 +6,22 @@ import com.mocircle.cidrawing.mode.ResizingDirection;
 
 public interface Resizable {
 
+    enum AspectRatioResetMethod {
+        WIDTH_FIRST,
+        HEIGHT_FIRST,
+        SMALL_FIRST,
+        LARGE_FIRST
+    }
+
     boolean isResizingEnabled();
 
     void setResizingEnabled(boolean resizingEnabled);
+
+    boolean isLockAspectRatio();
+
+    void setLockAspectRatio(boolean lockAspectRatio);
+
+    void resetAspectRatio(AspectRatioResetMethod method);
 
     void resize(float sx, float sy, float px, float py);
 

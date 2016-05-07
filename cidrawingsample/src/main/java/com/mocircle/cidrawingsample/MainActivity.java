@@ -321,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("sample.jpg"));
             PhotoElement element = new PhotoElement();
             element.setBitmap(bitmap);
+            element.setLockAspectRatio(true);
             mode.setPhotoElement(element);
         } catch (IOException e) {
             e.printStackTrace();

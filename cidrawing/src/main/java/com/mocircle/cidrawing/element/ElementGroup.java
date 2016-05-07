@@ -71,6 +71,42 @@ public abstract class ElementGroup extends DrawElement {
     }
 
     @Override
+    public boolean isMovementEnabled() {
+        boolean result = true;
+        for (DrawElement element : elements) {
+            result &= element.isMovementEnabled();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isRotationEnabled() {
+        boolean result = true;
+        for (DrawElement element : elements) {
+            result &= element.isRotationEnabled();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isResizingEnabled() {
+        boolean result = true;
+        for (DrawElement element : elements) {
+            result &= element.isResizingEnabled();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isSkewEnabled() {
+        boolean result = true;
+        for (DrawElement element : elements) {
+            result &= element.isSkewEnabled();
+        }
+        return result;
+    }
+
+    @Override
     protected void cloneTo(BaseElement element) {
         super.cloneTo(element);
         if (element instanceof ElementGroup) {

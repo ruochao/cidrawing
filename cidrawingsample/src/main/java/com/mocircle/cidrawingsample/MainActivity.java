@@ -23,11 +23,13 @@ import com.mocircle.cidrawing.command.GroupElementCommand;
 import com.mocircle.cidrawing.command.ReshapeCommand;
 import com.mocircle.cidrawing.command.UngroupElementCommand;
 import com.mocircle.cidrawing.element.PhotoElement;
+import com.mocircle.cidrawing.element.TextElement;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.mode.DrawingMode;
 import com.mocircle.cidrawing.mode.InsertPhotoMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
+import com.mocircle.cidrawing.mode.InsertTextMode;
 import com.mocircle.cidrawing.mode.MoveMode;
 import com.mocircle.cidrawing.mode.PenMode;
 import com.mocircle.cidrawing.mode.PointerMode;
@@ -327,6 +329,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertText() {
+        InsertTextMode mode = new InsertTextMode();
+        TextElement element = new TextElement();
+        element.setText("Sample text");
+        element.setTextSize(60);
+        mode.setTextElement(element);
+        drawingBoard.getDrawingContext().setDrawingMode(mode);
     }
 
     private void changeColor(View v) {

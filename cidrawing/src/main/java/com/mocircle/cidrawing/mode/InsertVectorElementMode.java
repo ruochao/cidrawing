@@ -79,8 +79,8 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
 
     protected VectorElement createRealElement(Vector2 vector) {
         VectorElement element = (VectorElement) realElement.clone();
-        element.setupElementByVector(vector);
         element.setPaint(new Paint(drawingContext.getPaint()));
+        element.setupElementByVector(vector);
         return element;
     }
 

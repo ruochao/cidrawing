@@ -29,8 +29,8 @@ public class InsertShapeMode extends InsertVectorElementMode {
     @Override
     protected VectorElement createRealElement(Vector2 vector) {
         ShapeElement element = getShapeInstance();
-        element.setupElementByVector(vector);
         element.setPaint(new Paint(drawingContext.getPaint()));
+        element.setupElementByVector(vector);
         return element;
     }
 

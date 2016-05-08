@@ -24,8 +24,11 @@ import com.mocircle.cidrawing.command.ReshapeCommand;
 import com.mocircle.cidrawing.command.UngroupElementCommand;
 import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
+import com.mocircle.cidrawing.element.shape.CircleElement;
 import com.mocircle.cidrawing.element.shape.LineElement;
+import com.mocircle.cidrawing.element.shape.OvalElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
+import com.mocircle.cidrawing.element.shape.SquareElement;
 import com.mocircle.cidrawing.mode.DrawingMode;
 import com.mocircle.cidrawing.mode.InsertPhotoMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
@@ -307,6 +310,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.rect_menu:
                         mode.setShapeType(RectElement.class);
+                        break;
+                    case R.id.squre_menu:
+                        mode.setShapeType(SquareElement.class);
+                        break;
+                    case R.id.oval_menu:
+                        mode.setShapeType(OvalElement.class);
+                        break;
+                    case R.id.circle_menu:
+                        mode.setShapeType(CircleElement.class);
                         break;
                 }
                 return true;

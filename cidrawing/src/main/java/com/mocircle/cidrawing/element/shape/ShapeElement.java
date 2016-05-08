@@ -18,6 +18,7 @@ public abstract class ShapeElement extends VectorElement {
 
     @Override
     public void setupElementByVector(Vector2 vector) {
+        retrieveAttributesFromVector(vector);
         shapePath = createShapePath();
         updateBoundingBox();
     }
@@ -57,6 +58,8 @@ public abstract class ShapeElement extends VectorElement {
         }
         return new RectF();
     }
+
+    protected abstract void retrieveAttributesFromVector(Vector2 vector);
 
     protected abstract Path createShapePath();
 

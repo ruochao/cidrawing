@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config;
 public class ShapeUtilsTest {
 
     @Test
-    public void testCalculateRotationDegree() throws Exception {
+    public void testCalculateRotationDegree() {
         testCalculateRotationDegree(0, 0, 1, 1, 2, 2, 0);
         testCalculateRotationDegree(0, 0, 0, 1, 1, 1, -45);
         testCalculateRotationDegree(0, 0, 1, 0, 1, 1, 45);
@@ -35,4 +35,5 @@ public class ShapeUtilsTest {
         float degree = ShapeUtils.calculateRotationDegree(center, p1, p2);
         Assert.assertEquals(values[6], degree);
     }
+
 }

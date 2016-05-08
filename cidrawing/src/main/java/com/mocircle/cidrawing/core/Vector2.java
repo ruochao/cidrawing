@@ -40,6 +40,14 @@ public class Vector2 {
         this.point2 = point2;
     }
 
+    public float getValueX() {
+        return point2.x - point1.x;
+    }
+
+    public float getValueY() {
+        return point2.y - point1.y;
+    }
+
     public void offset(float dx, float dy) {
         point1.offset(dx, dy);
         point2.offset(dx, dy);

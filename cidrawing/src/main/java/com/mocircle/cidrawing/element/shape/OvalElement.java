@@ -2,14 +2,11 @@ package com.mocircle.cidrawing.element.shape;
 
 import android.graphics.Path;
 
-public class RectElement extends BoxShapeElement {
-
-    public RectElement() {
-    }
+public class OvalElement extends BoxShapeElement {
 
     @Override
     public Object clone() {
-        RectElement element = new RectElement();
+        OvalElement element = new OvalElement();
         cloneTo(element);
         return element;
     }
@@ -17,7 +14,7 @@ public class RectElement extends BoxShapeElement {
     @Override
     protected Path createShapePath() {
         Path path = new Path();
-        path.addRect(shapeBox, Path.Direction.CW);
+        path.addOval(shapeBox, Path.Direction.CW);
         return path;
     }
 

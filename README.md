@@ -11,6 +11,11 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Shape element
   * Line
   * Rectangle
+  * Square
+  * Oval
+  * Circle
+ * Photo element
+ * Text element
 
 ### Transformations
  * Move
@@ -20,22 +25,23 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * ReShape
 
 ### Functions
+ * Element selection and transformation
+ * Multiple elements selection and transformation
  * Custom paint (color, width, style, etc)
  * Multiple layer support
  * Unlimited undo/redo
  * Element group/ungroup
- * Multiple elements selection and transformation
 
 ## How to Use
 Include view in your layout as:
-```
+```xml
 <com.mocircle.cidrawing.view.CiDrawingView
     android:id="@+id/drawing_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 ```
 Create drawing board object and set up the view:
-```
+```java
 CiDrawingView drawingView = (CiDrawingView) findViewById(R.id.drawing_view);
 DrawingBoard drawingBoard = DrawingBoardManager.getInstance().createNewBoard();
 drawingBoard.setupDrawingView(drawingView);
@@ -43,6 +49,10 @@ drawingBoard.setupDrawingView(drawingView);
 
 ## Sample Project
 Please check out the sample project at [CiDrawing Sample] (https://github.com/mocircle/cidrawing/tree/master/cidrawingsample)
+
+### Screenshots
+![Screenshot 1](https://github.com/mocircle/cidrawing/blob/master/docs/sample1.png) 
+![Screenshot 2](https://github.com/mocircle/cidrawing/blob/master/docs/sample2.png)
 
 ## Add to your project
 Current CiDrawing is still under developing, not yet published. So please compile source code yourself.

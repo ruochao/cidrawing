@@ -19,9 +19,9 @@ import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
-import com.mocircle.cidrawing.command.GroupElementCommand;
-import com.mocircle.cidrawing.command.ReshapeCommand;
-import com.mocircle.cidrawing.command.UngroupElementCommand;
+import com.mocircle.cidrawing.operation.GroupElementOperation;
+import com.mocircle.cidrawing.operation.ReshapeOperation;
+import com.mocircle.cidrawing.operation.UngroupElementOperation;
 import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
 import com.mocircle.cidrawing.element.shape.CircleElement;
@@ -285,11 +285,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void group() {
-        drawingBoard.getCommandManager().executeCommand(new GroupElementCommand());
+        drawingBoard.getOperationManager().executeOperation(new GroupElementOperation());
     }
 
     private void ungroup() {
-        drawingBoard.getCommandManager().executeCommand(new UngroupElementCommand());
+        drawingBoard.getOperationManager().executeOperation(new UngroupElementOperation());
     }
 
     private void pen(View v) {
@@ -397,15 +397,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void undo() {
-        drawingBoard.getCommandManager().undo();
+        drawingBoard.getOperationManager().undo();
     }
 
     private void redo() {
-        drawingBoard.getCommandManager().redo();
+        drawingBoard.getOperationManager().redo();
     }
 
     private void reshape() {
-        drawingBoard.getCommandManager().executeCommand(new ReshapeCommand());
+        drawingBoard.getOperationManager().executeOperation(new ReshapeOperation());
         drawingView.notifyViewUpdated();
     }
 

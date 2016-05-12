@@ -7,8 +7,8 @@ import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.command.CommandManager;
-import com.mocircle.cidrawing.command.InsertElementCommand;
+import com.mocircle.cidrawing.operation.OperationManager;
+import com.mocircle.cidrawing.operation.InsertElementOperation;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.VectorElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
@@ -19,7 +19,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
 
     protected ElementManager elementManager;
     protected DrawingContext drawingContext;
-    protected CommandManager commandManager;
+    protected OperationManager operationManager;
     protected PaintBuilder paintBuilder;
 
     protected float downX;
@@ -36,7 +36,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
         super.setDrawingBoardId(boardId);
         elementManager = drawingBoard.getElementManager();
         drawingContext = drawingBoard.getDrawingContext();
-        commandManager = drawingBoard.getCommandManager();
+        operationManager = drawingBoard.getOperationManager();
         paintBuilder = drawingBoard.getPaintBuilder();
     }
 
@@ -58,7 +58,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
                 elementManager.removeElementFromCurrentLayer(previewElement);
 
                 VectorElement element = createRealElement(new Vector2(downX, downY, event.getX(), event.getY()));
-                commandManager.executeCommand(new InsertElementCommand(element));
+                operationManager.executeOperation(new InsertElementOperation(element));
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 elementManager.removeElementFromCurrentLayer(previewElement);

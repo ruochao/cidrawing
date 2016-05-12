@@ -1,9 +1,9 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 
-public abstract class AbstractCommand implements DrawingCommand {
+public abstract class AbstractOperation implements DrawingOperation {
 
     protected DrawingBoard drawingBoard;
 
@@ -13,7 +13,7 @@ public abstract class AbstractCommand implements DrawingCommand {
     }
 
     @Override
-    public void redoCommand() {
-        doCommand();
+    public void redo() {
+        doOperation();
     }
 }

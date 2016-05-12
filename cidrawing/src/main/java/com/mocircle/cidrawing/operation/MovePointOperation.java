@@ -1,14 +1,14 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import android.graphics.PointF;
 
-public class MovePointCommand extends AbstractCommand {
+public class MovePointOperation extends AbstractOperation {
 
     private PointF point;
     private float deltaX;
     private float deltaY;
 
-    public MovePointCommand(PointF point, float deltaX, float deltaY) {
+    public MovePointOperation(PointF point, float deltaX, float deltaY) {
         this.point = point;
         this.deltaX = deltaX;
         this.deltaY = deltaY;
@@ -20,14 +20,14 @@ public class MovePointCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean doOperation() {
         point.offset(deltaX, deltaY);
         drawingBoard.getDrawingView().notifyViewUpdated();
         return true;
     }
 
     @Override
-    public void undoCommand() {
+    public void undo() {
         point.offset(-deltaX, -deltaY);
         drawingBoard.getDrawingView().notifyViewUpdated();
     }

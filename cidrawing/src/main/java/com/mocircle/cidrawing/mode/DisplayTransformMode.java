@@ -3,7 +3,7 @@ package com.mocircle.cidrawing.mode;
 import android.graphics.Matrix;
 import android.view.MotionEvent;
 
-import com.mocircle.cidrawing.command.DisplayTransformCommand;
+import com.mocircle.cidrawing.operation.DisplayTransformOperation;
 import com.mocircle.cidrawing.utils.MatrixUtils;
 
 public abstract class DisplayTransformMode extends AutoDetectedElementOperationMode {
@@ -30,7 +30,7 @@ public abstract class DisplayTransformMode extends AutoDetectedElementOperationM
             case MotionEvent.ACTION_UP:
                 Matrix deltaMatrix = MatrixUtils.getTransformationMatrix(originalDisplayMatrix, element.getDisplayMatrix());
                 resetTransformation(deltaMatrix);
-                commandManager.executeCommand(new DisplayTransformCommand(element, deltaMatrix));
+                operationManager.executeOperation(new DisplayTransformOperation(element, deltaMatrix));
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 deltaMatrix = MatrixUtils.getTransformationMatrix(originalDisplayMatrix, element.getDisplayMatrix());

@@ -2,8 +2,8 @@ package com.mocircle.cidrawing;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.board.ElementManagerImpl;
-import com.mocircle.cidrawing.command.CommandManager;
-import com.mocircle.cidrawing.command.CommandManagerImpl;
+import com.mocircle.cidrawing.operation.OperationManager;
+import com.mocircle.cidrawing.operation.OperationManagerImpl;
 import com.mocircle.cidrawing.view.DrawingView;
 import com.mocircle.cidrawing.view.DrawingViewProxy;
 import com.mocircle.cidrawing.view.DrawingViewProxyImpl;
@@ -17,7 +17,7 @@ public class DrawingBoardImpl implements DrawingBoard {
     private DrawingView drawingView;
     private DrawingContext context;
     private ElementManager elementManager;
-    private CommandManager commandManager;
+    private OperationManager operationManager;
     private ConfigManager configManager;
     private DrawingViewProxy viewProxy;
 
@@ -36,7 +36,7 @@ public class DrawingBoardImpl implements DrawingBoard {
             }
         });
         elementManager = new ElementManagerImpl(boardId);
-        commandManager = new CommandManagerImpl(boardId);
+        operationManager = new OperationManagerImpl(boardId);
         configManager = new ConfigManagerImpl();
         paintBuilder = new DefaultPaintBuilder();
         paintingBehavior = new DefaultPaintingBehavior(paintBuilder);
@@ -69,9 +69,8 @@ public class DrawingBoardImpl implements DrawingBoard {
         return elementManager;
     }
 
-    @Override
-    public CommandManager getCommandManager() {
-        return commandManager;
+    public OperationManager getOperationManager() {
+        return operationManager;
     }
 
     @Override

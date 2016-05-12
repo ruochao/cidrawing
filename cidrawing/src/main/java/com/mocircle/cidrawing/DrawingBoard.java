@@ -1,7 +1,7 @@
 package com.mocircle.cidrawing;
 
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.command.CommandManager;
+import com.mocircle.cidrawing.operation.OperationManager;
 import com.mocircle.cidrawing.view.DrawingView;
 
 /**
@@ -46,11 +46,11 @@ public interface DrawingBoard {
     ElementManager getElementManager();
 
     /**
-     * Gets command manager.
+     * Gets operation manager.
      *
-     * @return command manager
+     * @return operation manager
      */
-    CommandManager getCommandManager();
+    OperationManager getOperationManager();
 
     /**
      * Gets configuration manager.

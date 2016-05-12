@@ -1,16 +1,16 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import android.graphics.Matrix;
 
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.utils.MatrixUtils;
 
-public class DataTransformCommand extends AbstractCommand {
+public class DataTransformOperation extends AbstractOperation {
 
     private DrawElement element;
     private Matrix deltaMatrix;
 
-    public DataTransformCommand(DrawElement element, Matrix deltaMatrix) {
+    public DataTransformOperation(DrawElement element, Matrix deltaMatrix) {
         this.element = element;
         this.deltaMatrix = deltaMatrix;
     }
@@ -21,7 +21,7 @@ public class DataTransformCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean doOperation() {
         element.applyMatrixForData(deltaMatrix);
         element.updateBoundingBox();
         drawingBoard.getDrawingView().notifyViewUpdated();
@@ -29,7 +29,7 @@ public class DataTransformCommand extends AbstractCommand {
     }
 
     @Override
-    public void undoCommand() {
+    public void undo() {
         element.applyMatrixForData(MatrixUtils.getInvertMatrix(deltaMatrix));
         element.updateBoundingBox();
         drawingBoard.getDrawingView().notifyViewUpdated();

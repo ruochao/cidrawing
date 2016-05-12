@@ -1,11 +1,11 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import android.graphics.Matrix;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 
-public class ReshapeCommand extends AbstractCommand {
+public class ReshapeOperation extends AbstractOperation {
 
     private ElementManager elementManager;
     private DrawElement reshapeElement;
@@ -26,7 +26,7 @@ public class ReshapeCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean doOperation() {
         displayMatrix = reshapeElement.applyDisplayMatrixToData();
         reshapeElement.resetReferencePoint();
         drawingBoard.getDrawingView().notifyViewUpdated();
@@ -34,7 +34,7 @@ public class ReshapeCommand extends AbstractCommand {
     }
 
     @Override
-    public void undoCommand() {
+    public void undo() {
         if (reshapeElement != null) {
             reshapeElement.restoreDisplayMatrixFromData(displayMatrix);
             drawingBoard.getDrawingView().notifyViewUpdated();

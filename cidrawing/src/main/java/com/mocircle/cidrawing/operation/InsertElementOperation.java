@@ -1,14 +1,14 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 
-public class InsertElementCommand extends AbstractCommand {
+public class InsertElementOperation extends AbstractOperation {
 
     private ElementManager elementManager;
     private DrawElement element;
 
-    public InsertElementCommand(DrawElement element) {
+    public InsertElementOperation(DrawElement element) {
         this.element = element;
     }
 
@@ -24,14 +24,14 @@ public class InsertElementCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean doOperation() {
         elementManager.addElementToCurrentLayer(element);
         drawingBoard.getDrawingView().notifyViewUpdated();
         return true;
     }
 
     @Override
-    public void undoCommand() {
+    public void undo() {
         elementManager.removeElementFromCurrentLayer(element);
         drawingBoard.getDrawingView().notifyViewUpdated();
     }

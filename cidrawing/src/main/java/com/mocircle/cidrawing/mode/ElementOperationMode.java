@@ -5,14 +5,14 @@ import android.view.MotionEvent;
 
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.command.CommandManager;
+import com.mocircle.cidrawing.operation.OperationManager;
 import com.mocircle.cidrawing.element.DrawElement;
 
 public class ElementOperationMode extends AbstractDrawingMode {
 
     protected PaintBuilder paintBuilder;
     protected ElementManager elementManager;
-    protected CommandManager commandManager;
+    protected OperationManager operationManager;
     
     protected DrawElement element;
     protected Paint originalPaint;
@@ -37,7 +37,7 @@ public class ElementOperationMode extends AbstractDrawingMode {
         super.setDrawingBoardId(boardId);
         paintBuilder = drawingBoard.getPaintBuilder();
         elementManager = drawingBoard.getElementManager();
-        commandManager = drawingBoard.getCommandManager();
+        operationManager = drawingBoard.getOperationManager();
     }
 
     @Override

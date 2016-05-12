@@ -1,18 +1,18 @@
-package com.mocircle.cidrawing.command;
+package com.mocircle.cidrawing.operation;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.GroupElement;
 
-public class UngroupElementCommand extends AbstractCommand {
+public class UngroupElementOperation extends AbstractOperation {
 
     private ElementManager elementManager;
     private GroupElement groupElement;
 
-    public UngroupElementCommand() {
+    public UngroupElementOperation() {
     }
 
-    public UngroupElementCommand(GroupElement groupElement) {
+    public UngroupElementOperation(GroupElement groupElement) {
         this.groupElement = groupElement;
     }
 
@@ -34,7 +34,7 @@ public class UngroupElementCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean doCommand() {
+    public boolean doOperation() {
         for (DrawElement element : groupElement.getElements()) {
             element.getDisplayMatrix().postConcat(groupElement.getDisplayMatrix());
             elementManager.addElementToCurrentLayer(element);
@@ -49,7 +49,7 @@ public class UngroupElementCommand extends AbstractCommand {
     }
 
     @Override
-    public void undoCommand() {
+    public void undo() {
         if (groupElement != null) {
             for (DrawElement element : groupElement.getElements()) {
                 elementManager.removeElementFromCurrentLayer(element);

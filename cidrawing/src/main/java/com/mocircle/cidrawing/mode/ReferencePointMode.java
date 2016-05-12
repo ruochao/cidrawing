@@ -4,7 +4,7 @@ import android.graphics.PointF;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
-import com.mocircle.cidrawing.command.MovePointCommand;
+import com.mocircle.cidrawing.operation.MovePointOperation;
 
 public class ReferencePointMode extends ElementOperationMode {
 
@@ -45,7 +45,7 @@ public class ReferencePointMode extends ElementOperationMode {
                 float deltaX = element.getReferencePoint().x - originalReferencePoint.x;
                 float deltaY = element.getReferencePoint().y - originalReferencePoint.y;
                 resetPointOffset(deltaX, deltaY);
-                commandManager.executeCommand(new MovePointCommand(element.getReferencePoint(), deltaX, deltaY));
+                operationManager.executeOperation(new MovePointOperation(element.getReferencePoint(), deltaX, deltaY));
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 deltaX = element.getReferencePoint().x - originalReferencePoint.x;

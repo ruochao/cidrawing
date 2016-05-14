@@ -19,9 +19,6 @@ import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
-import com.mocircle.cidrawing.operation.GroupElementOperation;
-import com.mocircle.cidrawing.operation.ReshapeOperation;
-import com.mocircle.cidrawing.operation.UngroupElementOperation;
 import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
 import com.mocircle.cidrawing.element.shape.CircleElement;
@@ -39,6 +36,9 @@ import com.mocircle.cidrawing.mode.PointerMode;
 import com.mocircle.cidrawing.mode.ResizeMode;
 import com.mocircle.cidrawing.mode.RotateMode;
 import com.mocircle.cidrawing.mode.SkewMode;
+import com.mocircle.cidrawing.operation.GroupElementOperation;
+import com.mocircle.cidrawing.operation.ReshapeOperation;
+import com.mocircle.cidrawing.operation.UngroupElementOperation;
 import com.mocircle.cidrawing.view.CiDrawingView;
 
 import java.io.IOException;
@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.reshape_menu:
-                reshape();
-                return true;
             case R.id.switch_debug_menu:
                 switchDebugMode();
                 return true;
@@ -94,114 +91,18 @@ public class MainActivity extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setScrimColor(Color.TRANSPARENT);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         drawingView = (CiDrawingView) findViewById(R.id.drawing_view);
         drawingBoard.setupDrawingView(drawingView);
-
-        View selectButton = findViewById(R.id.select_button);
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                select();
-            }
-        });
-
-        final View transformButton = findViewById(R.id.transform_button);
-        transformButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                transform(transformButton);
-            }
-        });
-
-        View groupButton = findViewById(R.id.group_button);
-        groupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                group();
-            }
-        });
-
-        View ungroupButton = findViewById(R.id.ungroup_button);
-        ungroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ungroup();
-            }
-        });
-
-        final View penButton = findViewById(R.id.pen_button);
-        penButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pen(v);
-            }
-        });
-
-        final View shapeButton = findViewById(R.id.shape_button);
-        shapeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertShape(shapeButton);
-            }
-        });
-
-        final View photoButton = findViewById(R.id.photo_button);
-        photoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertPhoto();
-            }
-        });
-
-        final View textButton = findViewById(R.id.text_button);
-        textButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertText();
-            }
-        });
-
-        final View colorButton = findViewById(R.id.color_button);
-        colorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeColor(colorButton);
-            }
-        });
-
-        final View widthButton = findViewById(R.id.width_button);
-        widthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeWidth(widthButton);
-            }
-        });
-
-        View undoButton = findViewById(R.id.undo_button);
-        undoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                undo();
-            }
-        });
-
-        View redoButton = findViewById(R.id.redo_button);
-        redoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redo();
-            }
-        });
-
     }
 
     private void setupDefault() {
         drawingBoard.getDrawingContext().setColor(Color.BLACK);
         drawingBoard.getDrawingContext().setStrokeWidth(6);
-        select();
+        select(null);
         drawingBoard.getElementManager().createNewLayer();
         drawingBoard.getElementManager().selectFirstVisibleLayer();
     }
@@ -231,32 +132,15 @@ public class MainActivity extends AppCompatActivity {
                 layerAdapter.setLayers(Arrays.asList(drawingBoard.getElementManager().getLayers()));
             }
         });
-
-
-        View addButton = findViewById(R.id.add_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawingBoard.getElementManager().createNewLayer();
-                layerAdapter.notifyDataSetChanged();
-            }
-        });
-        View removeButton = findViewById(R.id.remove_button);
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawingBoard.getElementManager().removeLayer(drawingBoard.getElementManager().getCurrentLayer());
-                drawingBoard.getElementManager().selectFirstVisibleLayer();
-                layerAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
-    private void select() {
+    // First row
+
+    public void select(View v) {
         drawingBoard.getDrawingContext().setDrawingMode(new PointerMode());
     }
 
-    private void transform(View v) {
+    public void transform(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.getMenuInflater().inflate(R.menu.menu_transform, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -284,19 +168,31 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void group() {
-        drawingBoard.getOperationManager().executeOperation(new GroupElementOperation());
+    public void eraser(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_eraser, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                DrawingMode mode = null;
+                switch (item.getItemId()) {
+                    case R.id.object_eraser_menu:
+                        break;
+                }
+                drawingBoard.getDrawingContext().setDrawingMode(mode);
+                return true;
+            }
+        });
+        popup.show();
     }
 
-    private void ungroup() {
-        drawingBoard.getOperationManager().executeOperation(new UngroupElementOperation());
-    }
+    // Second row
 
-    private void pen(View v) {
+    public void pen(View v) {
         drawingBoard.getDrawingContext().setDrawingMode(new PenMode());
     }
 
-    private void insertShape(View v) {
+    public void insertShape(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.getMenuInflater().inflate(R.menu.menu_insert_shape, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -327,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void insertPhoto() {
+    public void insertPhoto(View v) {
         InsertPhotoMode mode = new InsertPhotoMode();
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open("sample.jpg"));
@@ -341,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
         drawingBoard.getDrawingContext().setDrawingMode(mode);
     }
 
-    private void insertText() {
+    public void insertText(View v) {
         InsertTextMode mode = new InsertTextMode();
         TextElement element = new TextElement();
         element.setText("Sample text");
@@ -350,7 +246,37 @@ public class MainActivity extends AppCompatActivity {
         drawingBoard.getDrawingContext().setDrawingMode(mode);
     }
 
-    private void changeColor(View v) {
+    // Left drawer panel
+
+    public void addLayer(View v) {
+        drawingBoard.getElementManager().createNewLayer();
+        layerAdapter.notifyDataSetChanged();
+    }
+
+    public void removeLayer(View v) {
+        drawingBoard.getElementManager().removeLayer(drawingBoard.getElementManager().getCurrentLayer());
+        drawingBoard.getElementManager().selectFirstVisibleLayer();
+        layerAdapter.notifyDataSetChanged();
+    }
+
+    // Right drawer panel
+
+    public void reshape(View v) {
+        drawingBoard.getOperationManager().executeOperation(new ReshapeOperation());
+        drawingView.notifyViewUpdated();
+    }
+
+    public void group(View v) {
+        drawingBoard.getOperationManager().executeOperation(new GroupElementOperation());
+    }
+
+    public void ungroup(View v) {
+        drawingBoard.getOperationManager().executeOperation(new UngroupElementOperation());
+    }
+
+    // Bottom row
+
+    public void changeColor(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.getMenuInflater().inflate(R.menu.menu_color, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -373,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void changeWidth(View v) {
+    public void changeWidth(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.getMenuInflater().inflate(R.menu.menu_width, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -396,25 +322,22 @@ public class MainActivity extends AppCompatActivity {
         popup.show();
     }
 
-    private void undo() {
+    public void undo(View v) {
         drawingBoard.getOperationManager().undo();
     }
 
-    private void redo() {
+    public void redo(View v) {
         drawingBoard.getOperationManager().redo();
     }
 
-    private void reshape() {
-        drawingBoard.getOperationManager().executeOperation(new ReshapeOperation());
-        drawingView.notifyViewUpdated();
-    }
+    // More menu
 
-    private void switchDebugMode() {
+    public void switchDebugMode() {
         drawingBoard.getConfigManager().setDebugMode(!drawingBoard.getConfigManager().isDebugMode());
         drawingView.notifyViewUpdated();
     }
 
-    private void showInfo() {
+    public void showInfo() {
     }
 
 }

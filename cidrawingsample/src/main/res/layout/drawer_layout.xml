@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:background="#eeffffff">
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#eeffffff">
 
     <LinearLayout
         android:id="@+id/bottom_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+" />
+            android:onClick="addLayer"
+            android:text="+"/>
 
         <Button
             android:id="@+id/remove_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-" />
+            android:onClick="removeLayer"
+            android:text="-"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/layers_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_layout" />
+        android:layout_above="@id/bottom_layout"/>
 </RelativeLayout>

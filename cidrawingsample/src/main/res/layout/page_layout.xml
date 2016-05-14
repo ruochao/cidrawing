@@ -20,25 +20,22 @@
                 android:id="@+id/select_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="select"
                 android:text="Select"/>
 
             <Button
                 android:id="@+id/transform_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="transform"
                 android:text="Transform"/>
 
             <Button
-                android:id="@+id/group_button"
+                android:id="@+id/eraser_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Group"/>
-
-            <Button
-                android:id="@+id/ungroup_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ungroup"/>
+                android:onClick="eraser"
+                android:text="Eraser"/>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -60,24 +57,28 @@
                 android:id="@+id/pen_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="pen"
                 android:text="Pen"/>
 
             <Button
                 android:id="@+id/shape_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="insertShape"
                 android:text="Shape"/>
 
             <Button
                 android:id="@+id/photo_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="insertPhoto"
                 android:text="Photo"/>
 
             <Button
                 android:id="@+id/text_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="insertText"
                 android:text="Text"/>
         </LinearLayout>
     </HorizontalScrollView>
@@ -95,24 +96,28 @@
             android:id="@+id/color_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="changeColor"
             android:text="Color"/>
 
         <Button
             android:id="@+id/width_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="changeWidth"
             android:text="Width"/>
 
         <Button
             android:id="@+id/undo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="undo"
             android:text="Undo"/>
 
         <Button
             android:id="@+id/redo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="redo"
             android:text="Redo"/>
     </LinearLayout>
 

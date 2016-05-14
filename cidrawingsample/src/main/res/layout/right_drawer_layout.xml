@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:background="#eeffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/reshape_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="reshape"
+        android:text="ReShape"/>
+
+    <Button
+        android:id="@+id/group_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="group"
+        android:text="Group"/>
+
+    <Button
+        android:id="@+id/ungroup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="ungroup"
+        android:text="Ungroup"/>
+
+</LinearLayout>

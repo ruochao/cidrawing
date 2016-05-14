@@ -31,6 +31,7 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Multiple layer support
  * Unlimited undo/redo
  * Element group/ungroup
+ * Eraser (Object eraser)
 
 ## How to Use
 Include view in your layout as:

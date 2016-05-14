@@ -31,6 +31,7 @@ import com.mocircle.cidrawing.mode.InsertPhotoMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
 import com.mocircle.cidrawing.mode.InsertTextMode;
 import com.mocircle.cidrawing.mode.MoveMode;
+import com.mocircle.cidrawing.mode.ObjectEraserMode;
 import com.mocircle.cidrawing.mode.PenMode;
 import com.mocircle.cidrawing.mode.PointerMode;
 import com.mocircle.cidrawing.mode.ResizeMode;
@@ -177,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 DrawingMode mode = null;
                 switch (item.getItemId()) {
                     case R.id.object_eraser_menu:
+                        mode = new ObjectEraserMode();
                         break;
                 }
                 drawingBoard.getDrawingContext().setDrawingMode(mode);

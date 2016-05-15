@@ -5,6 +5,9 @@
         android:id="@+id/line_menu"
         android:title="Line"/>
     <item
+        android:id="@+id/arc_menu"
+        android:title="Arc"/>
+    <item
         android:id="@+id/rect_menu"
         android:title="Rectangle"/>
     <item

@@ -2,14 +2,11 @@ package com.mocircle.cidrawing.element.shape;
 
 import android.graphics.Path;
 
-public class LineElement extends BoxShapeElement {
-
-    public LineElement() {
-    }
+public class ArcElement extends BoxShapeElement {
 
     @Override
     public Object clone() {
-        LineElement element = new LineElement();
+        ArcElement element = new ArcElement();
         cloneTo(element);
         return element;
     }
@@ -18,8 +15,7 @@ public class LineElement extends BoxShapeElement {
     protected Path createShapePath() {
         Path path = new Path();
         path.moveTo(shapeVector.getPoint1().x, shapeVector.getPoint1().y);
-        path.lineTo(shapeVector.getPoint2().x, shapeVector.getPoint2().y);
+        path.quadTo(shapeVector.getPoint1().x, shapeVector.getPoint2().y, shapeVector.getPoint2().x, shapeVector.getPoint2().y);
         return path;
     }
-
 }

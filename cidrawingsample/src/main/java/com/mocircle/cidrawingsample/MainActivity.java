@@ -21,6 +21,7 @@ import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
 import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
+import com.mocircle.cidrawing.element.shape.ArcElement;
 import com.mocircle.cidrawing.element.shape.CircleElement;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.OvalElement;
@@ -205,6 +206,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.line_menu:
                         mode.setShapeType(LineElement.class);
+                        break;
+                    case R.id.arc_menu:
+                        mode.setShapeType(ArcElement.class);
                         break;
                     case R.id.rect_menu:
                         mode.setShapeType(RectElement.class);

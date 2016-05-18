@@ -15,6 +15,7 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
   * Square
   * Oval
   * Circle
+  * Triangle (Isosceles triangle, Right triangle)
  * Photo element
  * Text element
 

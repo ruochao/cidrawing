@@ -120,8 +120,12 @@ public abstract class ElementGroup extends DrawElement {
         super.cloneTo(element);
         if (element instanceof ElementGroup) {
             ElementGroup obj = (ElementGroup) element;
-            obj.initBoundingBox = new RectF(initBoundingBox);
-            obj.boundingPath = new Path(boundingPath);
+            if (initBoundingBox != null) {
+                obj.initBoundingBox = new RectF(initBoundingBox);
+            }
+            if (boundingPath != null) {
+                obj.boundingPath = new Path(boundingPath);
+            }
             if (elements != null) {
                 obj.elements = new ArrayList<>();
                 for (DrawElement e : elements) {

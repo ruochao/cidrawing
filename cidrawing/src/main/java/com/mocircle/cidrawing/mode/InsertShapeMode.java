@@ -11,12 +11,17 @@ public class InsertShapeMode extends InsertVectorElementMode {
     private static final String TAG = "InsertShapeMode";
 
     private Class<? extends ShapeElement> shapeType;
+    private ShapeElement shapeInstance;
 
     public InsertShapeMode() {
     }
 
     public void setShapeType(Class<? extends ShapeElement> shapeType) {
         this.shapeType = shapeType;
+    }
+
+    public void setShapeInstance(ShapeElement shapeInstance) {
+        this.shapeInstance = shapeInstance;
     }
 
     @Override
@@ -35,11 +40,17 @@ public class InsertShapeMode extends InsertVectorElementMode {
     }
 
     private ShapeElement getShapeInstance() {
-        try {
-            return shapeType.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException();
-        } catch (IllegalAccessException e) {
+        if (shapeInstance != null) {
+            return (ShapeElement) shapeInstance.clone();
+        } else if (shapeType != null) {
+            try {
+                return shapeType.newInstance();
+            } catch (InstantiationException e) {
+                throw new RuntimeException();
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException();
+            }
+        } else {
             throw new RuntimeException();
         }
     }

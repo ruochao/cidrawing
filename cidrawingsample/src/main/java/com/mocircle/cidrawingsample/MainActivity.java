@@ -23,9 +23,12 @@ import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
 import com.mocircle.cidrawing.element.shape.ArcElement;
 import com.mocircle.cidrawing.element.shape.CircleElement;
+import com.mocircle.cidrawing.element.shape.IsoscelesTriangleElement;
 import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.OvalElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
+import com.mocircle.cidrawing.element.shape.RightTriangleElement;
+import com.mocircle.cidrawing.element.shape.ShapeElement;
 import com.mocircle.cidrawing.element.shape.SquareElement;
 import com.mocircle.cidrawing.mode.DrawingMode;
 import com.mocircle.cidrawing.mode.InsertPhotoMode;
@@ -221,6 +224,14 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.circle_menu:
                         mode.setShapeType(CircleElement.class);
+                        break;
+                    case R.id.isosceles_triangle_menu:
+                        mode.setShapeType(IsoscelesTriangleElement.class);
+                        break;
+                    case R.id.right_triangle_menu:
+                        RightTriangleElement shape = new RightTriangleElement();
+                        shape.setLeftRightAngle(true);
+                        mode.setShapeInstance(shape);
                         break;
                 }
                 return true;

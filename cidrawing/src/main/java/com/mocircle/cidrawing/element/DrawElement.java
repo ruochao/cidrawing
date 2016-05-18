@@ -470,13 +470,21 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             obj.configManager = configManager;
             obj.paintBuilder = paintBuilder;
             obj.paintingBehavior = paintingBehavior;
-            obj.paint = new Paint(paint);
+            if (paint != null) {
+                obj.paint = new Paint(paint);
+            }
             obj.debugPaintForLine = debugPaintForLine;
             obj.debugPaintForArea = debugPaintForArea;
 
-            obj.displayMatrix = new Matrix(displayMatrix);
-            obj.dataMatrix = new Matrix(dataMatrix);
-            obj.boundingBox = new RectF(boundingBox);
+            if (displayMatrix != null) {
+                obj.displayMatrix = new Matrix(displayMatrix);
+            }
+            if (dataMatrix != null) {
+                obj.dataMatrix = new Matrix(dataMatrix);
+            }
+            if (boundingBox != null) {
+                obj.boundingBox = new RectF(boundingBox);
+            }
             if (referencePoint != null) {
                 obj.referencePoint = new PointF(referencePoint.x, referencePoint.y);
             }

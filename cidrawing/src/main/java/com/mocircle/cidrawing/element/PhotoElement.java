@@ -88,7 +88,9 @@ public class PhotoElement extends BoundsElement implements Recyclable {
         super.cloneTo(element);
         if (element instanceof PhotoElement) {
             PhotoElement obj = (PhotoElement) element;
-            obj.bitmap = Bitmap.createBitmap(bitmap);
+            if (bitmap != null) {
+                obj.bitmap = Bitmap.createBitmap(bitmap);
+            }
         }
     }
 

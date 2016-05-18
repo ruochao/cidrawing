@@ -68,7 +68,9 @@ public abstract class ShapeElement extends VectorElement {
         super.cloneTo(element);
         if (element instanceof ShapeElement) {
             ShapeElement obj = (ShapeElement) element;
-            obj.shapePath = new Path(shapePath);
+            if (shapePath != null) {
+                obj.shapePath = new Path(shapePath);
+            }
         }
     }
 }

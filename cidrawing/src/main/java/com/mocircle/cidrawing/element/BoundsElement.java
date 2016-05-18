@@ -44,8 +44,12 @@ public abstract class BoundsElement extends VectorElement {
         super.cloneTo(element);
         if (element instanceof BoundsElement) {
             BoundsElement obj = (BoundsElement) element;
-            obj.originalBoundingBox = new RectF(originalBoundingBox);
-            obj.boundingPath = new Path(boundingPath);
+            if (originalBoundingBox != null) {
+                obj.originalBoundingBox = new RectF(originalBoundingBox);
+            }
+            if (boundingPath != null) {
+                obj.boundingPath = new Path(boundingPath);
+            }
         }
     }
 

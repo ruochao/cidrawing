@@ -2,7 +2,6 @@ package com.mocircle.cidrawing.element;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -12,13 +11,14 @@ import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.PaintingBehavior;
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.element.behavior.Movable;
 import com.mocircle.cidrawing.element.behavior.Resizable;
+import com.mocircle.cidrawing.element.behavior.ResizingDirection;
 import com.mocircle.cidrawing.element.behavior.Rotatable;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
-import com.mocircle.cidrawing.element.behavior.ResizingDirection;
 
 /**
  * Basic element for drawing.
@@ -29,9 +29,9 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     protected ConfigManager configManager;
     protected PaintBuilder paintBuilder;
     protected PaintingBehavior paintingBehavior;
-    protected Paint paint = new Paint();
-    protected Paint debugPaintForLine;
-    protected Paint debugPaintForArea;
+    protected CiPaint paint = new CiPaint();
+    protected CiPaint debugPaintForLine;
+    protected CiPaint debugPaintForArea;
 
     protected Matrix displayMatrix = new Matrix();
     protected Matrix dataMatrix = new Matrix();
@@ -67,11 +67,11 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         debugPaintForArea = paintBuilder.createDebugPaintForArea();
     }
 
-    public Paint getPaint() {
+    public CiPaint getPaint() {
         return paint;
     }
 
-    public void setPaint(Paint paint) {
+    public void setPaint(CiPaint paint) {
         this.paint = paint;
     }
 
@@ -471,7 +471,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             obj.paintBuilder = paintBuilder;
             obj.paintingBehavior = paintingBehavior;
             if (paint != null) {
-                obj.paint = new Paint(paint);
+                obj.paint = new CiPaint(paint);
             }
             obj.debugPaintForLine = debugPaintForLine;
             obj.debugPaintForArea = debugPaintForArea;

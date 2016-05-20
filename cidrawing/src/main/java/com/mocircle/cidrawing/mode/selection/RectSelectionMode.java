@@ -1,27 +1,28 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.selection;
 
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.VirtualElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
+import com.mocircle.cidrawing.mode.AbstractDrawingMode;
 import com.mocircle.cidrawing.utils.DrawUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectionMode extends AbstractDrawingMode {
+public class RectSelectionMode extends AbstractDrawingMode {
 
-    private static final String TAG = "SelectionMode";
+    private static final String TAG = "RectSelectionMode";
 
     private ElementManager elementManager;
     private PaintBuilder paintBuilder;
-    private Paint selectionPaint;
+    private CiPaint selectionPaint;
 
     private float downX;
     private float downY;
@@ -29,7 +30,7 @@ public class SelectionMode extends AbstractDrawingMode {
     private ShapeElement selectionElement;
     private VirtualElement virtualElement;
 
-    public SelectionMode() {
+    public RectSelectionMode() {
     }
 
     @Override

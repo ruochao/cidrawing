@@ -1,17 +1,17 @@
 package com.mocircle.cidrawing.mode;
 
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.operation.OperationManager;
-import com.mocircle.cidrawing.operation.InsertElementOperation;
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.VectorElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
+import com.mocircle.cidrawing.operation.InsertElementOperation;
+import com.mocircle.cidrawing.operation.OperationManager;
 
 public class InsertVectorElementMode extends AbstractDrawingMode {
 
@@ -79,7 +79,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
 
     protected VectorElement createRealElement(Vector2 vector) {
         VectorElement element = (VectorElement) realElement.clone();
-        element.setPaint(new Paint(drawingContext.getPaint()));
+        element.setPaint(new CiPaint(drawingContext.getPaint()));
         element.setupElementByVector(vector);
         return element;
     }

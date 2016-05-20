@@ -1,11 +1,11 @@
 package com.mocircle.cidrawing.mode.stroke;
 
-import android.graphics.EmbossMaskFilter;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.board.ElementManager;
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.element.StrokeElement;
 import com.mocircle.cidrawing.mode.AbstractDrawingMode;
 import com.mocircle.cidrawing.operation.InsertElementOperation;
@@ -52,8 +52,8 @@ public class StrokeMode extends AbstractDrawingMode {
         return false;
     }
 
-    protected Paint assignPaint() {
-        Paint paint = new Paint(drawingContext.getPaint());
+    protected CiPaint assignPaint() {
+        CiPaint paint = new CiPaint(drawingContext.getPaint());
         paint.setStyle(Paint.Style.STROKE);
         return paint;
     }

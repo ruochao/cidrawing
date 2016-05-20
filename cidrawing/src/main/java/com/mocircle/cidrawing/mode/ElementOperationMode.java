@@ -1,12 +1,12 @@
 package com.mocircle.cidrawing.mode;
 
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.operation.OperationManager;
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.operation.OperationManager;
 
 public class ElementOperationMode extends AbstractDrawingMode {
 
@@ -15,8 +15,8 @@ public class ElementOperationMode extends AbstractDrawingMode {
     protected OperationManager operationManager;
     
     protected DrawElement element;
-    protected Paint originalPaint;
-    protected Paint previewPaint;
+    protected CiPaint originalPaint;
+    protected CiPaint previewPaint;
 
     public ElementOperationMode() {
     }
@@ -45,7 +45,7 @@ public class ElementOperationMode extends AbstractDrawingMode {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (element != null) {
-                    originalPaint = new Paint(element.getPaint());
+                    originalPaint = new CiPaint(element.getPaint());
                     element.setPaint(previewPaint);
                     return true;
                 }

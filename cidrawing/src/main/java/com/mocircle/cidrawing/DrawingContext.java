@@ -2,6 +2,7 @@ package com.mocircle.cidrawing;
 
 import android.graphics.Paint;
 
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.mode.DrawingMode;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class DrawingContext {
     private DrawingMode drawingMode;
     private List<DrawingModeChangedListener> drawingModeChangedListeners = new ArrayList<>();
 
-    private Paint paint;
+    private CiPaint paint;
     private int color;
     private int alpha;
     private float strokeWidth;
@@ -50,9 +51,9 @@ public class DrawingContext {
         drawingModeChangedListeners.add(listener);
     }
 
-    public Paint getPaint() {
+    public CiPaint getPaint() {
         if (paint == null) {
-            paint = new Paint();
+            paint = new CiPaint();
         }
         return paint;
     }

@@ -1,7 +1,6 @@
 package com.mocircle.cidrawing.mode;
 
-import android.graphics.Paint;
-
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.VectorElement;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
@@ -47,7 +46,7 @@ public class InsertShapeMode extends InsertVectorElementMode {
     @Override
     protected VectorElement createRealElement(Vector2 vector) {
         ShapeElement element = getShapeInstance();
-        element.setPaint(new Paint(drawingContext.getPaint()));
+        element.setPaint(new CiPaint(drawingContext.getPaint()));
         element.setupElementByVector(vector);
         return element;
     }

@@ -1,11 +1,11 @@
 package com.mocircle.cidrawing.element;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 
 public class TextElement extends BoundsElement {
@@ -35,7 +35,7 @@ public class TextElement extends BoundsElement {
     }
 
     @Override
-    public void setPaint(Paint paint) {
+    public void setPaint(CiPaint paint) {
         super.setPaint(paint);
         setupPaint();
         calculateBoundingBox();

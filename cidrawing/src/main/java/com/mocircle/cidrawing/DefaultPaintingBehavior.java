@@ -1,10 +1,10 @@
 package com.mocircle.cidrawing;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.utils.ShapeUtils;
 
 /**
@@ -23,11 +23,11 @@ public class DefaultPaintingBehavior implements PaintingBehavior {
 
     private static final int RESIZING_HANDLE_RADIUS = 15;
 
-    private Paint selectionBoundPaint;
-    private Paint selectionAreaPaint;
-    private Paint resizingHandlePaint;
-    private Paint rotationHandlePaint;
-    private Paint referencePointPaint;
+    private CiPaint selectionBoundPaint;
+    private CiPaint selectionAreaPaint;
+    private CiPaint resizingHandlePaint;
+    private CiPaint rotationHandlePaint;
+    private CiPaint referencePointPaint;
 
     public DefaultPaintingBehavior(PaintBuilder paintBuilder) {
         this.selectionBoundPaint = paintBuilder.createSelectionBoundPaint();

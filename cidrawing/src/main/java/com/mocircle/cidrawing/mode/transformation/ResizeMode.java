@@ -1,9 +1,10 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.transformation;
 
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
+import com.mocircle.cidrawing.element.behavior.ResizingDirection;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 
 public class ResizeMode extends DataTransformMode {

@@ -1,8 +1,9 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.transformation;
 
 import android.graphics.Matrix;
 import android.view.MotionEvent;
 
+import com.mocircle.cidrawing.mode.AutoDetectedElementOperationMode;
 import com.mocircle.cidrawing.operation.DisplayTransformOperation;
 import com.mocircle.cidrawing.utils.MatrixUtils;
 

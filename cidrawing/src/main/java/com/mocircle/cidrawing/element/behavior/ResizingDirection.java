@@ -1,4 +1,4 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.element.behavior;
 
 public enum ResizingDirection {
 

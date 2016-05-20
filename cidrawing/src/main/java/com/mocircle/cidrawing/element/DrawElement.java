@@ -18,7 +18,7 @@ import com.mocircle.cidrawing.element.behavior.Rotatable;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
-import com.mocircle.cidrawing.mode.ResizingDirection;
+import com.mocircle.cidrawing.element.behavior.ResizingDirection;
 
 /**
  * Basic element for drawing.

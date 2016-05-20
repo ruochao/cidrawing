@@ -1,21 +1,22 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.transformation;
 
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
+import com.mocircle.cidrawing.mode.ElementOperationMode;
 import com.mocircle.cidrawing.operation.MovePointOperation;
 
-public class ReferencePointMode extends ElementOperationMode {
+public class MoveReferencePointMode extends ElementOperationMode {
 
-    private static final String TAG = "ReferencePointMode";
+    private static final String TAG = "MoveReferencePointMode";
 
     private PointF originalReferencePoint;
 
     private float downX;
     private float downY;
 
-    public ReferencePointMode() {
+    public MoveReferencePointMode() {
     }
 
     @Override

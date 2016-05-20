@@ -2,8 +2,6 @@ package com.mocircle.cidrawing.element.behavior;
 
 import android.graphics.Canvas;
 
-import com.mocircle.cidrawing.mode.ResizingDirection;
-
 public interface Resizable {
 
     enum AspectRatioResetMethod {

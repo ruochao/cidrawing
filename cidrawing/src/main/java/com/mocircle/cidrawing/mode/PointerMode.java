@@ -5,6 +5,11 @@ import android.view.MotionEvent;
 import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.mode.transformation.MoveMode;
+import com.mocircle.cidrawing.mode.transformation.MoveReferencePointMode;
+import com.mocircle.cidrawing.mode.transformation.ResizeMode;
+import com.mocircle.cidrawing.element.behavior.ResizingDirection;
+import com.mocircle.cidrawing.mode.transformation.RotateMode;
 
 public class PointerMode extends AbstractDrawingMode {
 
@@ -14,7 +19,7 @@ public class PointerMode extends AbstractDrawingMode {
     private DrawingMode currentMode;
 
     private SelectionMode selectionMode = new SelectionMode();
-    private ReferencePointMode referencePointMode = new ReferencePointMode();
+    private MoveReferencePointMode moveReferencePointMode = new MoveReferencePointMode();
     private MoveMode moveMode = new MoveMode();
     private RotateMode rotateMode = new RotateMode();
     private ResizeMode resizeMode = new ResizeMode();
@@ -26,7 +31,7 @@ public class PointerMode extends AbstractDrawingMode {
         elementManager = drawingBoard.getElementManager();
 
         selectionMode.setDrawingBoardId(boardId);
-        referencePointMode.setDrawingBoardId(boardId);
+        moveReferencePointMode.setDrawingBoardId(boardId);
         moveMode.setDrawingBoardId(boardId);
         rotateMode.setDrawingBoardId(boardId);
         resizeMode.setDrawingBoardId(boardId);
@@ -68,8 +73,8 @@ public class PointerMode extends AbstractDrawingMode {
             if (element.isSelected()) {
 
                 if (element.hitTestForReferencePoint(x, y)) {
-                    referencePointMode.setElement(element);
-                    currentMode = referencePointMode;
+                    moveReferencePointMode.setElement(element);
+                    currentMode = moveReferencePointMode;
                     CircleLog.i(TAG, "Switch to ReferencePointMode");
                     return;
                 }

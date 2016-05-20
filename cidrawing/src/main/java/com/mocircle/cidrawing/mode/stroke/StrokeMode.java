@@ -1,15 +1,17 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.stroke;
 
+import android.graphics.EmbossMaskFilter;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.mocircle.cidrawing.DrawingContext;
 import com.mocircle.cidrawing.board.ElementManager;
-import com.mocircle.cidrawing.operation.OperationManager;
-import com.mocircle.cidrawing.operation.InsertElementOperation;
 import com.mocircle.cidrawing.element.StrokeElement;
+import com.mocircle.cidrawing.mode.AbstractDrawingMode;
+import com.mocircle.cidrawing.operation.InsertElementOperation;
+import com.mocircle.cidrawing.operation.OperationManager;
 
-public class PenMode extends AbstractDrawingMode {
+public class StrokeMode extends AbstractDrawingMode {
 
     private ElementManager elementManager;
     private OperationManager operationManager;
@@ -30,7 +32,7 @@ public class PenMode extends AbstractDrawingMode {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 element = new StrokeElement();
-                element.setPaint(new Paint(drawingContext.getPaint()));
+                element.setPaint(assignPaint());
                 elementManager.addElementToCurrentLayer(element);
                 element.addPoint(event.getX(), event.getY());
                 return true;
@@ -48,5 +50,11 @@ public class PenMode extends AbstractDrawingMode {
                 return true;
         }
         return false;
+    }
+
+    protected Paint assignPaint() {
+        Paint paint = new Paint(drawingContext.getPaint());
+        paint.setStyle(Paint.Style.STROKE);
+        return paint;
     }
 }

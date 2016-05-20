@@ -28,19 +28,18 @@ import com.mocircle.cidrawing.element.shape.LineElement;
 import com.mocircle.cidrawing.element.shape.OvalElement;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.element.shape.RightTriangleElement;
-import com.mocircle.cidrawing.element.shape.ShapeElement;
 import com.mocircle.cidrawing.element.shape.SquareElement;
 import com.mocircle.cidrawing.mode.DrawingMode;
 import com.mocircle.cidrawing.mode.InsertPhotoMode;
 import com.mocircle.cidrawing.mode.InsertShapeMode;
 import com.mocircle.cidrawing.mode.InsertTextMode;
-import com.mocircle.cidrawing.mode.MoveMode;
-import com.mocircle.cidrawing.mode.ObjectEraserMode;
-import com.mocircle.cidrawing.mode.PenMode;
 import com.mocircle.cidrawing.mode.PointerMode;
-import com.mocircle.cidrawing.mode.ResizeMode;
-import com.mocircle.cidrawing.mode.RotateMode;
-import com.mocircle.cidrawing.mode.SkewMode;
+import com.mocircle.cidrawing.mode.eraser.ObjectEraserMode;
+import com.mocircle.cidrawing.mode.stroke.StrokeMode;
+import com.mocircle.cidrawing.mode.transformation.MoveMode;
+import com.mocircle.cidrawing.mode.transformation.ResizeMode;
+import com.mocircle.cidrawing.mode.transformation.RotateMode;
+import com.mocircle.cidrawing.mode.transformation.SkewMode;
 import com.mocircle.cidrawing.operation.GroupElementOperation;
 import com.mocircle.cidrawing.operation.ReshapeOperation;
 import com.mocircle.cidrawing.operation.UngroupElementOperation;
@@ -195,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     // Second row
 
     public void pen(View v) {
-        drawingBoard.getDrawingContext().setDrawingMode(new PenMode());
+        drawingBoard.getDrawingContext().setDrawingMode(new StrokeMode());
     }
 
     public void insertShape(View v) {

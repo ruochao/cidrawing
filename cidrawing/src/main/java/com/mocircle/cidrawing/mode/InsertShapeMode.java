@@ -16,10 +16,23 @@ public class InsertShapeMode extends InsertVectorElementMode {
     public InsertShapeMode() {
     }
 
+    /**
+     * Sets shape type, it has the lower priority then {@link #setShapeInstance(ShapeElement)},
+     * which means if shape instance has been set, it will ignore shape type.
+     *
+     * @param shapeType shape type
+     */
     public void setShapeType(Class<? extends ShapeElement> shapeType) {
         this.shapeType = shapeType;
     }
 
+    /**
+     * Sets shape instance, it will create shape according to this sample instance. And it has the
+     * higher priority then {@link #setShapeType(Class)}, which means if we set shape type and shape
+     * instance, shape instance will take effect.
+     *
+     * @param shapeInstance shape instance
+     */
     public void setShapeInstance(ShapeElement shapeInstance) {
         this.shapeInstance = shapeInstance;
     }
@@ -46,12 +59,12 @@ public class InsertShapeMode extends InsertVectorElementMode {
             try {
                 return shapeType.newInstance();
             } catch (InstantiationException e) {
-                throw new RuntimeException();
+                throw new RuntimeException("Cannot create shape.", e);
             } catch (IllegalAccessException e) {
-                throw new RuntimeException();
+                throw new RuntimeException("Cannot create shape.", e);
             }
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("Cannot find shape type or shape sample instance to create the new shape.");
         }
     }
 

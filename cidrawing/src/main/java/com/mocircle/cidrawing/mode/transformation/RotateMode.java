@@ -1,21 +1,24 @@
-package com.mocircle.cidrawing.mode;
+package com.mocircle.cidrawing.mode.transformation;
 
+import android.graphics.PointF;
 import android.view.MotionEvent;
 
 import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.element.behavior.Selectable;
+import com.mocircle.cidrawing.utils.ShapeUtils;
 
-public class MoveMode extends DisplayTransformMode {
+public class RotateMode extends DisplayTransformMode {
 
-    private static final String TAG = "MoveMode";
+    private static final String TAG = "RotateMode";
 
     private float downX;
     private float downY;
+    private PointF referencePoint;
 
-    public MoveMode() {
+    public RotateMode() {
     }
 
-    public MoveMode(boolean autoDetectMode) {
+    public RotateMode(boolean autoDetectMode) {
         super(autoDetectMode);
     }
 
@@ -29,7 +32,7 @@ public class MoveMode extends DisplayTransformMode {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean result = super.onTouchEvent(event);
-        if (element == null || !element.isMovementEnabled()) {
+        if (element == null || !element.isRotationEnabled()) {
             return result;
         }
 
@@ -37,15 +40,15 @@ public class MoveMode extends DisplayTransformMode {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
                 downY = event.getY();
+                referencePoint = element.getActualReferencePoint();
                 return true;
             case MotionEvent.ACTION_MOVE:
-                float offsetX = event.getX() - downX;
-                float offsetY = event.getY() - downY;
-                element.move(offsetX, offsetY);
-                CircleLog.d(TAG, "Move element by " + offsetX + ", " + offsetY);
-                CircleLog.v(TAG, "Element position: " + element.getLocX() + ", " + element.getLocY());
+                float degreeDelta = ShapeUtils.calculateRotationDegree(referencePoint,
+                        new PointF(downX, downY), new PointF(event.getX(), event.getY()));
+                element.rotate(degreeDelta, referencePoint.x, referencePoint.y);
                 downX = event.getX();
                 downY = event.getY();
+                CircleLog.d(TAG, "Rotate element by " + degreeDelta);
                 return true;
         }
         return result;

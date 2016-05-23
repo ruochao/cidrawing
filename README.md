@@ -27,7 +27,7 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * ReShape
 
 ### Functions
- * Element selection and transformation
+ * Element selection and transformation (Rectangle select, Oval select and Lasso select)
  * Multiple elements selection and transformation
  * Custom paint (color, width, style, etc)
  * Multiple layer support

@@ -11,7 +11,7 @@ import com.mocircle.cidrawing.element.BaseElement;
 public abstract class BoxShapeElement extends ShapeElement {
 
     protected Vector2 shapeVector;
-    protected RectF shapeBox;
+    protected RectF shapeBox = new RectF();
 
     @Override
     protected void retrieveAttributesFromVector(Vector2 vector) {
@@ -27,9 +27,7 @@ public abstract class BoxShapeElement extends ShapeElement {
             if (shapeVector != null) {
                 obj.shapeVector = new Vector2(shapeVector.getPoint1(), shapeVector.getPoint2());
             }
-            if (shapeBox != null) {
-                obj.shapeBox = new RectF(shapeBox);
-            }
+            obj.shapeBox = new RectF(shapeBox);
         }
     }
 }

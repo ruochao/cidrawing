@@ -5,6 +5,7 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.Region;
 
 import com.mocircle.cidrawing.ConfigManager;
 import com.mocircle.cidrawing.DrawingBoard;
@@ -19,6 +20,7 @@ import com.mocircle.cidrawing.element.behavior.Rotatable;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
+import com.mocircle.cidrawing.utils.ShapeUtils;
 
 /**
  * Basic element for drawing.
@@ -103,9 +105,14 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             drawResizingHandle(canvas);
         }
 
+        // Draw debug info for touchable area
+        if (configManager.isDebugMode()) {
+            canvas.drawPath(getTouchableArea(), debugPaintForArea);
+        }
+
         canvas.restore();
 
-        // Draw debug info
+        // Draw debug info for outer bounding box
         if (configManager.isDebugMode()) {
             canvas.drawRect(getOuterBoundingBox(), debugPaintForLine);
         }
@@ -153,6 +160,14 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             getDisplayMatrix().set(new Matrix(matrix));
             updateBoundingBox();
         }
+    }
+
+    public Path getTouchableArea() {
+        Path path = new Path();
+        if (getBoundingBox() != null) {
+            path.addRect(getBoundingBox(), Path.Direction.CW);
+        }
+        return path;
     }
 
     public RectF getBoundingBox() {
@@ -268,19 +283,27 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         if (getBoundingBox() != null) {
             float[] points = new float[2];
             getInvertedDisplayMatrix().mapPoints(points, new float[]{x, y});
-            return getBoundingBox().contains(points[0], points[1]);
+            Region region = ShapeUtils.createRegionFromPath(getTouchableArea());
+            return region.contains((int) points[0], (int) points[1]);
         }
         return false;
     }
 
     @Override
-    public boolean hitTestForSelection(float x1, float y1, float x2, float y2) {
+    public boolean hitTestForSelection(Path path) {
         if (!isSelectionEnabled()) {
             return false;
         }
-        RectF selectionBox = new RectF(x1, y1, x2, y2);
-        selectionBox.sort();
-        return selectionBox.contains(getOuterBoundingBox());
+
+        RectF box = new RectF();
+        if (path.isRect(box)) {
+            return box.contains(getOuterBoundingBox());
+        } else {
+            path.transform(getInvertedDisplayMatrix());
+            Region r1 = ShapeUtils.createRegionFromPath(path);
+            Region r2 = ShapeUtils.createRegionFromPath(getTouchableArea());
+            return !r2.op(r1, Region.Op.DIFFERENCE);
+        }
     }
 
     @Override

@@ -16,6 +16,19 @@ public abstract class ShapeElement extends VectorElement {
     public ShapeElement() {
     }
 
+    public Path getShapePath() {
+        return shapePath;
+    }
+
+    @Override
+    public Path getTouchableArea() {
+        if (shapePath != null) {
+            return shapePath;
+        } else {
+            return new Path();
+        }
+    }
+
     @Override
     public void setupElementByVector(Vector2 vector) {
         retrieveAttributesFromVector(vector);

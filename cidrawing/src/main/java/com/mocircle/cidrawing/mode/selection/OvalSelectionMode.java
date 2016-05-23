@@ -1,16 +1,16 @@
 package com.mocircle.cidrawing.mode.selection;
 
 import com.mocircle.cidrawing.element.DrawElement;
-import com.mocircle.cidrawing.element.shape.RectElement;
+import com.mocircle.cidrawing.element.shape.OvalElement;
 
-public class RectSelectionMode extends ShapeSelectionMode {
+public class OvalSelectionMode extends ShapeSelectionMode {
 
-    public RectSelectionMode() {
+    public OvalSelectionMode() {
     }
 
     @Override
     protected DrawElement createSelectionElement() {
-        return new RectElement();
+        return new OvalElement();
     }
 
 }

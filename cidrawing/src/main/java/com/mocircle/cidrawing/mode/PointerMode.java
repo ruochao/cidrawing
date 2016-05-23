@@ -7,6 +7,7 @@ import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.behavior.ResizingDirection;
 import com.mocircle.cidrawing.mode.selection.RectSelectionMode;
+import com.mocircle.cidrawing.mode.selection.SelectionMode;
 import com.mocircle.cidrawing.mode.transformation.MoveMode;
 import com.mocircle.cidrawing.mode.transformation.MoveReferencePointMode;
 import com.mocircle.cidrawing.mode.transformation.ResizeMode;
@@ -19,11 +20,15 @@ public class PointerMode extends CompositeMode {
     private ElementManager elementManager;
     private DrawingMode currentMode;
 
-    private RectSelectionMode rectSelectionMode = new RectSelectionMode();
+    private SelectionMode selectionMode = new RectSelectionMode();
     private MoveReferencePointMode moveReferencePointMode = new MoveReferencePointMode();
     private MoveMode moveMode = new MoveMode();
     private RotateMode rotateMode = new RotateMode();
     private ResizeMode resizeMode = new ResizeMode();
+
+    public void setSelectionMode(SelectionMode selectionMode) {
+        this.selectionMode = selectionMode;
+    }
 
     @Override
     public void setDrawingBoardId(String boardId) {
@@ -31,7 +36,7 @@ public class PointerMode extends CompositeMode {
 
         elementManager = drawingBoard.getElementManager();
 
-        rectSelectionMode.setDrawingBoardId(boardId);
+        selectionMode.setDrawingBoardId(boardId);
         moveReferencePointMode.setDrawingBoardId(boardId);
         moveMode.setDrawingBoardId(boardId);
         rotateMode.setDrawingBoardId(boardId);
@@ -104,7 +109,7 @@ public class PointerMode extends CompositeMode {
                 }
             }
         }
-        currentMode = rectSelectionMode;
+        currentMode = selectionMode;
         CircleLog.i(TAG, "Switch to SelectionMode");
     }
 

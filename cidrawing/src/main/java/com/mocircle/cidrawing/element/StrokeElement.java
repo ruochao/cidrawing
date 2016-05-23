@@ -13,8 +13,30 @@ public class StrokeElement extends DrawElement {
 
     private transient Path strokePath = new Path();
     private List<PointF> points = new ArrayList<>();
+    private boolean closeStroke;
 
     public StrokeElement() {
+    }
+
+    public boolean isCloseStroke() {
+        return closeStroke;
+    }
+
+    public void setCloseStroke(boolean closeStroke) {
+        this.closeStroke = closeStroke;
+    }
+
+    public Path getStrokePath() {
+        return strokePath;
+    }
+
+    @Override
+    public Path getTouchableArea() {
+        if (strokePath != null) {
+            return strokePath;
+        } else {
+            return new Path();
+        }
     }
 
     @Override
@@ -81,11 +103,16 @@ public class StrokeElement extends DrawElement {
         super.cloneTo(element);
         if (element instanceof StrokeElement) {
             StrokeElement obj = (StrokeElement) element;
-            obj.strokePath = new Path(strokePath);
-            obj.points = new ArrayList<>();
-            for (PointF p : points) {
-                obj.points.add(new PointF(p.x, p.y));
+            if (strokePath != null) {
+                obj.strokePath = new Path(strokePath);
             }
+            if (points != null) {
+                obj.points = new ArrayList<>();
+                for (PointF p : points) {
+                    obj.points.add(new PointF(p.x, p.y));
+                }
+            }
+            obj.closeStroke = closeStroke;
         }
     }
 
@@ -98,6 +125,9 @@ public class StrokeElement extends DrawElement {
             } else {
                 path.lineTo(p.x, p.y);
             }
+        }
+        if (closeStroke) {
+            path.close();
         }
         return path;
     }

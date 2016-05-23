@@ -1,7 +1,9 @@
 package com.mocircle.cidrawing.utils;
 
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.Region;
 
 /**
  * A utility class about shape.
@@ -41,6 +43,22 @@ public final class ShapeUtils {
             angle += 360;
         }
         return angle;
+    }
+
+    /**
+     * Creates a simple region from the given path.
+     *
+     * @param path given path
+     * @return region object
+     */
+    public static Region createRegionFromPath(Path path) {
+        Region region = new Region();
+        if (path != null) {
+            RectF box = new RectF();
+            path.computeBounds(box, true);
+            region.setPath(path, new Region((int) box.left, (int) box.top, (int) box.right, (int) box.bottom));
+        }
+        return region;
     }
 
 }

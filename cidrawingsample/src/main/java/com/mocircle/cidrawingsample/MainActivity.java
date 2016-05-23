@@ -35,6 +35,9 @@ import com.mocircle.cidrawing.mode.InsertShapeMode;
 import com.mocircle.cidrawing.mode.InsertTextMode;
 import com.mocircle.cidrawing.mode.PointerMode;
 import com.mocircle.cidrawing.mode.eraser.ObjectEraserMode;
+import com.mocircle.cidrawing.mode.selection.LassoSelectionMode;
+import com.mocircle.cidrawing.mode.selection.OvalSelectionMode;
+import com.mocircle.cidrawing.mode.selection.RectSelectionMode;
 import com.mocircle.cidrawing.mode.stroke.StrokeMode;
 import com.mocircle.cidrawing.mode.transformation.MoveMode;
 import com.mocircle.cidrawing.mode.transformation.ResizeMode;
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupDefault() {
         drawingBoard.getDrawingContext().setColor(Color.BLACK);
         drawingBoard.getDrawingContext().setStrokeWidth(6);
-        select(null);
+        drawingBoard.getDrawingContext().setDrawingMode(new PointerMode());
         drawingBoard.getElementManager().createNewLayer();
         drawingBoard.getElementManager().selectFirstVisibleLayer();
     }
@@ -140,8 +143,34 @@ public class MainActivity extends AppCompatActivity {
 
     // First row
 
+    public void pointer(View v) {
+        PointerMode mode = new PointerMode();
+        drawingBoard.getDrawingContext().setDrawingMode(mode);
+    }
+
     public void select(View v) {
-        drawingBoard.getDrawingContext().setDrawingMode(new PointerMode());
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_select, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                PointerMode mode = new PointerMode();
+                switch (item.getItemId()) {
+                    case R.id.rect_select_menu:
+                        mode.setSelectionMode(new RectSelectionMode());
+                        break;
+                    case R.id.oval_select_menu:
+                        mode.setSelectionMode(new OvalSelectionMode());
+                        break;
+                    case R.id.lasso_menu:
+                        mode.setSelectionMode(new LassoSelectionMode());
+                        break;
+                }
+                drawingBoard.getDrawingContext().setDrawingMode(mode);
+                return true;
+            }
+        });
+        popup.show();
     }
 
     public void transform(View v) {

@@ -1,6 +1,7 @@
 package com.mocircle.cidrawing.element.behavior;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 
 public interface Selectable {
 
@@ -25,5 +26,5 @@ public interface Selectable {
 
     boolean hitTestForSelection(float x, float y);
 
-    boolean hitTestForSelection(float x1, float y1, float x2, float y2);
+    boolean hitTestForSelection(Path path);
 }

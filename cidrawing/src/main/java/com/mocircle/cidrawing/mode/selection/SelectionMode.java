@@ -60,7 +60,7 @@ public abstract class SelectionMode extends AbstractDrawingMode {
                 elementManager.removeElementFromCurrentLayer(selectionElement);
                 elementManager.clearSelection();
 
-                if (DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event.getX(), event.getY())) {
+                if (DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event)) {
 
                     // Single selection
                     for (int i = elementManager.getCurrentElements().length - 1; i >= 0; i--) {

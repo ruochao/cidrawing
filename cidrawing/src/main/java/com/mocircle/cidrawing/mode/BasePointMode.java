@@ -28,7 +28,7 @@ public class BasePointMode extends AbstractDrawingMode {
                 downY = event.getY();
                 return true;
             case MotionEvent.ACTION_UP:
-                boolean singleTap = DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event.getX(), event.getY());
+                boolean singleTap = DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event);
                 onLastPointUp(event.getX(), event.getY(), singleTap);
                 return true;
             case MotionEvent.ACTION_CANCEL:

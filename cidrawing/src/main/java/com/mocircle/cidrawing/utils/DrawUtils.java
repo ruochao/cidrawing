@@ -1,6 +1,7 @@
 package com.mocircle.cidrawing.utils;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 /**
@@ -12,19 +13,37 @@ public final class DrawUtils {
     }
 
     /**
-     * Checks if two points are close enough to be treated as a single tap.
+     * Checks if touch event is treat as single tap
      *
      * @param context android context
-     * @param x1      x of point 1
-     * @param y1      y of point 1
-     * @param x2      x of point 2
-     * @param y2      y of point 2
+     * @param downX   axis x of touch down
+     * @param downY   axis y of touch down
+     * @param upEvent MotionEvent for touch up
      * @return true if it's single tap, otherwise false
      */
-    public static boolean isSingleTap(Context context, float x1, float y1, float x2, float y2) {
+    public static boolean isSingleTap(Context context, float downX, float downY, MotionEvent upEvent) {
+        return isSingleTap(context, upEvent.getDownTime(), upEvent.getEventTime(), downX, downY, upEvent.getX(), upEvent.getY());
+    }
+
+    /**
+     * Checks if touch event is treat as single tap
+     *
+     * @param context  android context
+     * @param downTime the time when touch down
+     * @param upTime   the time when touch up
+     * @param downX    axis x of touch down
+     * @param downY    axis y of touch down
+     * @param upX      axis  x of touch up
+     * @param upY      axis  y of touch up
+     * @return true if it's single tap, otherwise false
+     */
+    public static boolean isSingleTap(Context context, long downTime, long upTime, float downX, float downY, float upX, float upY) {
+        if (upTime - downTime > ViewConfiguration.getTapTimeout()) {
+            return false;
+        }
         int touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        final int deltaX = (int) (x1 - x2);
-        final int deltaY = (int) (y1 - y2);
+        final int deltaX = (int) (downX - upX);
+        final int deltaY = (int) (downY - upY);
         int distance = (deltaX * deltaX) + (deltaY * deltaY);
         return distance <= touchSlop * touchSlop;
     }

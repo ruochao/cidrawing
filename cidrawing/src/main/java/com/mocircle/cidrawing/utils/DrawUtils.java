@@ -1,6 +1,7 @@
 package com.mocircle.cidrawing.utils;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
@@ -48,4 +49,16 @@ public final class DrawUtils {
         return distance <= touchSlop * touchSlop;
     }
 
+    /**
+     * Create a rectangle based on touch point as center point and touch slop as half side.
+     *
+     * @param context android context
+     * @param x       axis x of touch point
+     * @param y       axis y of touch point
+     * @return rectangle for touch point
+     */
+    public static Rect createTouchSquare(Context context, int x, int y) {
+        int touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        return new Rect(x - touchSlop, y - touchSlop, x + touchSlop, y + touchSlop);
+    }
 }

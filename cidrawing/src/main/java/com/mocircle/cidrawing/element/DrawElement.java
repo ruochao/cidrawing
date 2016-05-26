@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 
@@ -20,7 +21,9 @@ import com.mocircle.cidrawing.element.behavior.Rotatable;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
+import com.mocircle.cidrawing.utils.DrawUtils;
 import com.mocircle.cidrawing.utils.ShapeUtils;
+import com.mocircle.cidrawing.view.DrawingView;
 
 /**
  * Basic element for drawing.
@@ -29,6 +32,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     protected String boardId;
     protected ConfigManager configManager;
+    protected DrawingView drawingView;
     protected PaintBuilder paintBuilder;
     protected PaintingBehavior paintingBehavior;
     protected CiPaint paint = new CiPaint();
@@ -63,6 +67,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             throw new DrawingBoardNotFoundException();
         }
         configManager = board.getConfigManager();
+        drawingView = board.getDrawingView();
         paintBuilder = board.getPaintBuilder();
         paintingBehavior = board.getPaintingBehavior();
         debugPaintForLine = paintBuilder.createDebugPaintForLine();
@@ -283,8 +288,22 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
         if (getBoundingBox() != null) {
             float[] points = new float[2];
             getInvertedDisplayMatrix().mapPoints(points, new float[]{x, y});
-            Region region = ShapeUtils.createRegionFromPath(getTouchableArea());
-            return region.contains((int) points[0], (int) points[1]);
+
+            Path path = getTouchableArea();
+            RectF box = new RectF();
+            if (path.isRect(box)) {
+                // Quick check if path is rectangle
+                return box.contains(x, y);
+            } else {
+                Region region = ShapeUtils.createRegionFromPath(path);
+                Rect touchSquare = DrawUtils.createTouchSquare(drawingView.getContext(), (int) points[0], (int) points[1]);
+                if (region.quickReject(touchSquare)) {
+                    // Quick check for not intersect case
+                    return false;
+                }
+                Region pointRegion = new Region(touchSquare);
+                return region.op(pointRegion, Region.Op.INTERSECT);
+            }
         }
         return false;
     }
@@ -297,11 +316,16 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
         RectF box = new RectF();
         if (path.isRect(box)) {
+            // Quick check if path is rectangle
             return box.contains(getOuterBoundingBox());
         } else {
             path.transform(getInvertedDisplayMatrix());
             Region r1 = ShapeUtils.createRegionFromPath(path);
             Region r2 = ShapeUtils.createRegionFromPath(getTouchableArea());
+            if (r1.quickReject(r2)) {
+                // Quick check for not intersect case
+                return false;
+            }
             return !r2.op(r1, Region.Op.DIFFERENCE);
         }
     }

@@ -24,7 +24,20 @@ public interface Selectable {
 
     void drawSelection(Canvas canvas);
 
+    /**
+     * Checks if the given point is inside the element's touch area.
+     *
+     * @param x axis x of given point
+     * @param y axis y of given point
+     * @return true if hit test successful, otherwise false.
+     */
     boolean hitTestForSelection(float x, float y);
 
+    /**
+     * Checks if the given path is including the element's touch area.
+     *
+     * @param path given path
+     * @return true if hit test successful, otherwise false.
+     */
     boolean hitTestForSelection(Path path);
 }

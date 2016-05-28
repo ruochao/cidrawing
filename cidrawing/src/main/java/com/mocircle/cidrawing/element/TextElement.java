@@ -7,9 +7,9 @@ import android.graphics.RectF;
 
 import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
-import com.mocircle.cidrawing.element.behavior.CreateByVector;
+import com.mocircle.cidrawing.element.behavior.SupportVector;
 
-public class TextElement extends BoundsElement implements CreateByVector {
+public class TextElement extends BoundsElement implements SupportVector {
 
     protected String text = "";
     protected float textSize;

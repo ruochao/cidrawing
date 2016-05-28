@@ -9,7 +9,7 @@ import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.DrawElement;
-import com.mocircle.cidrawing.element.behavior.CreateByVector;
+import com.mocircle.cidrawing.element.behavior.SupportVector;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.operation.InsertElementOperation;
 import com.mocircle.cidrawing.operation.OperationManager;
@@ -53,7 +53,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
                 elementManager.addElementToCurrentLayer(previewElement);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                ((CreateByVector) previewElement).setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                ((SupportVector) previewElement).setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
                 return true;
             case MotionEvent.ACTION_UP:
                 elementManager.removeElementFromCurrentLayer(previewElement);
@@ -70,7 +70,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
 
     protected void setVectorElement(DrawElement realElement) {
         this.realElement = realElement;
-        if (!(realElement instanceof CreateByVector)) {
+        if (!(realElement instanceof SupportVector)) {
             throw new IllegalArgumentException("Element must implement CreateByVector interface.");
         }
     }
@@ -84,7 +84,7 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
     protected DrawElement createRealElement(Vector2 vector) {
         DrawElement element = (DrawElement) realElement.clone();
         element.setPaint(new CiPaint(drawingContext.getPaint()));
-        ((CreateByVector) element).setupElementByVector(vector);
+        ((SupportVector) element).setupElementByVector(vector);
         return element;
     }
 

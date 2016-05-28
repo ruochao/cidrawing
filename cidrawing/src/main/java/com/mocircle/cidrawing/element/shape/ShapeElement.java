@@ -5,9 +5,9 @@ import android.graphics.Path;
 
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.BasePathElement;
-import com.mocircle.cidrawing.element.behavior.CreateByVector;
+import com.mocircle.cidrawing.element.behavior.SupportVector;
 
-public abstract class ShapeElement extends BasePathElement implements CreateByVector {
+public abstract class ShapeElement extends BasePathElement implements SupportVector {
 
     public ShapeElement() {
     }

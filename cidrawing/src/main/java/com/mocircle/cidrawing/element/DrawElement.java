@@ -293,7 +293,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
             RectF box = new RectF();
             if (path.isRect(box)) {
                 // Quick check if path is rectangle
-                return box.contains(x, y);
+                return box.contains(points[0], points[1]);
             } else {
                 Region region = ShapeUtils.createRegionFromPath(path);
                 Rect touchSquare = DrawUtils.createTouchSquare(drawingView.getContext(), (int) points[0], (int) points[1]);

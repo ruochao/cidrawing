@@ -3,6 +3,7 @@ package com.mocircle.cidrawingsample;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -44,6 +45,7 @@ import com.mocircle.cidrawing.mode.transformation.ResizeMode;
 import com.mocircle.cidrawing.mode.transformation.RotateMode;
 import com.mocircle.cidrawing.mode.transformation.SkewMode;
 import com.mocircle.cidrawing.operation.GroupElementOperation;
+import com.mocircle.cidrawing.operation.PathOperation;
 import com.mocircle.cidrawing.operation.ReshapeOperation;
 import com.mocircle.cidrawing.operation.UngroupElementOperation;
 import com.mocircle.cidrawing.view.CiDrawingView;
@@ -317,6 +319,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void ungroup(View v) {
         drawingBoard.getOperationManager().executeOperation(new UngroupElementOperation());
+    }
+
+    public void pathUnion(View v) {
+        PathOperation operation = new PathOperation();
+        operation.setPathOp(Path.Op.UNION);
+        drawingBoard.getOperationManager().executeOperation(operation);
+        drawingView.notifyViewUpdated();
+    }
+
+    public void pathIntersect(View v) {
+        PathOperation operation = new PathOperation();
+        operation.setPathOp(Path.Op.INTERSECT);
+        drawingBoard.getOperationManager().executeOperation(operation);
+        drawingView.notifyViewUpdated();
+    }
+
+    public void pathDifferent(View v) {
+        PathOperation operation = new PathOperation();
+        operation.setPathOp(Path.Op.DIFFERENCE);
+        drawingBoard.getOperationManager().executeOperation(operation);
+        drawingView.notifyViewUpdated();
+    }
+
+    public void pathXor(View v) {
+        PathOperation operation = new PathOperation();
+        operation.setPathOp(Path.Op.XOR);
+        drawingBoard.getOperationManager().executeOperation(operation);
+        drawingView.notifyViewUpdated();
     }
 
     // Bottom row

@@ -38,7 +38,7 @@ public class LassoSelectionMode extends SelectionMode {
     @Override
     protected Path getSelectionPath() {
         if (selectionElement instanceof StrokeElement) {
-            return ((StrokeElement) selectionElement).getStrokePath();
+            return ((StrokeElement) selectionElement).getElementPath();
         } else {
             return null;
         }

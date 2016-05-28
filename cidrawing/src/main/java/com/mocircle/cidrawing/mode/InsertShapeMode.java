@@ -2,7 +2,7 @@ package com.mocircle.cidrawing.mode;
 
 import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
-import com.mocircle.cidrawing.element.VectorElement;
+import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.shape.ShapeElement;
 
 public class InsertShapeMode extends InsertVectorElementMode {
@@ -37,14 +37,14 @@ public class InsertShapeMode extends InsertVectorElementMode {
     }
 
     @Override
-    protected VectorElement createPreviewElement() {
+    protected DrawElement createPreviewElement() {
         previewElement = getShapeInstance();
         previewElement.setPaint(paintBuilder.createPreviewPaint(drawingContext.getPaint()));
         return previewElement;
     }
 
     @Override
-    protected VectorElement createRealElement(Vector2 vector) {
+    protected DrawElement createRealElement(Vector2 vector) {
         ShapeElement element = getShapeInstance();
         element.setPaint(new CiPaint(drawingContext.getPaint()));
         element.setupElementByVector(vector);

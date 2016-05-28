@@ -6,9 +6,10 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 import com.mocircle.cidrawing.core.Vector2;
+import com.mocircle.cidrawing.element.behavior.CreateByVector;
 import com.mocircle.cidrawing.element.behavior.Recyclable;
 
-public class PhotoElement extends BoundsElement implements Recyclable {
+public class PhotoElement extends BoundsElement implements CreateByVector, Recyclable {
 
     private Bitmap bitmap;
 

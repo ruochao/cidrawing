@@ -29,7 +29,7 @@ public abstract class ShapeSelectionMode extends SelectionMode {
     @Override
     protected Path getSelectionPath() {
         if (selectionElement instanceof ShapeElement) {
-            return ((ShapeElement) selectionElement).getShapePath();
+            return ((ShapeElement) selectionElement).getElementPath();
         } else {
             return null;
         }

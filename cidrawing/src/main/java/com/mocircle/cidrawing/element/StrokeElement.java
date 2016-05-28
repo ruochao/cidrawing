@@ -1,17 +1,14 @@
 package com.mocircle.cidrawing.element;
 
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.RectF;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StrokeElement extends DrawElement {
+public class StrokeElement extends BasePathElement {
 
-    private transient Path strokePath = new Path();
     private List<PointF> points = new ArrayList<>();
     private boolean closeStroke;
 
@@ -26,19 +23,6 @@ public class StrokeElement extends DrawElement {
         this.closeStroke = closeStroke;
     }
 
-    public Path getStrokePath() {
-        return strokePath;
-    }
-
-    @Override
-    public Path getTouchableArea() {
-        if (strokePath != null) {
-            return strokePath;
-        } else {
-            return new Path();
-        }
-    }
-
     @Override
     public Object clone() {
         StrokeElement element = new StrokeElement();
@@ -46,26 +30,22 @@ public class StrokeElement extends DrawElement {
         return element;
     }
 
-    @Override
-    public void drawElement(Canvas canvas) {
-        if (strokePath != null) {
-            canvas.drawPath(strokePath, paint);
-        }
-    }
-
     public void addPoint(float x, float y) {
         points.add(new PointF(x, y));
 
         // Sync to path
+        if (elementPath == null) {
+            elementPath = new Path();
+        }
         if (points.size() == 1) {
-            strokePath.moveTo(x, y);
+            elementPath.moveTo(x, y);
         } else {
-            strokePath.lineTo(x, y);
+            elementPath.lineTo(x, y);
         }
     }
 
     public void doneEditing() {
-        strokePath = createStrokePath();
+        elementPath = createStrokePath();
         updateBoundingBox();
     }
 
@@ -74,28 +54,7 @@ public class StrokeElement extends DrawElement {
         super.applyMatrixForData(matrix);
 
         applyMatrixForPoints(matrix);
-        strokePath = createStrokePath();
-    }
-
-    @Override
-    public void updateBoundingBox() {
-        if (strokePath != null) {
-            RectF box = new RectF();
-            strokePath.computeBounds(box, true);
-            setBoundingBox(box);
-        }
-    }
-
-    @Override
-    public RectF getOuterBoundingBox() {
-        if (strokePath != null) {
-            Path path = new Path(strokePath);
-            path.transform(getDisplayMatrix());
-            RectF box = new RectF();
-            path.computeBounds(box, true);
-            return box;
-        }
-        return new RectF();
+        elementPath = createStrokePath();
     }
 
     @Override
@@ -103,9 +62,6 @@ public class StrokeElement extends DrawElement {
         super.cloneTo(element);
         if (element instanceof StrokeElement) {
             StrokeElement obj = (StrokeElement) element;
-            if (strokePath != null) {
-                obj.strokePath = new Path(strokePath);
-            }
             if (points != null) {
                 obj.points = new ArrayList<>();
                 for (PointF p : points) {

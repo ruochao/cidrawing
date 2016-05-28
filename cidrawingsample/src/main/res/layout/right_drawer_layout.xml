@@ -10,23 +10,51 @@
 
     <Button
         android:id="@+id/reshape_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="reshape"
         android:text="ReShape"/>
 
     <Button
         android:id="@+id/group_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="group"
         android:text="Group"/>
 
     <Button
         android:id="@+id/ungroup_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="ungroup"
         android:text="Ungroup"/>
+
+    <Button
+        android:id="@+id/union_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="pathUnion"
+        android:text="Path Union"/>
+
+    <Button
+        android:id="@+id/intersect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="pathIntersect"
+        android:text="Path Intersect"/>
+
+    <Button
+        android:id="@+id/different_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="pathDifferent"
+        android:text="Path Different"/>
+
+    <Button
+        android:id="@+id/xor_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="pathXor"
+        android:text="Path Xor"/>
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import android.graphics.RectF;
 /**
  * A kind of element which is surrounded by the bounds.
  */
-public abstract class BoundsElement extends VectorElement {
+public abstract class BoundsElement extends DrawElement {
 
     protected transient RectF originalBoundingBox;
     protected transient Path boundingPath;

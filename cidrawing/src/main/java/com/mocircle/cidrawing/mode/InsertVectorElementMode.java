@@ -8,7 +8,8 @@ import com.mocircle.cidrawing.PaintBuilder;
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
-import com.mocircle.cidrawing.element.VectorElement;
+import com.mocircle.cidrawing.element.DrawElement;
+import com.mocircle.cidrawing.element.behavior.CreateByVector;
 import com.mocircle.cidrawing.element.shape.RectElement;
 import com.mocircle.cidrawing.operation.InsertElementOperation;
 import com.mocircle.cidrawing.operation.OperationManager;
@@ -25,8 +26,8 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
     protected float downX;
     protected float downY;
 
-    protected VectorElement previewElement;
-    protected VectorElement realElement;
+    protected DrawElement previewElement;
+    protected DrawElement realElement;
 
     public InsertVectorElementMode() {
     }
@@ -52,12 +53,12 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
                 elementManager.addElementToCurrentLayer(previewElement);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                previewElement.setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                ((CreateByVector) previewElement).setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
                 return true;
             case MotionEvent.ACTION_UP:
                 elementManager.removeElementFromCurrentLayer(previewElement);
 
-                VectorElement element = createRealElement(new Vector2(downX, downY, event.getX(), event.getY()));
+                DrawElement element = createRealElement(new Vector2(downX, downY, event.getX(), event.getY()));
                 operationManager.executeOperation(new InsertElementOperation(element));
                 return true;
             case MotionEvent.ACTION_CANCEL:
@@ -67,20 +68,23 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
         return false;
     }
 
-    protected void setVectorElement(VectorElement realElement) {
+    protected void setVectorElement(DrawElement realElement) {
         this.realElement = realElement;
+        if (!(realElement instanceof CreateByVector)) {
+            throw new IllegalArgumentException("Element must implement CreateByVector interface.");
+        }
     }
 
-    protected VectorElement createPreviewElement() {
+    protected DrawElement createPreviewElement() {
         previewElement = new RectElement();
         previewElement.setPaint(paintBuilder.createPreviewAreaPaint(drawingContext.getPaint()));
         return previewElement;
     }
 
-    protected VectorElement createRealElement(Vector2 vector) {
-        VectorElement element = (VectorElement) realElement.clone();
+    protected DrawElement createRealElement(Vector2 vector) {
+        DrawElement element = (DrawElement) realElement.clone();
         element.setPaint(new CiPaint(drawingContext.getPaint()));
-        element.setupElementByVector(vector);
+        ((CreateByVector) element).setupElementByVector(vector);
         return element;
     }
 

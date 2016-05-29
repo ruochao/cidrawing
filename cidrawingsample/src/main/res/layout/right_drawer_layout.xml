@@ -1,60 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="end"
-    android:background="#eeffffff"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:background="#eeffffff">
 
-    <Button
-        android:id="@+id/reshape_button"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="reshape"
-        android:text="ReShape"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/group_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="group"
-        android:text="Group"/>
+        <Button
+            android:id="@+id/reshape_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="reshape"
+            android:text="ReShape"/>
 
-    <Button
-        android:id="@+id/ungroup_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="ungroup"
-        android:text="Ungroup"/>
+        <Button
+            android:id="@+id/group_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="group"
+            android:text="Group"/>
 
-    <Button
-        android:id="@+id/union_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pathUnion"
-        android:text="Path Union"/>
+        <Button
+            android:id="@+id/ungroup_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="ungroup"
+            android:text="Ungroup"/>
 
-    <Button
-        android:id="@+id/intersect_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pathIntersect"
-        android:text="Path Intersect"/>
+        <Button
+            android:id="@+id/union_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pathUnion"
+            android:text="Path Union"/>
 
-    <Button
-        android:id="@+id/different_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pathDifferent"
-        android:text="Path Different"/>
+        <Button
+            android:id="@+id/intersect_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pathIntersect"
+            android:text="Path Intersect"/>
 
-    <Button
-        android:id="@+id/xor_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pathXor"
-        android:text="Path Xor"/>
+        <Button
+            android:id="@+id/different_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pathDifferent"
+            android:text="Path Different"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/xor_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pathXor"
+            android:text="Path Xor"/>
+
+        <Button
+            android:id="@+id/align_left_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignLeft"
+            android:text="Align Left"/>
+
+        <Button
+            android:id="@+id/align_center_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignCenter"
+            android:text="Align Center"/>
+
+        <Button
+            android:id="@+id/align_right_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignRight"
+            android:text="Align Right"/>
+
+        <Button
+            android:id="@+id/align_top_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignTop"
+            android:text="Align Top"/>
+
+        <Button
+            android:id="@+id/align_middle_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignMiddle"
+            android:text="Align Middle"/>
+
+        <Button
+            android:id="@+id/align_bottom_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="alignBottom"
+            android:text="Align Bottom"/>
+    </LinearLayout>
+</ScrollView>

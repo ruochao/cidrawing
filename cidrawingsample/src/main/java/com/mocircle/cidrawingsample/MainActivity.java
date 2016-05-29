@@ -44,6 +44,7 @@ import com.mocircle.cidrawing.mode.transformation.MoveMode;
 import com.mocircle.cidrawing.mode.transformation.ResizeMode;
 import com.mocircle.cidrawing.mode.transformation.RotateMode;
 import com.mocircle.cidrawing.mode.transformation.SkewMode;
+import com.mocircle.cidrawing.operation.AlignmentOperation;
 import com.mocircle.cidrawing.operation.GroupElementOperation;
 import com.mocircle.cidrawing.operation.PathOperation;
 import com.mocircle.cidrawing.operation.ReshapeOperation;
@@ -310,7 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void reshape(View v) {
         drawingBoard.getOperationManager().executeOperation(new ReshapeOperation());
-        drawingView.notifyViewUpdated();
     }
 
     public void group(View v) {
@@ -325,28 +325,60 @@ public class MainActivity extends AppCompatActivity {
         PathOperation operation = new PathOperation();
         operation.setPathOp(Path.Op.UNION);
         drawingBoard.getOperationManager().executeOperation(operation);
-        drawingView.notifyViewUpdated();
     }
 
     public void pathIntersect(View v) {
         PathOperation operation = new PathOperation();
         operation.setPathOp(Path.Op.INTERSECT);
         drawingBoard.getOperationManager().executeOperation(operation);
-        drawingView.notifyViewUpdated();
     }
 
     public void pathDifferent(View v) {
         PathOperation operation = new PathOperation();
         operation.setPathOp(Path.Op.DIFFERENCE);
         drawingBoard.getOperationManager().executeOperation(operation);
-        drawingView.notifyViewUpdated();
     }
 
     public void pathXor(View v) {
         PathOperation operation = new PathOperation();
         operation.setPathOp(Path.Op.XOR);
         drawingBoard.getOperationManager().executeOperation(operation);
-        drawingView.notifyViewUpdated();
+    }
+
+    public void alignLeft(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.HorizontalLeft);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void alignCenter(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.HorizontalCenter);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void alignRight(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.HorizontalRight);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void alignTop(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.VerticalTop);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void alignMiddle(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.VerticalMiddle);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void alignBottom(View v) {
+        AlignmentOperation operation = new AlignmentOperation();
+        operation.setAlignmentType(AlignmentOperation.AlignmentType.VerticalBottom);
+        drawingBoard.getOperationManager().executeOperation(operation);
     }
 
     // Bottom row

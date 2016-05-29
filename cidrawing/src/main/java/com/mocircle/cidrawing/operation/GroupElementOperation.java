@@ -1,15 +1,12 @@
 package com.mocircle.cidrawing.operation;
 
-import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.GroupElement;
 
 import java.util.List;
 
-public class GroupElementOperation extends AbstractOperation {
+public class GroupElementOperation extends SelectedElementsOperation {
 
-    private ElementManager elementManager;
-    private List<DrawElement> elements;
     private GroupElement groupElement;
 
     public GroupElementOperation() {
@@ -17,21 +14,6 @@ public class GroupElementOperation extends AbstractOperation {
 
     public GroupElementOperation(List<DrawElement> elements) {
         this.elements = elements;
-    }
-
-    @Override
-    public void setDrawingBoardId(String boardId) {
-        super.setDrawingBoardId(boardId);
-        elementManager = drawingBoard.getElementManager();
-    }
-
-    @Override
-    public boolean isExecutable() {
-        if (elements == null) {
-            // Get current selected elements as group target
-            elements = elementManager.getSelection().getElements();
-        }
-        return elements.size() > 1;
     }
 
     @Override

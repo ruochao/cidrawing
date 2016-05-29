@@ -2,17 +2,14 @@ package com.mocircle.cidrawing.operation;
 
 import android.graphics.Path;
 
-import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.element.BasePathElement;
 import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.PathElement;
 
 import java.util.List;
 
-public class PathOperation extends AbstractOperation {
+public class PathOperation extends SelectedElementsOperation {
 
-    private ElementManager elementManager;
-    private List<DrawElement> elements;
     private PathElement pathElement;
     private Path.Op pathOp = Path.Op.UNION;
 
@@ -32,17 +29,8 @@ public class PathOperation extends AbstractOperation {
     }
 
     @Override
-    public void setDrawingBoardId(String boardId) {
-        super.setDrawingBoardId(boardId);
-        elementManager = drawingBoard.getElementManager();
-    }
-
-    @Override
     public boolean isExecutable() {
-        if (elements == null) {
-            // Get current selected elements as group target
-            elements = elementManager.getSelection().getElements();
-        }
+        super.isExecutable();
         int pathElementCount = 0;
         for (DrawElement element : elements) {
             if (element instanceof BasePathElement) {

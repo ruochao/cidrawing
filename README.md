@@ -19,21 +19,30 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Photo element
  * Text element
 
-### Transformations
- * Move
- * Rotate
- * Resize
- * Skew
- * ReShape
-
 ### Functions
- * Element selection and transformation (Rectangle select, Oval select and Lasso select)
- * Multiple elements selection and transformation
- * Custom paint (color, width, style, etc)
+ * Basic element transformation
+  * Move
+  * Rotate
+  * Resize
+  * Skew
+  * Re-Shape (Reset transformation without change drawing)
+ * Element selection (Single/Multiple)
+  * Rectangle select
+  * Oval select
+  * Lasso select
+ * Custom paint (Color, Width, Style, etc)
  * Multiple layer support
  * Unlimited undo/redo
  * Element group/ungroup
  * Eraser (Object eraser)
+ * Path operation
+  * Union
+  * Intersect
+  * Different/Reserved Differernt
+  * Xor
+ * Element alignment
+  * Horizontal (Left, Center, Right)
+  * Vertical (Top, Middle, Bottom)
 
 ## How to Use
 Include view in your layout as:
@@ -56,6 +65,7 @@ Please check out the sample project at [CiDrawing Sample] (https://github.com/mo
 ### Screenshots
 ![Screenshot 1](https://github.com/mocircle/cidrawing/blob/master/docs/sample1.png) 
 ![Screenshot 2](https://github.com/mocircle/cidrawing/blob/master/docs/sample2.png)
+![Screenshot 3](https://github.com/mocircle/cidrawing/blob/master/docs/sample3.png)
 
 ## Add to your project
 Current CiDrawing is still under developing, not yet published. So please compile source code yourself.

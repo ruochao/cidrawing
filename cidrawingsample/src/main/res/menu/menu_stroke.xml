@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/plain_stroke_menu"
+        android:title="Plain Stroke"/>
+    <item
+        android:id="@+id/smooth_stroke_menu"
+        android:title="Smooth Stroke"/>
+    <item
+        android:id="@+id/eraser_stroke_menu"
+        android:title="Eraser Stroke"/>
+</menu>

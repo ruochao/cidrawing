@@ -15,11 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
 import com.mocircle.cidrawing.board.LayerManager;
+import com.mocircle.cidrawing.element.DrawElement;
 import com.mocircle.cidrawing.element.PhotoElement;
 import com.mocircle.cidrawing.element.TextElement;
 import com.mocircle.cidrawing.element.shape.ArcElement;
@@ -39,7 +41,9 @@ import com.mocircle.cidrawing.mode.eraser.ObjectEraserMode;
 import com.mocircle.cidrawing.mode.selection.LassoSelectionMode;
 import com.mocircle.cidrawing.mode.selection.OvalSelectionMode;
 import com.mocircle.cidrawing.mode.selection.RectSelectionMode;
-import com.mocircle.cidrawing.mode.stroke.StrokeMode;
+import com.mocircle.cidrawing.mode.stroke.EraserStrokeMode;
+import com.mocircle.cidrawing.mode.stroke.PlainStrokeMode;
+import com.mocircle.cidrawing.mode.stroke.SmoothStrokeMode;
 import com.mocircle.cidrawing.mode.transformation.MoveMode;
 import com.mocircle.cidrawing.mode.transformation.ResizeMode;
 import com.mocircle.cidrawing.mode.transformation.RotateMode;
@@ -69,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawingBoard = DrawingBoardManager.getInstance().createNewBoard();
-        drawingBoard.getConfigManager().setDebugMode(true);
         setupView();
         setupLayer();
         setupDefault();
@@ -225,8 +228,31 @@ public class MainActivity extends AppCompatActivity {
 
     // Second row
 
-    public void pen(View v) {
-        drawingBoard.getDrawingContext().setDrawingMode(new StrokeMode());
+    public void stroke(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_stroke, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                DrawingMode mode = null;
+                switch (item.getItemId()) {
+                    case R.id.plain_stroke_menu:
+                        mode = new PlainStrokeMode();
+                        break;
+                    case R.id.smooth_stroke_menu:
+                        mode = new SmoothStrokeMode();
+                        break;
+                    case R.id.eraser_stroke_menu:
+                        mode = new EraserStrokeMode();
+                        break;
+                }
+                if (mode != null) {
+                    drawingBoard.getDrawingContext().setDrawingMode(mode);
+                }
+                return true;
+            }
+        });
+        popup.show();
     }
 
     public void insertShape(View v) {
@@ -445,6 +471,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showInfo() {
+        DrawElement element = drawingBoard.getElementManager().getSelection().getSingleElement();
+        if (element != null) {
+            String msg = "Type: " + element.getClass().getSimpleName();
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

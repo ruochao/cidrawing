@@ -3,6 +3,7 @@ package com.mocircle.cidrawing.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -17,19 +18,23 @@ public class CiDrawingView extends View implements DrawingView {
 
     public CiDrawingView(Context context) {
         super(context);
+        setupView();
     }
 
     public CiDrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setupView();
     }
 
     public CiDrawingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setupView();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public CiDrawingView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        setupView();
     }
 
     @Override
@@ -57,6 +62,10 @@ public class CiDrawingView extends View implements DrawingView {
         if (viewProxy != null) {
             viewProxy.onDraw(canvas);
         }
+    }
+
+    protected void setupView() {
+        setLayerType(LAYER_TYPE_HARDWARE, null);
     }
 
 }

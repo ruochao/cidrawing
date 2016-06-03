@@ -20,9 +20,6 @@ public class DrawingContext {
     private List<DrawingModeChangedListener> drawingModeChangedListeners = new ArrayList<>();
 
     private CiPaint paint;
-    private int color;
-    private int alpha;
-    private float strokeWidth;
 
     public DrawingContext(String boardId) {
         this.boardId = boardId;
@@ -56,33 +53,6 @@ public class DrawingContext {
             paint = new CiPaint();
         }
         return paint;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-        getPaint().setColor(color);
-    }
-
-    public int getAlpha() {
-        return alpha;
-    }
-
-    public void setAlpha(int alpha) {
-        this.alpha = alpha;
-        getPaint().setAlpha(alpha);
-    }
-
-    public float getStrokeWidth() {
-        return strokeWidth;
-    }
-
-    public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
-        getPaint().setStrokeWidth(strokeWidth);
     }
 
     private void setupDefault() {

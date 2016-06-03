@@ -3,6 +3,7 @@ package com.mocircle.cidrawingsample;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -113,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDefault() {
-        drawingBoard.getDrawingContext().setColor(Color.BLACK);
-        drawingBoard.getDrawingContext().setStrokeWidth(6);
+        drawingBoard.getDrawingContext().getPaint().setColor(Color.BLACK);
+        drawingBoard.getDrawingContext().getPaint().setStrokeWidth(6);
         drawingBoard.getDrawingContext().setDrawingMode(new PointerMode());
         drawingBoard.getElementManager().createNewLayer();
         drawingBoard.getElementManager().selectFirstVisibleLayer();
@@ -417,13 +418,39 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.black_menu:
-                        drawingBoard.getDrawingContext().setColor(Color.BLACK);
+                        drawingBoard.getDrawingContext().getPaint().setColor(Color.BLACK);
                         break;
                     case R.id.blue_menu:
-                        drawingBoard.getDrawingContext().setColor(Color.BLUE);
+                        drawingBoard.getDrawingContext().getPaint().setColor(Color.BLUE);
                         break;
                     case R.id.red_menu:
-                        drawingBoard.getDrawingContext().setColor(Color.RED);
+                        drawingBoard.getDrawingContext().getPaint().setColor(Color.RED);
+                        break;
+                }
+                return true;
+            }
+        });
+        popup.show();
+    }
+
+    public void changeColor2(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_color2, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nocolor_menu:
+                        drawingBoard.getDrawingContext().getPaint().setSecondaryColor(null);
+                        break;
+                    case R.id.black_menu:
+                        drawingBoard.getDrawingContext().getPaint().setSecondaryColor(Color.BLACK);
+                        break;
+                    case R.id.blue_menu:
+                        drawingBoard.getDrawingContext().getPaint().setSecondaryColor(Color.BLUE);
+                        break;
+                    case R.id.red_menu:
+                        drawingBoard.getDrawingContext().getPaint().setSecondaryColor(Color.RED);
                         break;
                 }
                 return true;
@@ -440,13 +467,36 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.large_menu:
-                        drawingBoard.getDrawingContext().setStrokeWidth(10);
+                        drawingBoard.getDrawingContext().getPaint().setStrokeWidth(10);
                         break;
                     case R.id.normal_menu:
-                        drawingBoard.getDrawingContext().setStrokeWidth(6);
+                        drawingBoard.getDrawingContext().getPaint().setStrokeWidth(6);
                         break;
                     case R.id.small_menu:
-                        drawingBoard.getDrawingContext().setStrokeWidth(2);
+                        drawingBoard.getDrawingContext().getPaint().setStrokeWidth(2);
+                        break;
+                }
+                return true;
+            }
+        });
+        popup.show();
+    }
+
+    public void changeStyle(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_style, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.stroke_menu:
+                        drawingBoard.getDrawingContext().getPaint().setStyle(Paint.Style.STROKE);
+                        break;
+                    case R.id.fill_menu:
+                        drawingBoard.getDrawingContext().getPaint().setStyle(Paint.Style.FILL);
+                        break;
+                    case R.id.fill_stroke_menu:
+                        drawingBoard.getDrawingContext().getPaint().setStyle(Paint.Style.FILL_AND_STROKE);
                         break;
                 }
                 return true;

@@ -4,117 +4,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <HorizontalScrollView
+    <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#999"
-        android:padding="2dp">
+        android:orientation="horizontal"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/pointer_button"
+            style="@style/ToolButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:onClick="pointer"
+            android:text="Pointer"/>
 
-            <Button
-                android:id="@+id/pointer_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="pointer"
-                android:text="Pointer"/>
+        <Button
+            android:id="@+id/select_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="select"
+            android:text="Select"/>
 
-            <Button
-                android:id="@+id/select_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="select"
-                android:text="Select"/>
+        <Button
+            android:id="@+id/transform_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="transform"
+            android:text="Transform"/>
 
-            <Button
-                android:id="@+id/transform_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="transform"
-                android:text="Transform"/>
+        <Button
+            android:id="@+id/eraser_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="eraser"
+            android:text="Eraser"/>
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/eraser_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="eraser"
-                android:text="Eraser"/>
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <HorizontalScrollView
+    <LinearLayout
         android:id="@+id/top2_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_layout"
         android:background="#999"
-        android:padding="2dp">
+        android:orientation="horizontal"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/stroke_button"
+            style="@style/ToolButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:onClick="stroke"
+            android:text="Stroke"/>
 
-            <Button
-                android:id="@+id/stroke_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="stroke"
-                android:text="Stroke"/>
+        <Button
+            android:id="@+id/shape_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="insertShape"
+            android:text="Shape"/>
 
-            <Button
-                android:id="@+id/shape_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="insertShape"
-                android:text="Shape"/>
+        <Button
+            android:id="@+id/photo_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="insertPhoto"
+            android:text="Photo"/>
 
-            <Button
-                android:id="@+id/photo_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="insertPhoto"
-                android:text="Photo"/>
-
-            <Button
-                android:id="@+id/text_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="insertText"
-                android:text="Text"/>
-        </LinearLayout>
-    </HorizontalScrollView>
+        <Button
+            android:id="@+id/text_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="insertText"
+            android:text="Text"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/bottom_layout"
+        android:id="@+id/bottom2_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#999"
         android:orientation="horizontal"
-        android:padding="2dp">
-
-        <Button
-            android:id="@+id/color_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="changeColor"
-            android:text="Color"/>
-
-        <Button
-            android:id="@+id/width_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="changeWidth"
-            android:text="Width"/>
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
 
         <Button
             android:id="@+id/undo_button"
+            style="@style/ToolButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="undo"
@@ -122,10 +109,54 @@
 
         <Button
             android:id="@+id/redo_button"
+            style="@style/ToolButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="redo"
             android:text="Redo"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom2_layout"
+        android:background="#999"
+        android:orientation="horizontal"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
+
+        <Button
+            android:id="@+id/color_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeColor"
+            android:text="Color 1"/>
+
+        <Button
+            android:id="@+id/secondary_color_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeColor2"
+            android:text="Color 2"/>
+
+        <Button
+            android:id="@+id/width_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeWidth"
+            android:text="Width"/>
+
+        <Button
+            android:id="@+id/style_button"
+            style="@style/ToolButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeStyle"
+            android:text="Style"/>
     </LinearLayout>
 
     <com.mocircle.cidrawing.view.CiDrawingView

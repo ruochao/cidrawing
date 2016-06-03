@@ -4,6 +4,8 @@ import android.graphics.Paint;
 
 public class CiPaint extends Paint {
 
+    private Integer secondaryColor;
+
     public CiPaint() {
         super();
     }
@@ -14,5 +16,18 @@ public class CiPaint extends Paint {
 
     public CiPaint(Paint paint) {
         super(paint);
+        if (paint instanceof CiPaint) {
+            CiPaint p = (CiPaint) paint;
+            secondaryColor = p.secondaryColor;
+        }
     }
+
+    public Integer getSecondaryColor() {
+        return secondaryColor;
+    }
+
+    public void setSecondaryColor(Integer color) {
+        secondaryColor = color;
+    }
+
 }

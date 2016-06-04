@@ -2,6 +2,7 @@ package com.mocircle.cidrawing.element;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Path;
 import android.graphics.RectF;
 
 import java.util.List;
@@ -72,5 +73,16 @@ public class GroupElement extends ElementGroup {
             box.union(temp.getOuterBoundingBox());
         }
         return box;
+    }
+
+    @Override
+    public Path getTouchableArea() {
+        Path path = new Path();
+        for (DrawElement element : elements) {
+            DrawElement temp = (DrawElement) element.clone();
+            temp.applyDisplayMatrixToData();
+            path.op(temp.getTouchableArea(), Path.Op.UNION);
+        }
+        return path;
     }
 }

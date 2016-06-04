@@ -40,6 +40,15 @@ public abstract class BoundsElement extends DrawElement {
     }
 
     @Override
+    public Path getTouchableArea() {
+        if (boundingPath != null) {
+            return boundingPath;
+        } else {
+            return new Path();
+        }
+    }
+
+    @Override
     protected void cloneTo(BaseElement element) {
         super.cloneTo(element);
         if (element instanceof BoundsElement) {

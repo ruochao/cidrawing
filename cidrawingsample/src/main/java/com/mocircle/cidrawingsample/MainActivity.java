@@ -50,6 +50,7 @@ import com.mocircle.cidrawing.mode.transformation.ResizeMode;
 import com.mocircle.cidrawing.mode.transformation.RotateMode;
 import com.mocircle.cidrawing.mode.transformation.SkewMode;
 import com.mocircle.cidrawing.operation.AlignmentOperation;
+import com.mocircle.cidrawing.operation.FlipOperation;
 import com.mocircle.cidrawing.operation.GroupElementOperation;
 import com.mocircle.cidrawing.operation.PathOperation;
 import com.mocircle.cidrawing.operation.ReshapeOperation;
@@ -405,6 +406,18 @@ public class MainActivity extends AppCompatActivity {
     public void alignBottom(View v) {
         AlignmentOperation operation = new AlignmentOperation();
         operation.setAlignmentType(AlignmentOperation.AlignmentType.VerticalBottom);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void flipVertical(View v) {
+        FlipOperation operation = new FlipOperation();
+        operation.setFlipType(FlipOperation.FlipType.Vertical);
+        drawingBoard.getOperationManager().executeOperation(operation);
+    }
+
+    public void flipHorizontal(View v) {
+        FlipOperation operation = new FlipOperation();
+        operation.setFlipType(FlipOperation.FlipType.Horizontal);
         drawingBoard.getOperationManager().executeOperation(operation);
     }
 

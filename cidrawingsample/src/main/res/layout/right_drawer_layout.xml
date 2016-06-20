@@ -102,5 +102,18 @@
             android:layout_height="wrap_content"
             android:onClick="alignBottom"
             android:text="Align Bottom"/>
+        <Button
+            android:id="@+id/flip_vertical_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="flipVertical"
+            android:text="Flip Vertical"/>
+
+        <Button
+            android:id="@+id/flip_horizontal_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="flipHorizontal"
+            android:text="Flip Horizontal"/>
     </LinearLayout>
 </ScrollView>

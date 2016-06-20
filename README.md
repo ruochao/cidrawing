@@ -43,6 +43,9 @@ CiDrawing is a vector graphics library for Android, it provides a custom view an
  * Element alignment
   * Horizontal (Left, Center, Right)
   * Vertical (Top, Middle, Bottom)
+ * Element flip (based on reference point)
+  * Horizontal
+  * Vertical
 
 ## How to Use
 Include view in your layout as:

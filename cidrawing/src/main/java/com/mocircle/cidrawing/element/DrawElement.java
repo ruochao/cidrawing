@@ -245,7 +245,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public boolean isSelectionEnabled() {
-        return selectionEnabled;
+        return selectionEnabled && configManager.getDrawingType() == ConfigManager.DrawingType.Vector;
     }
 
     @Override

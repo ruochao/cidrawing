@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.mocircle.cidrawing.ConfigManager;
 import com.mocircle.cidrawing.DrawingBoard;
 import com.mocircle.cidrawing.DrawingBoardManager;
 import com.mocircle.cidrawing.board.Layer;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.switch_drawing_type_menu:
+                switchDrawingType();
+                return true;
             case R.id.switch_debug_menu:
                 switchDebugMode();
                 return true;
@@ -528,9 +532,20 @@ public class MainActivity extends AppCompatActivity {
 
     // More menu
 
+    public void switchDrawingType() {
+        if (drawingBoard.getConfigManager().getDrawingType() == ConfigManager.DrawingType.Vector) {
+            drawingBoard.getConfigManager().setDrawingType(ConfigManager.DrawingType.Painting);
+            Toast.makeText(this, "Switch to Painting type.", Toast.LENGTH_SHORT).show();
+        } else {
+            drawingBoard.getConfigManager().setDrawingType(ConfigManager.DrawingType.Vector);
+            Toast.makeText(this, "Switch to Vector type.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void switchDebugMode() {
         drawingBoard.getConfigManager().setDebugMode(!drawingBoard.getConfigManager().isDebugMode());
         drawingView.notifyViewUpdated();
+        Toast.makeText(this, "Debug mode=" + drawingBoard.getConfigManager().isDebugMode() + ".", Toast.LENGTH_SHORT).show();
     }
 
     public void showInfo() {

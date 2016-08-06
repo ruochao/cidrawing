@@ -6,6 +6,7 @@ package com.mocircle.cidrawing;
 public class ConfigManagerImpl implements ConfigManager {
 
     private boolean debugMode = false;
+    private DrawingType drawingType = DrawingType.Vector;
 
     @Override
     public boolean isDebugMode() {
@@ -15,6 +16,16 @@ public class ConfigManagerImpl implements ConfigManager {
     @Override
     public void setDebugMode(boolean debugMode) {
         this.debugMode = debugMode;
+    }
+
+    @Override
+    public DrawingType getDrawingType() {
+        return drawingType;
+    }
+
+    @Override
+    public void setDrawingType(DrawingType type) {
+        this.drawingType = type;
     }
 
 }

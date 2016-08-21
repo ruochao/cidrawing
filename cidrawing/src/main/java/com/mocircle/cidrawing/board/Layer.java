@@ -64,12 +64,16 @@ public class Layer {
     }
 
     public void addElement(DrawElement element) {
-        elements.add(element);
-        element.setBoardId(boardId);
+        if (element != null) {
+            elements.add(element);
+            element.setBoardId(boardId);
+        }
     }
 
     public void removeElement(DrawElement element) {
-        elements.remove(element);
+        if (element != null) {
+            elements.remove(element);
+        }
     }
 
 }

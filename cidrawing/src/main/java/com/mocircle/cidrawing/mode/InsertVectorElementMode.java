@@ -53,13 +53,17 @@ public class InsertVectorElementMode extends AbstractDrawingMode {
                 elementManager.addElementToCurrentLayer(previewElement);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                ((SupportVector) previewElement).setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                if (previewElement != null) {
+                    ((SupportVector) previewElement).setupElementByVector(new Vector2(downX, downY, event.getX(), event.getY()));
+                }
                 return true;
             case MotionEvent.ACTION_UP:
-                elementManager.removeElementFromCurrentLayer(previewElement);
+                if (previewElement != null) {
+                    elementManager.removeElementFromCurrentLayer(previewElement);
 
-                DrawElement element = createRealElement(new Vector2(downX, downY, event.getX(), event.getY()));
-                operationManager.executeOperation(new InsertElementOperation(element));
+                    DrawElement element = createRealElement(new Vector2(downX, downY, event.getX(), event.getY()));
+                    operationManager.executeOperation(new InsertElementOperation(element));
+                }
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 elementManager.removeElementFromCurrentLayer(previewElement);

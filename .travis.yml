@@ -34,5 +34,5 @@ before_script:
     
 script:
   - ./gradlew assemble
-  - ./gradlew testDebug
+  - ./gradlew test
   #- ./gradlew connectedAndroidTest

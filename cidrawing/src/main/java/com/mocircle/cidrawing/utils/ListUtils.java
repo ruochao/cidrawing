@@ -92,9 +92,10 @@ public class ListUtils {
                 last = shiftItem(list.subList(0, last), indexArray[i], offset);
             }
         } else {
-            int last = 0;
+            int last = -1;
             for (int i = 0; i < indexArray.length; i++) {
-                last = shiftItem(list.subList(last, list.size()), indexArray[i], offset);
+                int index = indexArray[i] - (last + 1);
+                last = shiftItem(list.subList(last + 1, list.size()), index, offset);
             }
         }
     }

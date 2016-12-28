@@ -124,8 +124,8 @@ public class Layer {
     public void arrangeElements(List<DrawElement> elementList, int offset, ArrangeStrategy strategy) {
         List<Integer> indexList = new ArrayList<>();
         for (DrawElement element : elementList) {
-            int index = elementList.indexOf(element);
-            if (index > 0) {
+            int index = elements.indexOf(element);
+            if (index >= 0) {
                 indexList.add(index);
             }
         }

@@ -56,6 +56,16 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void testShiftItemsWithFixedDistanceOverflowCorner() {
+        List<String> list = Arrays.asList("A", "B", "C", "D", "E");
+        ListUtils.shiftItemsWithFixedDistance(list, new int[]{1, 4}, 10);
+        Assert.assertArrayEquals(new String[]{"A", "B", "C", "D", "E"}, list.toArray());
+
+        ListUtils.shiftItemsWithFixedDistance(list, new int[]{0, 2}, -10);
+        Assert.assertArrayEquals(new String[]{"A", "B", "C", "D", "E"}, list.toArray());
+    }
+
+    @Test
     public void testShiftItemsAsMuchAsPossibleNormal() {
         List<String> list = Arrays.asList("A", "B", "C", "D", "E");
         ListUtils.shiftItemsAsMuchAsPossible(list, new int[]{0, 2}, 1);
@@ -65,7 +75,7 @@ public class ListUtilsTest {
         Assert.assertArrayEquals(new String[]{"A", "B", "C", "D", "E"}, list.toArray());
     }
 
-    //@Test
+    @Test
     public void testShiftItemsAsMuchAsPossibleOverflow() {
         List<String> list = Arrays.asList("A", "B", "C", "D", "E");
         ListUtils.shiftItemsAsMuchAsPossible(list, new int[]{0, 2}, 10);

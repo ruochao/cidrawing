@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/get_order_menu"
+        android:title="Get order index" />
+    <item
+        android:id="@+id/bring_front_menu"
+        android:title="Bring to Front" />
+    <item
+        android:id="@+id/send_back_menu"
+        android:title="Send to Back" />
+    <item
+        android:id="@+id/bring_forward_menu"
+        android:title="Bring Forward" />
+    <item
+        android:id="@+id/send_backward_menu"
+        android:title="Send Backward" />
+
+</menu>

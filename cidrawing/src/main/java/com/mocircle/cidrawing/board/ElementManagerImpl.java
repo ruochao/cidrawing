@@ -134,6 +134,17 @@ public class ElementManagerImpl implements ElementManager {
     }
 
     @Override
+    public DrawElement[] getVisibleObjects() {
+        List<DrawElement> elements = new ArrayList<>();
+        for (Layer layer : layers) {
+            if (layer.isVisible()) {
+                elements.addAll(Arrays.asList(layer.getLayerObjects()));
+            }
+        }
+        return elements.toArray(new DrawElement[elements.size()]);
+    }
+
+    @Override
     public DrawElement[] getVisibleElements() {
         List<DrawElement> elements = new ArrayList<>();
         for (Layer layer : layers) {
@@ -144,10 +155,40 @@ public class ElementManagerImpl implements ElementManager {
         return elements.toArray(new DrawElement[elements.size()]);
     }
 
+
+    @Override
+    public DrawElement[] getVisibleAdornments() {
+        List<DrawElement> elements = new ArrayList<>();
+        for (Layer layer : layers) {
+            if (layer.isVisible()) {
+                elements.addAll(Arrays.asList(layer.getAdornments()));
+            }
+        }
+        return elements.toArray(new DrawElement[elements.size()]);
+    }
+
+    @Override
+    public DrawElement[] getCurrentObjects() {
+        if (getCurrentLayer() != null) {
+            return getCurrentLayer().getLayerObjects();
+        } else {
+            return new DrawElement[0];
+        }
+    }
+
     @Override
     public DrawElement[] getCurrentElements() {
         if (getCurrentLayer() != null) {
             return getCurrentLayer().getElements();
+        } else {
+            return new DrawElement[0];
+        }
+    }
+
+    @Override
+    public DrawElement[] getCurrentAdornments() {
+        if (getCurrentLayer() != null) {
+            return getCurrentLayer().getAdornments();
         } else {
             return new DrawElement[0];
         }
@@ -164,6 +205,16 @@ public class ElementManagerImpl implements ElementManager {
     }
 
     @Override
+    public void addAdornmentToCurrentLayer(DrawElement element) {
+        getCurrentLayer().addAdornment(element);
+    }
+
+    @Override
+    public void removeAdornmentFromCurrentLayer(DrawElement element) {
+        getCurrentLayer().removeAdornment(element);
+    }
+
+    @Override
     public void selectElement(DrawElement element) {
         element.setSelected(true);
     }
@@ -172,13 +223,13 @@ public class ElementManagerImpl implements ElementManager {
     public void selectElements(List<DrawElement> elements) {
         VirtualElement virtualElement = new VirtualElement(elements);
         virtualElement.setSelected(true);
-        addElementToCurrentLayer(virtualElement);
+        addAdornmentToCurrentLayer(virtualElement);
     }
 
     @Override
     public Selection getSelection() {
-        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
-            DrawElement element = getCurrentElements()[i];
+        for (int i = getCurrentObjects().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentObjects()[i];
             if (element.isSelected()) {
                 return new Selection(element);
             }
@@ -188,19 +239,19 @@ public class ElementManagerImpl implements ElementManager {
 
     @Override
     public void clearSelection() {
-        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
-            DrawElement element = getCurrentElements()[i];
+        for (int i = getCurrentObjects().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentObjects()[i];
             element.setSelected(false);
             if (element instanceof VirtualElement) {
-                removeElementFromCurrentLayer(element);
+                removeAdornmentFromCurrentLayer(element);
             }
         }
     }
 
     @Override
     public DrawElement getFirstHitElement(float x, float y) {
-        for (int i = getCurrentElements().length - 1; i >= 0; i--) {
-            DrawElement element = getCurrentElements()[i];
+        for (int i = getCurrentObjects().length - 1; i >= 0; i--) {
+            DrawElement element = getCurrentObjects()[i];
             if (element.isSelectionEnabled() && element.hitTestForSelection(x, y)) {
                 return element;
             }

@@ -54,17 +54,17 @@ public abstract class SelectionMode extends AbstractDrawingMode {
 
                 selectionElement = createSelectionElement();
                 selectionElement.setPaint(selectionPaint);
-                elementManager.addElementToCurrentLayer(selectionElement);
+                elementManager.addAdornmentToCurrentLayer(selectionElement);
                 return true;
             case MotionEvent.ACTION_UP:
-                elementManager.removeElementFromCurrentLayer(selectionElement);
+                elementManager.removeAdornmentFromCurrentLayer(selectionElement);
                 elementManager.clearSelection();
 
                 if (DrawUtils.isSingleTap(drawingBoard.getDrawingView().getContext(), downX, downY, event)) {
 
                     // Single selection
-                    for (int i = elementManager.getCurrentElements().length - 1; i >= 0; i--) {
-                        DrawElement element = elementManager.getCurrentElements()[i];
+                    for (int i = elementManager.getCurrentObjects().length - 1; i >= 0; i--) {
+                        DrawElement element = elementManager.getCurrentObjects()[i];
                         if (element.isSelectionEnabled()) {
                             if (element.hitTestForSelection(downX, downY)) {
                                 // Only allow one element selected
@@ -78,8 +78,8 @@ public abstract class SelectionMode extends AbstractDrawingMode {
 
                     // Multiple selection
                     List<DrawElement> selectedElements = new ArrayList<>();
-                    for (int i = elementManager.getCurrentElements().length - 1; i >= 0; i--) {
-                        DrawElement element = elementManager.getCurrentElements()[i];
+                    for (int i = elementManager.getCurrentObjects().length - 1; i >= 0; i--) {
+                        DrawElement element = elementManager.getCurrentObjects()[i];
                         element.setSelected(false);
                         if (element.isSelectionEnabled() && element.hitTestForSelection(getSelectionPath())) {
                             selectedElements.add(element);
@@ -92,13 +92,13 @@ public abstract class SelectionMode extends AbstractDrawingMode {
                         // Real multiple selection
                         virtualElement = new VirtualElement(selectedElements);
                         virtualElement.setSelected(true);
-                        elementManager.addElementToCurrentLayer(virtualElement);
+                        elementManager.addAdornmentToCurrentLayer(virtualElement);
                     }
                 }
 
                 return true;
             case MotionEvent.ACTION_CANCEL:
-                elementManager.removeElementFromCurrentLayer(selectionElement);
+                elementManager.removeAdornmentFromCurrentLayer(selectionElement);
                 return true;
         }
         return false;

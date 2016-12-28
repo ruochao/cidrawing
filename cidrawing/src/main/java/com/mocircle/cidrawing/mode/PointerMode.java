@@ -74,8 +74,8 @@ public class PointerMode extends CompositeMode {
 
 
     private void hitTestForSwitchingMode(float x, float y) {
-        for (int i = elementManager.getCurrentElements().length - 1; i >= 0; i--) {
-            DrawElement element = elementManager.getCurrentElements()[i];
+        for (int i = elementManager.getCurrentObjects().length - 1; i >= 0; i--) {
+            DrawElement element = elementManager.getCurrentObjects()[i];
             if (element.isSelected()) {
 
                 if (element.hitTestForReferencePoint(x, y)) {

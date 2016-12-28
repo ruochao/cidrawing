@@ -51,6 +51,7 @@ import com.mocircle.cidrawing.mode.transformation.ResizeMode;
 import com.mocircle.cidrawing.mode.transformation.RotateMode;
 import com.mocircle.cidrawing.mode.transformation.SkewMode;
 import com.mocircle.cidrawing.operation.AlignmentOperation;
+import com.mocircle.cidrawing.operation.ArrangeOperation;
 import com.mocircle.cidrawing.operation.FlipOperation;
 import com.mocircle.cidrawing.operation.GroupElementOperation;
 import com.mocircle.cidrawing.operation.PathOperation;
@@ -528,6 +529,45 @@ public class MainActivity extends AppCompatActivity {
 
     public void redo(View v) {
         drawingBoard.getOperationManager().redo();
+    }
+
+    public void arrange(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.menu_arrange, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.get_order_menu) {
+                    DrawElement element = drawingBoard.getElementManager().getSelection().getSingleElement();
+                    if (element != null) {
+                        int index = drawingBoard.getElementManager().getCurrentLayer().getOrderIndex(element);
+                        Toast.makeText(MainActivity.this, "Element order = " + index, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "You should select one element", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+
+                ArrangeOperation operation = new ArrangeOperation();
+                switch (item.getItemId()) {
+                    case R.id.bring_forward_menu:
+                        operation.setArrangeType(ArrangeOperation.ArrangeType.BringForward);
+                        break;
+                    case R.id.bring_front_menu:
+                        operation.setArrangeType(ArrangeOperation.ArrangeType.BringToFront);
+                        break;
+                    case R.id.send_backward_menu:
+                        operation.setArrangeType(ArrangeOperation.ArrangeType.SendBackward);
+                        break;
+                    case R.id.send_back_menu:
+                        operation.setArrangeType(ArrangeOperation.ArrangeType.SendToBack);
+                        break;
+                }
+                drawingBoard.getOperationManager().executeOperation(operation);
+                return true;
+            }
+        });
+        popup.show();
     }
 
     // More menu

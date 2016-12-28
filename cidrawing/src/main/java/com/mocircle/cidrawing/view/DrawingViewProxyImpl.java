@@ -24,11 +24,9 @@ public class DrawingViewProxyImpl implements DrawingViewProxy {
 
     @Override
     public void onDraw(Canvas canvas) {
-        DrawElement[] elements = elementManager.getVisibleElements();
-        if (elements.length > 0) {
-            for (DrawElement element : elements) {
-                element.drawToCanvas(canvas);
-            }
+        DrawElement[] elements = elementManager.getVisibleObjects();
+        for (int i = 0; i < elements.length; i++) {
+            elements[i].drawToCanvas(canvas);
         }
     }
 

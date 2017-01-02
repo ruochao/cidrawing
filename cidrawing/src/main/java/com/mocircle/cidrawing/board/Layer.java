@@ -76,12 +76,14 @@ public class Layer {
         if (element != null) {
             element.setBoardId(boardId);
             elements.add(element);
+            element.setOrderIndex(getElementOrder(element));
         }
     }
 
     public void removeElement(DrawElement element) {
         if (element != null) {
             elements.remove(element);
+            refreshElementsOrder();
         }
     }
 
@@ -93,32 +95,41 @@ public class Layer {
         if (element != null) {
             element.setBoardId(boardId);
             adornments.add(element);
+            element.setOrderIndex(getAdornmentOrder(element));
         }
     }
 
     public void removeAdornment(DrawElement element) {
         if (element != null) {
             adornments.remove(element);
+            refreshAdornmentsOrder();
         }
     }
 
-    public int getOrderIndex(DrawElement element) {
+    public int getElementOrder(DrawElement element) {
         return elements.indexOf(element);
+    }
+
+    public int getAdornmentOrder(DrawElement element) {
+        return adornments.indexOf(element);
     }
 
     public void arrangeElement(DrawElement element, int offset) {
         int index = elements.indexOf(element);
         ListUtils.shiftItem(elements, index, offset);
+        refreshElementsOrder();
     }
 
     public void arrangeElementToFront(DrawElement element) {
         int index = elements.indexOf(element);
         ListUtils.shiftItemToFront(elements, index);
+        refreshElementsOrder();
     }
 
     public void arrangeElementToBack(DrawElement element) {
         int index = elements.indexOf(element);
         ListUtils.shiftItemToBack(elements, index);
+        refreshElementsOrder();
     }
 
     public void arrangeElements(List<DrawElement> elementList, int offset, ArrangeStrategy strategy) {
@@ -137,6 +148,7 @@ public class Layer {
         } else {
             CircleLog.w(TAG, "Unsupported arrange strategy: " + strategy);
         }
+        refreshElementsOrder();
     }
 
     public void arrangeElementsToFront(List<DrawElement> elementList, ArrangeStrategy strategy) {
@@ -145,6 +157,18 @@ public class Layer {
 
     public void arrangeElementsToBack(List<DrawElement> elementList, ArrangeStrategy strategy) {
         arrangeElements(elementList, -elementList.size(), strategy);
+    }
+
+    private void refreshElementsOrder() {
+        for (int i = 0; i < elements.size(); i++) {
+            elements.get(i).setOrderIndex(i);
+        }
+    }
+
+    private void refreshAdornmentsOrder() {
+        for (int i = 0; i < adornments.size(); i++) {
+            adornments.get(i).setOrderIndex(i);
+        }
     }
 
 }

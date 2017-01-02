@@ -50,7 +50,7 @@ public class ArrangeOperation extends SelectedElementsOperation {
         // Save current elements ordering
         Layer currentLayer = drawingBoard.getElementManager().getCurrentLayer();
         for (DrawElement element : elements) {
-            orderMap.put(element, currentLayer.getOrderIndex(element));
+            orderMap.put(element, currentLayer.getElementOrder(element));
         }
         switch (arrangeType) {
             case BringForward:
@@ -90,7 +90,7 @@ public class ArrangeOperation extends SelectedElementsOperation {
     public void undo() {
         Layer currentLayer = drawingBoard.getElementManager().getCurrentLayer();
         for (DrawElement element : elements) {
-            int currentOrder = currentLayer.getOrderIndex(element);
+            int currentOrder = currentLayer.getElementOrder(element);
             int offset = orderMap.get(element) - currentOrder;
             currentLayer.arrangeElement(element, offset);
         }

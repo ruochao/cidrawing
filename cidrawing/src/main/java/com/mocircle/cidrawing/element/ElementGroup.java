@@ -4,6 +4,8 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.mocircle.cidrawing.utils.ElementUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public abstract class ElementGroup extends DrawElement {
 
     public void setElements(List<DrawElement> elements) {
         this.elements = elements;
+        // Make sure the element's order is the same in layer
+        ElementUtils.sortElementsInLayer(elements);
         recalculateBoundingBox();
     }
 

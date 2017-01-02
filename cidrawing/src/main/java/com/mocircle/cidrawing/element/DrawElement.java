@@ -52,6 +52,7 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     protected boolean skewEnabled = true;
     protected boolean resizingEnabled = true;
     protected boolean lockAspectRatio = false;
+    protected int orderIndex = 0;
 
     public DrawElement() {
     }
@@ -431,6 +432,14 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
 
     @Override
     public void resetAspectRatio(AspectRatioResetMethod method) {
+    }
+
+    public int getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(int orderIndex) {
+        this.orderIndex = orderIndex;
     }
 
     @Override

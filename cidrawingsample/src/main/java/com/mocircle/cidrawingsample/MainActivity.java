@@ -540,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.get_order_menu) {
                     DrawElement element = drawingBoard.getElementManager().getSelection().getSingleElement();
                     if (element != null) {
-                        int index = drawingBoard.getElementManager().getCurrentLayer().getOrderIndex(element);
+                        int index = drawingBoard.getElementManager().getCurrentLayer().getElementOrder(element);
                         Toast.makeText(MainActivity.this, "Element order = " + index, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "You should select one element", Toast.LENGTH_SHORT).show();

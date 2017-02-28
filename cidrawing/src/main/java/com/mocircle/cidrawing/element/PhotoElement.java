@@ -5,13 +5,29 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.mocircle.android.logging.CircleLog;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.behavior.Recyclable;
 import com.mocircle.cidrawing.element.behavior.SupportVector;
+import com.mocircle.cidrawing.persistence.PersistenceException;
+import com.mocircle.cidrawing.persistence.PersistenceManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PhotoElement extends BoundsElement implements SupportVector, Recyclable {
 
+    private static final String TAG = "PhotoElement";
+    private static final String KEY_BITMAP = "bitmap";
+    private static final String KEY_WIDTH = "width";
+    private static final String KEY_HEIGHT = "height";
+
     private Bitmap bitmap;
+    private transient String bitmapKey;
 
     public PhotoElement() {
     }
@@ -26,6 +42,59 @@ public class PhotoElement extends BoundsElement implements SupportVector, Recycl
         }
         this.bitmap = bitmap;
         calculateBoundingBox();
+    }
+
+    @Override
+    public JSONObject generateJson() {
+        JSONObject object = super.generateJson();
+        try {
+            if (bitmap != null) {
+                object.put(KEY_BITMAP, getBitmapKey());
+                object.put(KEY_WIDTH, bitmap.getWidth());
+                object.put(KEY_HEIGHT, bitmap.getHeight());
+            }
+        } catch (JSONException e) {
+            throw new PersistenceException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public Map<String, byte[]> generateResources() {
+        Map<String, byte[]> resMap = new HashMap<>();
+        if (bitmap != null) {
+            ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
+            bitmap.copyPixelsToBuffer(byteBuffer);
+            byte[] bytes = byteBuffer.array();
+            resMap.put(getBitmapKey(), bytes);
+        }
+        return resMap;
+    }
+
+    @Override
+    public void loadFromJson(JSONObject object, Map<String, byte[]> resources) {
+        super.loadFromJson(object, resources);
+        if (object != null) {
+            String bitmapKey = object.optString(KEY_BITMAP, null);
+            if (bitmapKey != null) {
+                byte[] bytes = resources.get(bitmapKey);
+                if (bytes != null) {
+                    if (bitmap != null && !bitmap.isRecycled()) {
+                        bitmap.recycle();
+                    }
+                    bitmap = Bitmap.createBitmap(object.optInt(KEY_WIDTH), object.optInt(KEY_HEIGHT), Bitmap.Config.ARGB_8888);
+                    bitmap.copyPixelsFromBuffer(ByteBuffer.wrap(bytes));
+                } else {
+                    CircleLog.w(TAG, "Cannot find resource for key=" + bitmapKey);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void afterLoaded() {
+        calculateBoundingBox();
+        updateBoundingBoxWithDataMatrix();
     }
 
     @Override
@@ -79,7 +148,9 @@ public class PhotoElement extends BoundsElement implements SupportVector, Recycl
     @Override
     public void recycleElement() {
         if (bitmap != null) {
-            bitmap.recycle();
+            if (!bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
             bitmap = null;
         }
     }
@@ -101,6 +172,13 @@ public class PhotoElement extends BoundsElement implements SupportVector, Recycl
         boundingPath = new Path();
         boundingPath.addRect(originalBoundingBox, Path.Direction.CW);
         updateBoundingBox();
+    }
+
+    private String getBitmapKey() {
+        if (bitmapKey == null) {
+            bitmapKey = PersistenceManager.generateResourceName();
+        }
+        return bitmapKey;
     }
 
 }

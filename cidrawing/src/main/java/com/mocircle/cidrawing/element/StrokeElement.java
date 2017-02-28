@@ -4,10 +4,20 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
 
+import com.mocircle.cidrawing.persistence.ConvertUtils;
+import com.mocircle.cidrawing.persistence.PersistenceException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StrokeElement extends BasePathElement {
+
+    private static final String KEY_POINTS = "points";
+    private static final String KEY_CLOSE_STROKE = "closeStroke";
 
     private List<PointF> points = new ArrayList<>();
     private boolean closeStroke;
@@ -45,6 +55,37 @@ public class StrokeElement extends BasePathElement {
     }
 
     public void doneEditing() {
+        elementPath = createStrokePath();
+        updateBoundingBox();
+    }
+
+    @Override
+    public JSONObject generateJson() {
+        JSONObject object = super.generateJson();
+        try {
+            object.put(KEY_POINTS, ConvertUtils.pointsToJson(points));
+            object.put(KEY_CLOSE_STROKE, closeStroke);
+        } catch (JSONException e) {
+            throw new PersistenceException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public void loadFromJson(JSONObject object, Map<String, byte[]> resources) {
+        super.loadFromJson(object, resources);
+        if (object != null) {
+            try {
+                points = ConvertUtils.pointsFromJson(object.optJSONArray(KEY_POINTS));
+                closeStroke = object.optBoolean(KEY_CLOSE_STROKE, false);
+            } catch (JSONException e) {
+                throw new PersistenceException(e);
+            }
+        }
+    }
+
+    @Override
+    public void afterLoaded() {
         elementPath = createStrokePath();
         updateBoundingBox();
     }

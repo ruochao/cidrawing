@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/switch_drawing_type_menu"
         android:title="Switch Drawing Type"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/switch_debug_menu"
         android:title="Switch Debug"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/show_info_menu"
         android:title="Show Info"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/save_menu"
+        android:title="Save Drawings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/load_menu"
+        android:title="Load Drawings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/export_menu"
+        android:title="Export as Picture"
+        app:showAsAction="never" />
 </menu>

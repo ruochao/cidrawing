@@ -21,24 +21,48 @@ import com.mocircle.cidrawing.element.behavior.Rotatable;
 import com.mocircle.cidrawing.element.behavior.Selectable;
 import com.mocircle.cidrawing.element.behavior.Skewable;
 import com.mocircle.cidrawing.exception.DrawingBoardNotFoundException;
+import com.mocircle.cidrawing.persistence.ConvertUtils;
+import com.mocircle.cidrawing.persistence.PersistenceException;
 import com.mocircle.cidrawing.utils.DrawUtils;
 import com.mocircle.cidrawing.utils.ShapeUtils;
 import com.mocircle.cidrawing.view.DrawingView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Basic element for drawing.
  */
 public abstract class DrawElement extends BaseElement implements Selectable, Movable, Rotatable, Skewable, Resizable {
 
-    protected String boardId;
+    private static final String TAG = "DrawElement";
+    private static final String KEY_BOARD_ID = "boardId";
+    private static final String KEY_PAINT = "paint";
+    private static final String KEY_DISPLAY_MATRIX = "displayMatrix";
+    private static final String KEY_DATA_MATRIX = "dataMatrix";
+    private static final String KEY_BOUNDING_BOX = "boundingBox";
+    private static final String KEY_REF_POINT = "refPoint";
+    private static final String KEY_SELECTED = "selected";
+    private static final String KEY_SELECTION_ENABLED = "selectionEnabled";
+    private static final String KEY_SELECTION_STYLE = "selectionStyle";
+    private static final String KEY_MOVEMENT_ENABLED = "movementEnabled";
+    private static final String KEY_ROTATION_ENABLED = "rotationEnabled";
+    private static final String KEY_SKEW_ENABLED = "skewEnabled";
+    private static final String KEY_RESIZING_ENABLED = "resizingEnabled";
+    private static final String KEY_LOCK_ASPECT_RATIO = "lockAspectRatio";
+    private static final String KEY_ORDER_INDEX = "orderIndex";
+
     protected ConfigManager configManager;
     protected DrawingView drawingView;
     protected PaintBuilder paintBuilder;
     protected PaintingBehavior paintingBehavior;
-    protected CiPaint paint = new CiPaint();
     protected CiPaint debugPaintForLine;
     protected CiPaint debugPaintForArea;
 
+    protected String boardId;
+    protected CiPaint paint = new CiPaint();
     protected Matrix displayMatrix = new Matrix();
     protected Matrix dataMatrix = new Matrix();
     protected RectF boundingBox;
@@ -243,6 +267,66 @@ public abstract class DrawElement extends BaseElement implements Selectable, Mov
     }
 
     public abstract void drawElement(Canvas canvas);
+
+    @Override
+    public JSONObject generateJson() {
+        JSONObject object = super.generateJson();
+        try {
+            object.put(KEY_BOARD_ID, boardId);
+            object.put(KEY_PAINT, paint.generateJson());
+            object.put(KEY_DISPLAY_MATRIX, ConvertUtils.matrixToJson(displayMatrix));
+            object.put(KEY_DATA_MATRIX, ConvertUtils.matrixToJson(dataMatrix));
+            object.put(KEY_BOUNDING_BOX, ConvertUtils.rectToJson(boundingBox));
+            object.put(KEY_REF_POINT, ConvertUtils.pointToJson(referencePoint));
+            object.put(KEY_SELECTED, selected);
+            object.put(KEY_SELECTION_ENABLED, selectionEnabled);
+            object.put(KEY_SELECTION_STYLE, selectionStyle.name());
+            object.put(KEY_MOVEMENT_ENABLED, movementEnabled);
+            object.put(KEY_ROTATION_ENABLED, rotationEnabled);
+            object.put(KEY_SKEW_ENABLED, skewEnabled);
+            object.put(KEY_RESIZING_ENABLED, resizingEnabled);
+            object.put(KEY_LOCK_ASPECT_RATIO, lockAspectRatio);
+            object.put(KEY_ORDER_INDEX, orderIndex);
+        } catch (JSONException e) {
+            throw new PersistenceException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public void loadFromJson(JSONObject object, Map<String, byte[]> resources) {
+        super.loadFromJson(object, resources);
+        if (object != null) {
+            try {
+                setBoardId(object.getString(KEY_BOARD_ID));
+                if (object.has(KEY_PAINT)) {
+                    paint = new CiPaint();
+                    paint.loadFromJson(object.getJSONObject(KEY_PAINT), resources);
+                }
+                displayMatrix = ConvertUtils.matrixFromJson(object.optJSONArray(KEY_DISPLAY_MATRIX));
+                dataMatrix = ConvertUtils.matrixFromJson(object.optJSONArray(KEY_DATA_MATRIX));
+                boundingBox = ConvertUtils.rectFromJson(object.optJSONArray(KEY_BOUNDING_BOX));
+                referencePoint = ConvertUtils.pointFromJson(object.optJSONArray(KEY_REF_POINT));
+                selected = object.optBoolean(KEY_SELECTED);
+                selectionEnabled = object.optBoolean(KEY_SELECTION_ENABLED);
+                selectionStyle = SelectionStyle.valueOf(object.optString(KEY_SELECTION_STYLE));
+                movementEnabled = object.optBoolean(KEY_MOVEMENT_ENABLED);
+                rotationEnabled = object.optBoolean(KEY_ROTATION_ENABLED);
+                skewEnabled = object.optBoolean(KEY_SKEW_ENABLED);
+                resizingEnabled = object.optBoolean(KEY_RESIZING_ENABLED);
+                lockAspectRatio = object.optBoolean(KEY_LOCK_ASPECT_RATIO);
+                orderIndex = object.optInt(KEY_ORDER_INDEX);
+            } catch (JSONException e) {
+                throw new PersistenceException(e);
+            }
+        }
+    }
+
+    @Override
+    public void afterLoaded() {
+        super.afterLoaded();
+        updateBoundingBox();
+    }
 
     @Override
     public boolean isSelectionEnabled() {

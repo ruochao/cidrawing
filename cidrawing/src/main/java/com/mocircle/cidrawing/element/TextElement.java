@@ -8,8 +8,17 @@ import android.graphics.RectF;
 import com.mocircle.cidrawing.core.CiPaint;
 import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.behavior.SupportVector;
+import com.mocircle.cidrawing.persistence.PersistenceException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 public class TextElement extends BoundsElement implements SupportVector {
+
+    private static final String KEY_TEXT = "text";
+    private static final String KEY_SIZE = "textSize";
 
     protected String text = "";
     protected float textSize;
@@ -33,6 +42,33 @@ public class TextElement extends BoundsElement implements SupportVector {
     public void setTextSize(float textSize) {
         this.textSize = textSize;
         setupPaint();
+    }
+
+    @Override
+    public JSONObject generateJson() {
+        JSONObject object = super.generateJson();
+        try {
+            object.put(KEY_TEXT, text);
+            object.put(KEY_SIZE, textSize);
+        } catch (JSONException e) {
+            throw new PersistenceException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public void loadFromJson(JSONObject object, Map<String, byte[]> resources) {
+        super.loadFromJson(object, resources);
+        if (object != null) {
+            text = object.optString(KEY_TEXT, "");
+            textSize = (float) object.optDouble(KEY_SIZE);
+        }
+    }
+
+    @Override
+    public void afterLoaded() {
+        setupPaint();
+        calculateBoundingBox();
     }
 
     @Override

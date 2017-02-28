@@ -62,6 +62,11 @@ public abstract class BoundsElement extends DrawElement {
         }
     }
 
+    protected void updateBoundingBoxWithDataMatrix() {
+        boundingPath.transform(getDataMatrix());
+        updateBoundingBox();
+    }
+
     protected abstract void calculateBoundingBox();
 
 }

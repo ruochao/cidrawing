@@ -4,15 +4,25 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.RectF;
 
+import com.mocircle.cidrawing.persistence.PersistenceException;
+import com.mocircle.cidrawing.persistence.PersistenceManager;
 import com.mocircle.cidrawing.utils.ElementUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A ElementGroup is a element container basic class which contains sub elements.
  */
 public abstract class ElementGroup extends DrawElement {
+
+    private static final String KEY_ELEMENTS = "elements";
 
     protected transient RectF initBoundingBox;
     protected transient Path boundingPath;
@@ -33,6 +43,50 @@ public abstract class ElementGroup extends DrawElement {
         this.elements = elements;
         // Make sure the element's order is the same in layer
         ElementUtils.sortElementsInLayer(elements);
+        recalculateBoundingBox();
+    }
+
+    @Override
+    public JSONObject generateJson() {
+        JSONObject object = super.generateJson();
+        try {
+            object.put(KEY_ELEMENTS, PersistenceManager.persistObjects(elements));
+        } catch (JSONException e) {
+            throw new PersistenceException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public Map<String, byte[]> generateResources() {
+        Map<String, byte[]> resMap = new HashMap<>();
+        for (DrawElement element : elements) {
+            Map<String, byte[]> map = element.generateResources();
+            if (map != null) {
+                resMap.putAll(map);
+            }
+        }
+        return resMap;
+    }
+
+    @Override
+    public void loadFromJson(JSONObject object, Map<String, byte[]> resources) {
+        super.loadFromJson(object, resources);
+        if (object != null) {
+            try {
+                JSONArray array = object.getJSONArray(KEY_ELEMENTS);
+                elements = PersistenceManager.buildObjects(array, resources);
+            } catch (JSONException e) {
+                throw new PersistenceException(e);
+            }
+        }
+    }
+
+    @Override
+    public void afterLoaded() {
+        for (DrawElement element : elements) {
+            element.afterLoaded();
+        }
         recalculateBoundingBox();
     }
 

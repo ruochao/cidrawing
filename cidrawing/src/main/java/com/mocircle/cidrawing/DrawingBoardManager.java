@@ -1,5 +1,9 @@
 package com.mocircle.cidrawing;
 
+import android.text.TextUtils;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -33,10 +37,27 @@ public class DrawingBoardManager {
      *
      * @return drawing board just created
      */
-    public DrawingBoard createNewBoard() {
+    public DrawingBoard createDrawingBoard() {
         DrawingBoard board = new DrawingBoardImpl(generateBoardId());
         drawingBoardMap.put(board.getBoardId(), board);
         return board;
+    }
+
+    /**
+     * Pre-create a new drawing board from json data (boardId)
+     *
+     * @param object json data
+     * @return drawing board
+     */
+    public DrawingBoard createDrawingBoard(JSONObject object) {
+        String boardId = extractBoardId(object);
+        if (!TextUtils.isEmpty(boardId)) {
+            DrawingBoard board = new DrawingBoardImpl(boardId);
+            drawingBoardMap.put(board.getBoardId(), board);
+            return board;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -51,6 +72,10 @@ public class DrawingBoardManager {
 
     private String generateBoardId() {
         return UUID.randomUUID().toString();
+    }
+
+    private String extractBoardId(JSONObject object) {
+        return object.optString(DrawingBoardImpl.KEY_BOARD_ID);
     }
 
 }

@@ -9,9 +9,17 @@ import com.mocircle.cidrawing.core.Vector2;
 import com.mocircle.cidrawing.element.BasePathElement;
 import com.mocircle.cidrawing.element.behavior.SupportVector;
 
+import org.json.JSONObject;
+
 public abstract class ShapeElement extends BasePathElement implements SupportVector {
 
     public ShapeElement() {
+    }
+
+    @Override
+    public void afterLoaded() {
+        elementPath = createShapePath();
+        updateBoundingBox();
     }
 
     @Override
@@ -52,4 +60,5 @@ public abstract class ShapeElement extends BasePathElement implements SupportVec
     protected abstract void retrieveAttributesFromVector(Vector2 vector);
 
     protected abstract Path createShapePath();
+
 }

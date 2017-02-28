@@ -2,7 +2,12 @@ package com.mocircle.cidrawing;
 
 import com.mocircle.cidrawing.board.ElementManager;
 import com.mocircle.cidrawing.operation.OperationManager;
+import com.mocircle.cidrawing.persistence.ExportData;
 import com.mocircle.cidrawing.view.DrawingView;
+
+import org.json.JSONObject;
+
+import java.util.Map;
 
 /**
  * Drawing board is a main interface to manage the drawing.
@@ -86,5 +91,20 @@ public interface DrawingBoard {
      * @param paintingBehavior painting behavior
      */
     void setPaintingBehavior(PaintingBehavior paintingBehavior);
+
+    /**
+     * Export drawing board content
+     *
+     * @return json data and external resources
+     */
+    ExportData exportData();
+
+    /**
+     * Load drawing board
+     *
+     * @param metaData  json format meta data
+     * @param resources resource mapping
+     */
+    void importData(JSONObject metaData, Map<String, byte[]> resources);
 
 }
